@@ -1,0 +1,44 @@
+zh-CN:
+  common:
+    plat_name: Lucky Pocket
+    language: 简体中文
+    no_record: 没有记录
+    coming_soon: 马上开放
+  errors:
+    error: 错误
+    permission_denied: 无权操作
+    system_busy: 系统繁忙，请稍后再试
+    invalid_request: 非法请求
+    login_to_operate: 未登录或会话已过期，请登录后再操作
+    invalid_params: 参数无效或错误
+    user_not_exist: 该地址未注册
+  tips:
+    success: 成功
+    operation_success: 操作成功
+    failed: 失败
+    confirm: 确定
+    confirm_operation: 确认操作
+    cancel: 取消
+    submit: 提交
+  users:
+    create:
+      parent_not_exist: 邀请人不存在
+  game_rooms:
+    create:
+      game_not_exist: 该红包金额不存在
+      min_usdt_amount_less_than_game_required: 最低保证金不应低于红包金额
+      in_room_not_to_create: 您当前正在参与一个密码红包，不可再次创建密码红包
+      usdt_available_less_than_min: 您的USDT可用余额小于要创建的密码房的最低保证金
+      loser_amount_lager_than_player_amount: 输家数量应小于玩家数量
+    query:
+      room_not_exist: 该密码红包不存在或已结束
+    enter:
+      have_joined_a_room: 您已经参与了一个密码红包，不可以再次参与其他密码红包
+    join:
+      have_joined_the_room: 您已经参与了该密码红包，请勿重复参与
+      room_stopped: 该密码红包已经结束
+      usdt_available_insufficient: USDT可用余额不足
+  games:
+    join:
+      game_not_exist: 该红包不存在
+      already_joined: 您已经参与了该红包，不可重复参与

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title><%= t('common.plat_name') %></title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+  <meta content="" name="author"/>
+  <!--  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+
+  <link rel="stylesheet" media="all" href="/color-admin/css/default/app.min.css" data-turbolinks-track="reload"/>
+  <link rel="stylesheet" href="/color-admin/plugins/ladda/ladda-themeless.min.css"/>
+  <link rel="stylesheet" href="/color-admin/plugins/ionicons/css/ionicons.min.css"/>
+  <link rel="stylesheet" href="/color-admin/plugins/gritter/css/jquery.gritter.css"/>
+  <link rel="stylesheet" href="/color-admin/plugins/bootstrap-table/bootstrap-table.min.css"/>
+  <link href="/color-admin/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+  <link href="/color-admin/plugins/select2/dist/css/select2.min.css" rel="stylesheet"/>
+
+  <%#= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <script src="/color-admin/js/app.min.js"></script>
+  <script src="/color-admin/js/business.js"></script>
+  <script src="/color-admin/plugins/jquery.cookie.js"></script>
+  <script src="/color-admin/js/theme/default.min.js"></script>
+  <script src="/color-admin/plugins/ladda/spin.min.js"></script>
+  <script src="/color-admin/plugins/ladda/ladda.min.js"></script>
+  <script src="/color-admin/plugins/ladda/ladda.jquery.min.js"></script>
+  <script src="/color-admin/plugins/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="/color-admin/plugins/gritter/js/jquery.gritter.min.js"></script>
+  <script src="/color-admin/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+  <script src="/color-admin/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <script src="/color-admin/plugins/select2/dist/js/select2.full.min.js"></script>
+
+  <style>
+      #content {
+          display: flex;
+          flex-direction: column;
+      }
+
+      .modal-backdrop {
+          z-index: 1000;
+      }
+  </style>
+</head>
+
+<body>
+<!-- begin page-cover -->
+<div class="page-cover"></div>
+<!-- end page-cover -->
+
+<!-- begin #page-loader -->
+<div id="page-loader" class="fade show">
+  <span class="spinner"></span>
+</div>
+<!-- end #page-loader -->
+
+<!-- begin #page-container -->
+<div id="page-container" class="page-container fade page-sidebar-fixed page-header-fixed">
+  <!-- begin #header -->
+  <div id="header" class="header navbar-default">
+    <!-- begin navbar-header -->
+    <div class="navbar-header">
+      <a href="#" class="navbar-brand"><b><%= t('common.plat_name') %></b></a>
+      <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <!-- end navbar-header -->
+    <!-- begin header-nav -->
+    <ul class="navbar-nav navbar-right">
+      <li class="dropdown navbar-user">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <div class="image image-icon bg-black text-grey-darker">
+            <i class="fa fa-user"></i>
+          </div>
+          <span class="d-none d-md-inline"><%= @cur_session.admin.account %></span> <b class="caret"></b>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a href="javascript:logout();" class="dropdown-item">退出登录</a>
+        </div>
+      </li>
+    </ul>
+    <!-- end header navigation right -->
+  </div>
+  <!-- end #header -->
+
+  <!-- begin #sidebar -->
+  <div id="sidebar" class="sidebar">
+    <!-- begin sidebar scrollbar -->
+    <div data-scrollbar="true" data-height="100%">
+      <!-- begin sidebar nav -->
+      <ul class="nav">
+        <li class="nav-header"></li>
+        <li class="<%= 'active' if params[:controller] == 'admin/dashboard' && params[:action] == 'index' %>">
+          <a href="/admin/dashboard/index">
+            <i class="fa fa-home"></i>
+            <span>首页</span>
+          </a>
+        </li>
+        <li class="<%= 'active' if params[:controller] == 'admin/admins' and params[:action] == 'index' %>">
+          <a href="/admin/admins/index">
+            <i class="fa fa-users-cog"></i>
+            <span>后台工作人员</span>
+          </a>
+        </li>
+        <li class="has-sub <%= 'active' if params[:controller] == 'admin/users' %>">
+          <a href="javascript:;">
+            <b class="caret"></b>
+            <i class="fa fa-users"></i>
+            <span>用户管理</span>
+          </a>
+          <ul class="sub-menu">
+            <li class="<%= 'active' if params[:controller] == 'admin/users' and params[:action] == 'index' %>">
+              <a href="/admin/users/index">用户列表</a>
+            </li>
+            <li class="<%= 'active' if params[:controller] == 'admin/users' and params[:action] == 'tree' %>">
+              <a href="/admin/users/tree">用户树</a>
+            </li>
+          </ul>
+        </li>
+        <li class="<%= 'active' if params[:controller] == 'admin/games' and params[:action] == 'index' %>">
+          <a href="/admin/games/index">
+            <i class="fa fa-gamepad"></i>
+            <span>游戏管理</span>
+          </a>
+        </li>
+        <!-- begin sidebar minify button -->
+        <li>
+          <a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a>
+        </li>
+        <!-- end sidebar minify button -->
+      </ul>
+      <!-- end sidebar nav -->
+    </div>
+    <!-- end sidebar scrollbar -->
+  </div>
+  <div class="sidebar-bg"></div>
+  <!-- end #sidebar -->
+
+  <!-- begin #content -->
+  <div id="content" class="content">
+    <!-- begin breadcrumb -->
+    <!-- end breadcrumb -->
+    <!-- begin page-header -->
+    <!-- end page-header -->
+    <!-- begin panel -->
+    <%= yield %>
+    <!-- end panel -->
+  </div>
+  <!-- end #content -->
+
+  <!-- begin scroll to top btn -->
+  <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+  <!-- end scroll to top btn -->
+</div>
+<!-- end page container -->
+<script type="text/javascript">
+    function logout() {
+        swal({
+            title: '确认操作',
+            text: '确认要退出登录？',
+            icon: 'info',
+            buttons: {
+                cancel: {
+                    text: '取消',
+                    value: null,
+                    visible: true,
+                    className: 'btn btn-default',
+                    closeModal: true,
+                },
+                confirm: {
+                    text: '确认',
+                    value: true,
+                    visible: true,
+                    className: 'btn btn-primary',
+                    closeModal: true
+                }
+            }
+        }).then((confirmed) => {
+            if (confirmed) {
+                Business.post("/admin/admin_sessions/destroy", {authenticity_token: '<%= form_authenticity_token %>'},
+                    function () {
+                        location.href = '/admin/admin_sessions/new';
+                    }
+                );
+            }
+        });
+    }
+</script>
+</body>
+</html>

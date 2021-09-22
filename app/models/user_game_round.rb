@@ -1,0 +1,2 @@
+class UserGameRound < ApplicationRecord
+end

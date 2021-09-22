@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title><%= t('common.plat_name') %></title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+  <meta content="" name="description" />
+  <meta content="" name="author" />
+
+  <!-- ================== BEGIN BASE CSS STYLE ================== -->
+  <link href="/color-admin/css/transparent/app.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/color-admin/plugins/ladda/ladda-themeless.min.css"/>
+  <!-- ================== END BASE CSS STYLE ================== -->
+
+  <!-- ================== BEGIN BASE JS ================== -->
+  <script src="/color-admin/js/app.min.js"></script>
+  <script src="/color-admin/js/theme/transparent.min.js"></script>
+  <script src="/color-admin/js/business.js"></script>
+  <script src="/color-admin/plugins/ladda/spin.min.js"></script>
+  <script src="/color-admin/plugins/ladda/ladda.min.js"></script>
+  <script src="/color-admin/plugins/ladda/ladda.jquery.min.js"></script>
+  <script src="/color-admin/plugins/sweetalert/dist/sweetalert.min.js"></script>
+  <!-- ================== END BASE JS ================== -->
+</head>
+<body class="pace-top">
+<!-- begin #page-loader -->
+<div id="page-loader" class="fade show">
+  <span class="spinner"></span>
+</div>
+<!-- end #page-loader -->
+
+<!-- begin #page-container -->
+<div id="page-container" class="fade">
+  <!-- begin login -->
+  <div class="login login-v1">
+    <!-- begin login-container -->
+    <div class="login-container">
+      <%= yield %>
+    </div>
+    <!-- end login-container -->
+  </div>
+  <!-- end login -->
+
+  <!-- begin scroll to top btn -->
+  <a href="javascript:;" class="btn btn-icon btn-circle btn-blue btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+  <!-- end scroll to top btn -->
+</div>
+<!-- end page container -->
+
+</body>
+</html>

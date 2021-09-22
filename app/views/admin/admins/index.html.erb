@@ -1,0 +1,249 @@
+<div class="flex justify-between m-b-15">
+  <ol class="breadcrumb float-xl-left">
+    <li id="li_nav_level_1" class="breadcrumb-item"><a href="javascript:;" class="">首页</a></li>
+    <li id="li_nav_level_2" class="breadcrumb-item"><a href="javascript:;">后台工作人员</a></li>
+  </ol>
+</div>
+
+<div class="panel panel-inverse">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-12">
+        <button class="btn btn-sm btn-primary pull-right" onclick="add_admin()"><i class="fa fa-plus"></i> 新增</button>
+      </div>
+    </div>
+    <div class="row m-t-15">
+      <div class="col-12">
+        <table id="table_admins"></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_new" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title">新增工作人员</h4>
+      </div>
+      <form id="form_new">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>账号 <span class="text-danger">*</span></label>
+            <input name="admin[account]" class="form-control" type="text" required>
+          </div>
+          <div class="form-group">
+            <label>姓名/昵称 <span class="text-danger">*</span></label>
+            <input name="admin[nickname]" class="form-control" type="text" required>
+          </div>
+          <div class="form-group">
+            <label>登录密码 <span class="text-danger">*</span></label>
+            <input name="admin[password]" class="form-control" type="text" required>
+          </div>
+          <div class="form-group">
+            <label>角色 <span class="text-danger">*</span></label>
+            <select name="admin[role]" class="form-control">
+              <option value="admin">系统管理员</option>
+              <option value="finance">财务</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="submit" class="ladda-button btn btn-success" data-style="zoom-in">确定</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_modify_password" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title">修改登录密码</h4>
+      </div>
+      <form id="form_modify_password">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="hidden" name="admin[id]">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>账号</label>
+            <input name="admin[account]" class="form-control" type="text" readonly>
+          </div>
+          <div class="form-group">
+            <label>登录密码 <span class="text-danger">*</span></label>
+            <input name="admin[password]" class="form-control" type="text" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="submit" class="ladda-button btn btn-success" data-style="zoom-in">确定</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    let table, page_size = 15;
+
+    function init_table() {
+        table = $('#table_admins').bootstrapTable({
+            locale: 'zh-CN',
+            url: '/admin/admins/list_for_table',
+            method: 'get',
+            striped: true,
+            cache: false,
+            pagination: true,
+            contentType: "application/x-www-form-urlencoded",
+            queryParams: function (params) {
+                params['page'] = params.pageNumber - 1;
+                params['limit'] = params.pageSize;
+                return params;
+            },
+            sidePagination: "server",
+            pageNumber: 1,
+            queryParamsType: "pageNumber",
+            pageSize: page_size,
+            strictSearch: true,
+            clickToSelect: true,
+            uniqueId: "id",
+            columns: [
+                {field: 'id', title: 'ID'},
+                {field: 'account', title: '账号'},
+                {field: 'nickname', title: '姓名/昵称'},
+                {field: 'role_name', title: '角色'},
+                {
+                    field: 'locked', title: '状态', formatter: function (locked) {
+                        return locked ? '已锁定' : '正常';
+                    }
+                },
+                {
+                    field: 'id', title: '操作', formatter: function (id, row) {
+                        let actions = ['<a href="javascript:modify_password(' + id + ')" title="改密码">改密码</a>'];
+                        if (row.locked)
+                            actions.push('<a href="javascript:unlock(' + id + ')" title="解锁">解锁</a>');
+                        else
+                            actions.push('<a href="javascript:lock(' + id + ')" title="锁定">锁定</a>');
+                        return actions.join(' ');
+                    }
+                }
+            ]
+        });
+    }
+
+    function add_admin() {
+        $('#form_new')[0].reset();
+        $('#modal_new').modal();
+    }
+
+    function modify_password(id) {
+        $('#form_modify_password')[0].reset();
+        let row = table.bootstrapTable('getRowByUniqueId', id);
+        $('#form_modify_password input[name="admin[id]"]').val(id);
+        $('#form_modify_password input[name="admin[account]"]').val(row.account);
+        $('#modal_modify_password').modal();
+    }
+
+    function unlock(id) {
+        swal({
+            title: '确认操作',
+            text: '确认要解锁该账号？',
+            icon: 'info',
+            buttons: {
+                cancel: {
+                    text: '取消',
+                    value: null,
+                    visible: true,
+                    className: 'btn btn-default',
+                    closeModal: true,
+                },
+                confirm: {
+                    text: '确认',
+                    value: true,
+                    visible: true,
+                    className: 'btn btn-primary',
+                    closeModal: true
+                }
+            }
+        }).then((confirmed) => {
+            if (confirmed) {
+                Business.post("/admin/admins/unlock", {id: id, authenticity_token: '<%= form_authenticity_token %>'},
+                    function () {
+                        table.bootstrapTable('refresh');
+                    }
+                );
+            }
+        });
+    }
+
+    function lock(id) {
+        swal({
+            title: '确认操作',
+            text: '确认要锁定该账号？',
+            icon: 'info',
+            buttons: {
+                cancel: {
+                    text: '取消',
+                    value: null,
+                    visible: true,
+                    className: 'btn btn-default',
+                    closeModal: true,
+                },
+                confirm: {
+                    text: '确认',
+                    value: true,
+                    visible: true,
+                    className: 'btn btn-primary',
+                    closeModal: true
+                }
+            }
+        }).then((confirmed) => {
+            if (confirmed) {
+                Business.post("/admin/admins/lock", {id: id, authenticity_token: '<%= form_authenticity_token %>'},
+                    function () {
+                        table.bootstrapTable('refresh');
+                    }
+                );
+            }
+        });
+    }
+
+    $(function () {
+        init_table();
+
+        $('#form_new').submit(function () {
+            let l = $('#form_new button[type="submit"]').ladda();
+            l.ladda('start');
+            Business.submit_form('/admin/admins/create', 'form_new', function () {
+                    l.ladda('stop');
+                    $('#modal_new').modal('hide');
+                    table.bootstrapTable('refresh');
+                }, function (data) {
+                    l.ladda('stop');
+                    swal('错误', data.msg, 'error');
+                }
+            );
+
+            return false;
+        });
+
+        $('#form_modify_password').submit(function () {
+            let l = $('#form_modify_password button[type="submit"]').ladda();
+            l.ladda('start');
+            Business.submit_form('/admin/admins/modify_password', 'form_modify_password', function () {
+                    l.ladda('stop');
+                    $('#modal_modify_password').modal('hide');
+                    swal('成功', '修改登录密码成功', 'success');
+                }, function (data) {
+                    l.ladda('stop');
+                    swal('错误', data.msg, 'error');
+                }
+            );
+
+            return false;
+        });
+    });
+</script>

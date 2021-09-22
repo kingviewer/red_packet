@@ -1,0 +1,174 @@
+<div class="flex justify-between m-b-15">
+  <ol class="breadcrumb float-xl-left">
+    <li id="li_nav_level_1" class="breadcrumb-item"><a href="javascript:;" class="">首页</a></li>
+    <li id="li_nav_level_2" class="breadcrumb-item"><a href="javascript:;">游戏管理</a></li>
+  </ol>
+</div>
+
+<div class="panel panel-inverse">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-12">
+        <button class="btn btn-sm btn-primary pull-right" onclick="add_game()"><i class="fa fa-plus"></i> 新增</button>
+      </div>
+    </div>
+    <div class="row m-t-15">
+      <div class="col-12">
+        <table id="table_games"></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_new" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title">新增游戏</h4>
+      </div>
+      <form id="form_new">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>单份金额(USDT) <span class="text-danger">*</span></label>
+            <input name="game[usdt_amount]" class="form-control" type="number" min="0.00000001" step="0.00000001" required>
+          </div>
+          <div class="form-group">
+            <label>开奖人数 <span class="text-danger">*</span></label>
+            <input name="game[player_amount]" class="form-control" type="number" min="2" required>
+          </div>
+          <div class="form-group">
+            <label>输家数量 <span class="text-danger">*</span></label>
+            <input name="game[loser_amount]" class="form-control" type="number" min="1" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="submit" class="ladda-button btn btn-success" data-style="zoom-in">确定</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title">修改游戏</h4>
+      </div>
+      <form id="form_edit">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="hidden" name="game[id]">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>单份金额(USDT) <span class="text-danger">*</span></label>
+            <input name="game[usdt_amount]" class="form-control" type="number" min="0.00000001" step="0.00000001" required>
+          </div>
+          <div class="form-group">
+            <label>开奖人数 <span class="text-danger">*</span></label>
+            <input name="game[player_amount]" class="form-control" type="number" min="2" required>
+          </div>
+          <div class="form-group">
+            <label>输家数量 <span class="text-danger">*</span></label>
+            <input name="game[loser_amount]" class="form-control" type="number" min="1" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="submit" class="ladda-button btn btn-success" data-style="zoom-in">确定</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    let table, page_size = 15;
+
+    function init_table() {
+        table = $('#table_games').bootstrapTable({
+            locale: 'zh-CN',
+            url: '/admin/games/list_for_table',
+            method: 'get',
+            striped: true,
+            cache: false,
+            pagination: true,
+            contentType: "application/x-www-form-urlencoded",
+            queryParams: function (params) {
+                params['page'] = params.pageNumber - 1;
+                params['limit'] = params.pageSize;
+                return params;
+            },
+            sidePagination: "server",
+            pageNumber: 1,
+            queryParamsType: "pageNumber",
+            pageSize: page_size,
+            strictSearch: true,
+            clickToSelect: true,
+            uniqueId: "id",
+            columns: [
+                {field: 'id', title: 'ID'},
+                {field: 'usdt_amount', title: '单份金额(USDT)'},
+                {field: 'player_amount', title: '开奖人数'},
+                {
+                    field: 'id', title: '操作', formatter: function (id, row) {
+                        let actions = ['<a href="javascript:edit(' + id + ')" title="修改">修改</a>'];
+                        return actions.join(' ');
+                    }
+                }
+            ]
+        });
+    }
+
+    function add_game() {
+        $('#form_new')[0].reset();
+        $('#modal_new').modal('show');
+    }
+
+    function edit(id) {
+        let row = table.bootstrapTable('getRowByUniqueId', id);
+        $('#form_edit')[0].reset();
+        $('#form_edit input[name="game[id]"]').val(id);
+        $('#form_edit input[name="game[usdt_amount]"]').val(row.usdt_amount);
+        $('#form_edit input[name="game[player_amount]"]').val(row.player_amount);
+        $('#form_edit input[name="game[loser_amount]"]').val(row.loser_amount);
+        $('#modal_edit').modal('show');
+    }
+
+    $(function () {
+        init_table();
+
+        $('#form_new').submit(function () {
+            let l = $('#form_new button[type="submit"]').ladda();
+            l.ladda('start');
+            Business.submit_form('/admin/games/create', 'form_new', function () {
+                    l.ladda('stop');
+                    $('#modal_new').modal('hide');
+                    table.bootstrapTable('refresh');
+                }, function (data) {
+                    l.ladda('stop');
+                    swal('错误', data.msg, 'error');
+                }
+            );
+
+            return false;
+        });
+
+        $('#form_edit').submit(function () {
+            let l = $('#form_edit button[type="submit"]').ladda();
+            l.ladda('start');
+            Business.submit_form('/admin/games/update', 'form_edit', function () {
+                    l.ladda('stop');
+                    $('#modal_edit').modal('hide');
+                    table.bootstrapTable('refresh');
+                }, function (data) {
+                    l.ladda('stop');
+                    swal('错误', data.msg, 'error');
+                }
+            );
+
+            return false;
+        });
+    });
+</script>
