@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+  <title><%= t('common.plat_name') %></title>
+  <link rel="icon" type="image/x-icon" href="/xato/assets/img/favicon.ico"/>
+  <!-- Common Styles Starts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="/xato/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="/xato/assets/css/main.css" rel="stylesheet" type="text/css" />
+  <link href="/xato/assets/css/structure.css" rel="stylesheet" type="text/css" />
+  <link href="/xato/plugins/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" type="text/css" />
+  <link href="/xato/plugins/highlight/styles/monokai-sublime.css" rel="stylesheet" type="text/css" />
+  <!-- Common Styles Ends -->
+  <!-- Common Icon Starts -->
+  <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+  <!-- Common Icon Ends -->
+  <!-- Page Level Plugin/Style Starts -->
+  <link href="/xato/assets/css/loader.css" rel="stylesheet" type="text/css" />
+  <link href="/xato/assets/css/animate.min.css" rel="stylesheet" type="text/css" />
+  <link href="/xato/assets/css/basic-ui/animation.css" rel="stylesheet" type="text/css" />
+  <link href="/xato/plugins/owl-carousel/owl.carousel.min.css" rel="stylesheet" type="text/css">
+  <link href="/xato/plugins/owl-carousel/owl.theme.default.min.css" rel="stylesheet" type="text/css">
+  <link href="/xato/assets/css/authentication/auth_1.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/color-admin/plugins/ladda/ladda-themeless.min.css"/>
+  <script src="/xato/plugins/sweetalerts/promise-polyfill.js"></script>
+  <link href="/xato/plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+  <link href="/xato/plugins/sweetalerts/sweetalert.css" rel="stylesheet" type="text/css" />
+  <!-- Page Level Plugin/Style Ends -->
+
+  <!-- Page Level Plugin/Script Starts -->
+  <script src="/xato/assets/js/loader.js"></script>
+  <script src="/xato/assets/js/libs/jquery-3.1.1.min.js"></script>
+  <script src="/xato/plugins/owl-carousel/owl.carousel.min.js"></script>
+  <script src="/xato/plugins/owl-carousel/owl.carousel.js"></script>
+  <script src="/xato/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/xato/assets/js/authentication/auth_1.js"></script>
+  <script src="/assets/js/web3.min.js"></script>
+  <script src="/assets/js/getWeb3.js"></script>
+  <script src="/color-admin/js/business.js"></script>
+  <script src="/color-admin/plugins/jquery.cookie.js"></script>
+  <script src="/color-admin/plugins/ladda/spin.min.js"></script>
+  <script src="/color-admin/plugins/ladda/ladda.min.js"></script>
+  <script src="/color-admin/plugins/ladda/ladda.jquery.min.js"></script>
+  <script src="/xato/plugins/sweetalerts/sweetalert2.min.js"></script>
+  <script src="/xato/assets/js/basicui/sweet_alerts.js"></script>
+  <!-- Page Level Plugin/Script Ends -->
+</head>
+<body class="login-one">
+<!-- Loader Starts -->
+<div id="load_screen">
+  <div class="boxes">
+    <div class="box">
+      <div></div><div></div><div></div><div></div>
+    </div>
+    <div class="box">
+      <div></div><div></div><div></div><div></div>
+    </div>
+    <div class="box">
+      <div></div><div></div><div></div><div></div>
+    </div>
+    <div class="box">
+      <div></div><div></div><div></div><div></div>
+    </div>
+  </div>
+  <p class="xato-loader-heading"><%= t('common.plat_name') %></p>
+</div>
+<!--  Loader Ends -->
+<!-- Main Body Starts -->
+<div class="container-fluid login-one-container">
+  <div class="p-30 h-100" >
+    <div class="row main-login-one h-100">
+      <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 p-0">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Main Body Ends -->
+</body>
+</html>

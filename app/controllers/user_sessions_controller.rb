@@ -1,4 +1,6 @@
 class UserSessionsController < BaseUserController
+  layout 'user_sessions', only: :new
+
   def new
   end
 

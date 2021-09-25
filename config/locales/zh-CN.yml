@@ -21,8 +21,17 @@ zh-CN:
     cancel: 取消
     submit: 提交
   users:
+    new:
+      sign_up_tip: 请输入您的邀请人ID进行注册
+      your_address: 您的地址
+      parent_id: 邀请人ID
+      sign_up: 注册
     create:
       parent_not_exist: 邀请人不存在
+      address_already_exists: 该地址已经注册
+  user_sessions:
+    new:
+      connecting_wallet: 正在连接钱包...
   game_rooms:
     create:
       game_not_exist: 该红包金额不存在

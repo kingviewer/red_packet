@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_not_exist
-    render json: Utils::ReturnCodes.invalid_params, status: :unprocessable_entity
+    render json: Utils::ReturnCodes.user_not_exist, status: :unprocessable_entity
   end
 
   def error(msg)

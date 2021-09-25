@@ -1,0 +1,28 @@
+<div class="login-one-start">
+  <h6 class="mt-2 text-primary text-center font-20"><%= t('common.plat_name') %></h6>
+  <p class="text-center text-muted mt-3 mb-3 font-14"><%= t('.connecting_wallet') %></p>
+  <div class="text-center"><img id="img_loading" src="/assets/img/connecting.png" style="width: 200px;"></div>
+</div>
+<script>
+    $(function () {
+        getWeb3().then(res => {
+            res.eth.getAccounts(function (err, result) {
+                let address = result[0];
+                Business.post(
+                    '/user_sessions/create',
+                    {address: address, authenticity_token: '<%= form_authenticity_token %>'},
+                    function (result) {
+                        location.href = '/dashboard/index';
+                    }, function (err) {
+                        if (err.code === 'user_not_exist')
+                            location.href = '/users/new';
+                        else
+                            swal('<%= t('errors.error') %>', err.msg, 'error');
+                    }
+                );
+            });
+        }).catch(function (result) {
+            console.log(result);
+        });
+    });
+</script>

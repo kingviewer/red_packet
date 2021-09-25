@@ -1,0 +1,52 @@
+<form id="form_new">
+  <div class="login-one-start">
+    <h6 class="mt-2 text-primary text-center font-20"><%= t('common.plat_name') %></h6>
+    <p class="text-center text-muted mt-3 mb-3 font-14"><%= t(".sign_up_tip") %></p>
+    <div class="login-one-inputs mt-5">
+      <input id="input_address" name="user[address]" type="text" readonly placeholder="<%= t('.your_address') %>" required>
+      <i class="la la-id-badge"></i>
+    </div>
+    <div class="login-one-inputs mt-3">
+      <input id="input_parent" name="user[invite_code]" type="text" placeholder="<%= t('.parent_id') %>" required>
+      <i class="la la-user-alt"></i>
+    </div>
+    <div class="login-one-inputs mt-4">
+      <button class="btn btn-primary btn-login ladda-button" type="submit" data-style="zoom-in">
+        <%= t('.sign_up') %>
+      </button>
+    </div>
+  </div>
+</form>
+
+<script>
+    $(function () {
+        getWeb3().then(res => {
+            res.eth.getAccounts(function (err, result) {
+                let address = result[0];
+                $('#input_address').val(address);
+                <% if @parent %>
+                $('#input_parent').val('<%= @parent.invite_code %>');
+                <% end %>
+            });
+        }).catch(function (result) {
+            console.log(result);
+        });
+
+        $('#form_new').submit(function () {
+            let l = $('#form_new button[type="submit"]').ladda();
+            l.ladda('start');
+            Business.submit_form(
+                '/users/create', 'form_new',
+                function (result) {
+                    l.ladda('stop');
+                    location.href = '/dashboard/index';
+                }, function (err) {
+                    l.ladda('stop');
+                    swal('<%= t('errors.error') %>', err.msg, 'error');
+                }
+            );
+
+            return false;
+        });
+    });
+</script>

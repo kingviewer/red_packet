@@ -1,7 +1,9 @@
 class UsersController < BaseUserController
   before_action :ajax_auth_user, only: [:my_info]
+  layout 'user_sessions', only: :new
 
   def new
+    @parent = User.find_by_invite_code(params[:pid]) unless params[:pid].blank?
   end
 
   def create
@@ -9,16 +11,20 @@ class UsersController < BaseUserController
       error(t('.create.parent_not_exist'))
     else
       user = User.new(params.require(:user).permit(:address))
-      user.parent_id = parent.id
-      begin
-        user.gen_invite_code
-        user.save
-      rescue
-        retry
+      if User.exists?(address: user.address)
+        error(t('.address_already_exists'))
+      else
+        user.parent_id = parent.id
+        begin
+          user.gen_invite_code
+          user.save
+        rescue
+          retry
+        end
+        user.user_session.renew
+        cookies[:user_token] = user.user_session.token
+        success(user_token: user.user_session.token)
       end
-      user.user_session.renew
-      cookies[:user_token] = user.user_session.token
-      success(user_token: user.user_session.token)
     end
   end
 
