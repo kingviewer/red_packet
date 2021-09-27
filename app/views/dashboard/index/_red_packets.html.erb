@@ -1,0 +1,303 @@
+<div class="row">
+  <div class="col-12 text-center bg-primary" style="position: fixed;z-index: 200;">
+    <span class="m-15 font-16 font-weight-bold">红包</span>
+  </div>
+  <div class="col-12" style="height: 50px;"></div>
+  <div class="col-12 bg-danger">
+    <span id="span_note" class="m-5 font-14"><i class="la la-volume-up"></i> 注意: 神马都是浮云</span>
+    <span class="m-5 font-14 pull-right"><b><i class="las la-angle-right"></i></b></span>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 bg-primary p-t-10">
+    <span class="m-10 text-white font-17">我的ID</span>
+    <span class="pull-right m-10 font-19">XI81A1</span>
+  </div>
+  <div class="col-12 bg-primary">
+    <span class="m-10 text-white font-17">托管中</span>
+    <span class="pull-right m-10 font-13"><span class="font-19">1000.123412</span> USDT</span>
+  </div>
+</div>
+<div class="row bg-primary">
+  <div class="col-4 p-10 text-center">
+    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%">托管</button>
+  </div>
+  <div class="col-4 p-10 text-center">
+    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%">提取</button>
+  </div>
+  <div class="col-4 p-10 text-center">
+    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%">划转</button>
+  </div>
+</div>
+
+<div class="m-4 display-flex">
+  <div class="text-center m-r-2" style="flex: 1">
+    <div class="card" onclick="choose_room_option()">
+      <div class="card-header bg-primary text-white text-center">
+        密码红包
+      </div>
+      <div class="card-body bg-warning text-center">
+        <span class="font-16">? 人</span>
+      </div>
+    </div>
+  </div>
+  <div class="text-center m-l-2 m-r-2" style="flex: 1">
+    <div class="card" onclick="join_gain(1)">
+      <div class="card-header bg-primary text-white text-center">
+        1000 USDT
+      </div>
+      <div class="card-body bg-warning text-center">
+        <span class="font-16">10 人</span>
+      </div>
+    </div>
+  </div>
+  <div class="text-center m-l-2" style="flex: 1">
+    <div class="card" onclick="show_joined_game(1)">
+      <div class="card-header bg-primary text-white text-center">
+        100 USDT
+      </div>
+      <div class="card-body bg-warning text-center">
+        <span class="font-16">10 人</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="m-4 display-flex">
+  <div class="text-center m-r-2" style="flex: 1">
+    <div class="card">
+      <div class="card-header bg-primary text-white text-center">
+        100 USDT
+      </div>
+      <div class="card-body bg-warning text-center">
+        <span class="font-16">? 人</span>
+      </div>
+    </div>
+  </div>
+  <div class="text-center m-l-2 m-r-2" style="flex: 1">
+    <div class="card">
+      <div class="card-header bg-primary text-white text-center">
+        100 USDT
+      </div>
+      <div class="card-body bg-warning text-center">
+        <span class="font-16">10 人</span>
+      </div>
+    </div>
+  </div>
+  <div class="text-center m-l-2" style="flex: 1">
+    <div class="card">
+      <div class="card-header bg-primary text-white text-center">
+        100 USDT
+      </div>
+      <div class="card-body bg-warning text-center">
+        <span class="font-16">10 人</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 m-5 layout-spacing">
+    <div class="widget widget-chart-one">
+      <div class="widget-heading m-10">
+        <div>
+          <br>
+          <h6 class="">匹配记录</h6>
+        </div>
+      </div>
+      <div class="widget-content m-10">
+        <div class="mb-2 border-bottom border-light pb-2">
+          <span class="text-primary font-15">100 USDT/15人</span>
+          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
+          <span class="font-12 mb-0 text-muted">我(XIQ912)进入匹配队列</span>
+          <a class="float-right text-gray font-12">查看详情 ></a>
+        </div>
+        <div class="mb-2 border-bottom border-light pb-2">
+          <span class="text-primary font-15">100 USDT/15人</span>
+          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
+          <span class="font-12 mb-0 text-muted">我(XIQ912)进入匹配队列</span>
+          <a class="float-right text-gray font-12">查看详情 ></a>
+        </div>
+        <div>
+          <span class="text-primary font-15">100 USDT/15人</span>
+          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
+          <span class="font-12 mb-0 text-muted">我(XIQ912)进入匹配队列</span>
+          <a class="float-right text-gray font-12">查看详情 ></a>
+        </div>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_join_game" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">匹配红包</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="las la-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12 text-center">
+            <span><span class="text-warning font-30">100</span><span class="text-warning">.00</span> USDT</span>
+          </div>
+          <div class="col-12 text-center">
+            满员人数: <span>50</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-block btn-rounded">确认参与</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_joined_game" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">匹配红包</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="las la-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12 text-center">
+            <span><span class="text-warning font-30">100</span><span class="text-warning">.00</span> USDT</span>
+          </div>
+          <div class="col-12 text-center">匹配中...</div>
+          <div class="col-12 m-t-10">
+            <div class="progress br-30">
+              <div class="progress-bar br-0 progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 50%"></div>
+            </div>
+          </div>
+          <div class="col-12 text-center">25/100 人</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-block btn-rounded" disabled>拆红包</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_room_option" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">密码红包</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="las la-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <button type="button" class="btn btn-primary btn-block btn-rounded ladda-button" onclick="join_room()" data-style="zoom-in">参与密码红包</button>
+          </div>
+          <div class="col-12 m-t-20">
+            <button type="button" class="btn btn-primary btn-block btn-rounded" onclick="create_room()">创建密码红包</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_join_room" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">参与密码红包</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="las la-times"></i>
+        </button>
+      </div>
+      <form id="form_join_room">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>密码红包房间号</label>
+            <input type="text" class="form-control" placeholder="请输入密码红包的房间号" required>
+          </div>
+          <div class="form-group">
+            <label>红包密码</label>
+            <input type="text" class="form-control" placeholder="请输入红包的密码" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-block btn-rounded ladda-button" data-style="zoom-in">提交</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_create_room" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">创建密码红包</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="las la-times"></i>
+        </button>
+      </div>
+      <form id="form_create_room">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>红包金额</label>
+            <select class="form-control" required>
+              <option value="1">100.00 USDT</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>最低红包账户余额</label>
+            <input type="text" class="form-control" placeholder="0.00" required>
+          </div>
+          <div class="form-group">
+            <label>踩雷人数</label>
+            <input type="number" min="1" class="form-control" placeholder="最小为1，最大为红包参与人数减1" required>
+          </div>
+          <div class="form-group">
+            <label>红包密码</label>
+            <input type="text" class="form-control" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-block btn-rounded ladda-button" data-style="zoom-in">提交</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    function load_red_packets_data() {
+
+    }
+
+    function join_gain(id) {
+        $('#modal_join_game').modal('show');
+    }
+
+    function show_joined_game(id) {
+        $('#modal_joined_game').modal('show');
+    }
+
+    function choose_room_option() {
+        $('#modal_room_option').modal('show');
+    }
+
+    function join_room() {
+        $('#modal_room_option').modal('hide');
+        $('#modal_join_room').modal('show');
+    }
+
+    function create_room() {
+        $('#modal_room_option').modal('hide');
+        $('#modal_create_room').modal('show');
+    }
+</script>

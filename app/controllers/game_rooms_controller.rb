@@ -1,5 +1,10 @@
 class GameRoomsController < BaseUserController
-  before_action :ajax_auth_user
+  layout 'user'
+  before_action :ajax_auth_user, except: [:show]
+  # before_action :auth_user, only: [:show]
+
+  def show
+  end
 
   # 创建
   def create

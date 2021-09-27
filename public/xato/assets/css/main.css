@@ -1936,6 +1936,7 @@ table .badge-info, table .badge-secondary, table .badge-dark  {
 .text-secondary { color: #5c1ac3 !important; }
 .text-dark { color: #3b3f5c !important; }
 .text-muted { color: #888ea8 !important }
+.text-gray { color: #aaaaaa !important }
 .text-white { color: #fff !important }
 .text-light-black { color: #0e1726 !important }
 .text-black { color: #000 !important }

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+  <title><%= t('common.plat_name') %></title>
+  <link rel="icon" type="image/x-icon" href="/xato/assets/img/favicon.ico"/>
+  <!-- Common Styles Starts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="/xato/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="/xato/assets/css/main.css" rel="stylesheet" type="text/css"/>
+  <link href="/xato/assets/css/structure.css" rel="stylesheet" type="text/css"/>
+  <link href="/xato/plugins/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" type="text/css"/>
+  <link href="/xato/plugins/highlight/styles/monokai-sublime.css" rel="stylesheet" type="text/css"/>
+  <!-- Common Styles Ends -->
+  <!-- Common Icon Starts -->
+  <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+  <!-- Common Icon Ends -->
+  <!-- Page Level Plugin/Style Starts -->
+  <link href="/xato/assets/css/loader.css" rel="stylesheet" type="text/css"/>
+  <!-- Page Level Plugin/Style Ends -->
+  <link rel="stylesheet" href="/color-admin/plugins/ladda/ladda-themeless.min.css"/>
+  <script src="/xato/plugins/sweetalerts/promise-polyfill.js"></script>
+  <link href="/xato/plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
+  <link href="/xato/plugins/sweetalerts/sweetalert.css" rel="stylesheet" type="text/css"/>
+  <link href="/color-admin/css/transparent/mobile.css" rel="stylesheet" type="text/css"/>
+  <link href="/xato/assets/css/basic-ui/tabs.css" rel="stylesheet" type="text/css"/>
+
+  <!-- Common Script Starts -->
+  <script src="/xato/assets/js/libs/jquery-3.1.1.min.js"></script>
+  <script src="/xato/bootstrap/js/popper.min.js"></script>
+  <script src="/xato/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/xato/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+  <!--<script src="/xato/assets/js/app.js"></script>-->
+  <script src="/xato/assets/js/custom.js"></script>
+  <!-- Common Script Ends -->
+  <!-- Page Level Plugin/Script Starts -->
+  <script src="/xato/assets/js/loader.js"></script>
+  <!-- Page Level Plugin/Script Ends -->
+  <script src="/assets/js/web3.min.js"></script>
+  <script src="/assets/js/getWeb3.js"></script>
+  <script src="/color-admin/js/business.js"></script>
+  <script src="/color-admin/plugins/ladda/spin.min.js"></script>
+  <script src="/color-admin/plugins/ladda/ladda.min.js"></script>
+  <script src="/color-admin/plugins/ladda/ladda.jquery.min.js"></script>
+  <script src="/xato/plugins/sweetalerts/sweetalert2.min.js"></script>
+  <script src="/xato/assets/js/basicui/sweet_alerts.js"></script>
+  <script src="/xato/assets/js/app.js"></script>
+  <script type="text/javascript">
+      const TAB_IDS = ['red_packets', 'friends', 'assets', 'settings'];
+  </script>
+</head>
+<body>
+<!-- Loader Starts -->
+<div id="load_screen">
+  <div class="boxes">
+    <div class="box">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="box">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="box">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="box">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <p class="xato-loader-heading"><%= t('common.plat_name') %></p>
+</div>
+<!--  Loader Ends -->
+<!--  Main Container Starts  -->
+<div class="main-container" id="container">
+  <!--  Content Area Starts  -->
+  <div id="content" class="main-content">
+    <!-- Main Body Starts -->
+    <%= yield %>
+    <!-- Main Body Ends -->
+    <div class="footer-container">
+      <div class="footer-slot height-150"></div>
+      <footer class="navbar-fixed-bottom">
+        <div style="height: 0.5pt; width: 100%; background-color: #9a0b46 !important"></div>
+        <div class="display-flex p-t-5 p-b-5">
+          <div id="tab_red_packets" onclick="change_main_tab('red_packets')" class="calc-width text-center text-primary font-weight-bold">
+            <div><i class="la la-fw la-home" style="font-size: 15pt;"></i></div>
+            <div class="m-b-xs"><span style="font-size: 14px;"><%= t('dashboard.titles.red_packets') %></span></div>
+          </div>
+          <div id="tab_friends" onclick="change_main_tab('friends')" class="calc-width text-gray text-center">
+            <div><i class="la la-fw la-user-friends" style="font-size: 15pt;"></i></div>
+            <div class="m-b-xs"><span style="font-size: 14px;"><%= t('dashboard.titles.friends') %></span></div>
+          </div>
+          <div id="tab_assets" onclick="change_main_tab('assets')" class="calc-width text-gray text-center">
+            <div><i class="la la-fw la-coins" style="font-size: 15pt;"></i></div>
+            <div class="m-b-xs"><span style="font-size: 14px;"><%= t('dashboard.titles.assets') %></span></div>
+          </div>
+          <div id="tab_settings" onclick="change_main_tab('settings')" class="calc-width text-gray text-center">
+            <div><i class="la la-fw la-cog" style="font-size: 15pt;"></i></div>
+            <div class="m-b-xs"><span style="font-size: 14px;"><%= t('dashboard.titles.settings') %></span></div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!--  Content Area Ends  -->
+</div>
+<!-- Main Container Ends -->
+<script>
+    function change_main_tab(tab) {
+        for (let i = 0; i < TAB_IDS.length; i++) {
+            let tab_id = TAB_IDS[i];
+            if (tab === tab_id) {
+                $('#' + tab_id).show();
+                $('#tab_' + tab_id).removeClass('text-gray').addClass('text-primary font-weight-bold');
+                eval('load_' + tab_id + '_data()');
+                localStorage.setItem('mobile:dashboard:tab', tab_id);
+            } else {
+                $('#' + tab_id).hide();
+                $('#tab_' + tab_id).removeClass('text-primary font-weight-bold').addClass('text-gray');
+            }
+        }
+    }
+</script>
+</body>
+</html>

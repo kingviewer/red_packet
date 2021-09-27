@@ -337,11 +337,11 @@ var App = function() {
             fullScreenMode.fullscreen();
             _desktopResolution.onRefresh();
             _mobileResolution.onRefresh();
-            formatDate();
-            sidebarFunctionality();
-            inBuiltfunctionality.mainCatActivateScroll();
-            inBuiltfunctionality.preventScrollBody();
-            inBuiltfunctionality.functionalDropdown();
+            // formatDate();
+            // sidebarFunctionality();
+            // inBuiltfunctionality.mainCatActivateScroll();
+            // inBuiltfunctionality.preventScrollBody();
+            // inBuiltfunctionality.functionalDropdown();
         }
     }
 

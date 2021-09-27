@@ -51,3 +51,9 @@ zh-CN:
     join:
       game_not_exist: 该红包不存在
       already_joined: 您已经参与了该红包，不可重复参与
+  dashboard:
+    titles:
+      red_packets: 红包
+      friends: 好友
+      assets: 资产
+      settings: 设置

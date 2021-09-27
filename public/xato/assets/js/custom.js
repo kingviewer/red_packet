@@ -1,8 +1,3 @@
-/* Scroll To Top */ 
-$('.scrollTop').click(function() {
-  $("html, body").animate({scrollTop: 0});
-});
-
 $('.navbar .dropdown.notification-dropdown > .dropdown-menu, .navbar .dropdown.message-dropdown > .dropdown-menu ').click(function(e) {
   e.stopPropagation();
 });
