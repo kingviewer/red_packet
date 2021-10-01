@@ -7,8 +7,9 @@ class GamesController < BaseUserController
     Game.order(usdt_amount: :asc).each do |game|
       data << {
         id: game.id,
-        usdt_amount: game.usdt_amount,
+        usdt_amount: game.usdt_amount.to_i,
         player_amount: game.player_amount,
+        player_amount_display: t('dashboard.index.person', number: game.player_amount),
         waiter_amount: game.waiter_amount
       }
     end

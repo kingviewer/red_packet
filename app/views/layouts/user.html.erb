@@ -47,6 +47,13 @@
   <script src="/xato/plugins/sweetalerts/sweetalert2.min.js"></script>
   <script src="/xato/assets/js/basicui/sweet_alerts.js"></script>
   <script src="/xato/assets/js/app.js"></script>
+  <script>
+      function set_top_btn(icon, callback) {
+          $('#span_top_right_btn').html(icon).show().click(function () {
+              callback();
+          });
+      }
+  </script>
 </head>
 <body>
 <!-- Loader Starts -->
@@ -83,10 +90,14 @@
 <!--  Main Container Starts  -->
 <div class="main-container" id="container">
   <!--  Content Area Starts  -->
-  <div id="content" class="main-content">
-    <div class="col-12 text-center bg-primary" style="position: fixed;z-index: 200;">
-      <span class="float-left"><i class="las la-2x la-arrow-left"></i></span>
-      <span class="m-15 font-16 font-weight-bold">资产</span>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-12 bg-primary" style="position: fixed;z-index: 200;">
+        <span class="font-25 align-middle"><i class="las la-arrow-left" onclick="history.back();"></i></span>
+        <span class="m-15 font-16 font-weight-bold"><%= @title %></span>
+        <span class="float-right font-25 m-t-6 text-right" style="width: 60px; display: none" id="span_top_right_btn"></span>
+      </div>
+      <div class="col-12 height-50"></div>
     </div>
     <!-- Main Body Starts -->
     <%= yield %>
@@ -95,7 +106,5 @@
   <!--  Content Area Ends  -->
 </div>
 <!-- Main Container Ends -->
-<script>
-</script>
 </body>
 </html>

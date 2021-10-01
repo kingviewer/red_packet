@@ -7,7 +7,7 @@ zh-CN:
   errors:
     error: 错误
     permission_denied: 无权操作
-    system_busy: 系统繁忙，请稍后再试
+    system_busy: 网络拥堵，请稍后再试
     invalid_request: 非法请求
     login_to_operate: 未登录或会话已过期，请登录后再操作
     invalid_params: 参数无效或错误
@@ -57,3 +57,21 @@ zh-CN:
       friends: 好友
       assets: 资产
       settings: 设置
+    index:
+      my_id: 我的ID
+      entrusted: 托管中
+      entrust: 托管
+      withdraw: 提取
+      transfer: 划转
+      encrypted_packet: 密码红包
+      person: "%{number}人"
+      join_game: 参与红包
+      full_players: 满员人数
+      confirm_joining: 确认参与
+      amount: 金额
+      current_balance: 当前余额
+      entrust_successfully: 托管成功
+  deposits:
+    create:
+      tx_hash_exists: 该比托管已提交过，请勿重复提交
+      tx_hash_invalid: 错误的 TX Hash

@@ -1,7 +1,9 @@
-<div class="col-12 text-center bg-primary" style="position: fixed;z-index: 200;">
-  <span class="m-15 font-16 font-weight-bold">资产</span>
+<div class="row">
+  <div class="col-12 text-center bg-primary" style="position: fixed;z-index: 200;">
+    <span class="m-15 font-16 font-weight-bold">资产</span>
+  </div>
+  <div class="col-12" style="height: 50px;"></div>
 </div>
-<div class="col-12" style="height: 50px;"></div>
 <div class="row">
   <div class="col-12 bg-primary p-t-10">
     <span class="m-10 text-white font-17">总资产折合</span>
@@ -10,17 +12,17 @@
 </div>
 <div class="row bg-primary">
   <div class="col-4 p-10 text-center">
-    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%">托管</button>
+    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_deposit_modal()">托管</button>
   </div>
   <div class="col-4 p-10 text-center">
-    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%">提取</button>
+    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_withdraw_modal()">提取</button>
   </div>
   <div class="col-4 p-10 text-center">
-    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%">划转</button>
+    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_transfer_modal()">划转</button>
   </div>
 </div>
 
-<div class="table-responsive m-10">
+<div class="table-responsive">
   <table class="table mb-0">
     <thead>
     <tr>
@@ -31,27 +33,27 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
+    <tr onclick="location.href='/asset_flows/index?account_type=wallet&asset_type=usdt'">
       <td>钱包</td>
       <td>USDT</td>
       <td>1000</td>
       <td><i class="la la-angle-right"></i></td>
     </tr>
-    <tr>
+    <tr onclick="location.href='/asset_flows/index?account_type=packet&asset_type=cic'">
+      <td>钱包</td>
+      <td>CIC</td>
+      <td>1000</td>
+      <td><i class="la la-angle-right"></i></td>
+    </tr>
+    <tr onclick="location.href='/asset_flows/index?account_type=wallet&asset_type=usdt'">
       <td>红包</td>
       <td>USDT</td>
       <td>1000</td>
       <td><i class="la la-angle-right"></i></td>
     </tr>
-    <tr>
-      <td>福利</td>
-      <td>Boom</td>
-      <td>1000</td>
-      <td><i class="la la-angle-right"></i></td>
-    </tr>
-    <tr>
-      <td>返佣</td>
-      <td>USDT</td>
+    <tr onclick="location.href='/asset_flows/index?account_type=packet&asset_type=cic'">
+      <td>红包</td>
+      <td>CIC</td>
       <td>1000</td>
       <td><i class="la la-angle-right"></i></td>
     </tr>

@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  enum role: [:user, :agent]
+  enum role: [:user, :vip, :agent]
   enum state: [:normal, :locked]
 
   belongs_to :parent, foreign_key: :parent_id, class_name: 'User', required: false
@@ -32,7 +32,7 @@ class User < ApplicationRecord
 
   def encrypted_address
     _addr = address.clone
-    _addr[12..31] = '🔐' * 20
+    _addr[12..31] = '...'
     _addr
   end
 

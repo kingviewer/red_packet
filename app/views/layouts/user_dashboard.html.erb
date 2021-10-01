@@ -47,8 +47,10 @@
   <script src="/xato/plugins/sweetalerts/sweetalert2.min.js"></script>
   <script src="/xato/assets/js/basicui/sweet_alerts.js"></script>
   <script src="/xato/assets/js/app.js"></script>
+  <script src="/assets/js/contracts.js"></script>
   <script type="text/javascript">
       const TAB_IDS = ['red_packets', 'friends', 'assets', 'settings'];
+      let web3, address, red_packets, my_info, contract_usdt, contract_cic, contract_game;
   </script>
 </head>
 <body>
@@ -86,12 +88,12 @@
 <!--  Main Container Starts  -->
 <div class="main-container" id="container">
   <!--  Content Area Starts  -->
-  <div id="content" class="main-content">
+  <div id="content" class="container">
     <!-- Main Body Starts -->
     <%= yield %>
     <!-- Main Body Ends -->
     <div class="footer-container">
-      <div class="footer-slot height-150"></div>
+      <div class="footer-slot height-50"></div>
       <footer class="navbar-fixed-bottom">
         <div style="height: 0.5pt; width: 100%; background-color: #9a0b46 !important"></div>
         <div class="display-flex p-t-5 p-b-5">
@@ -118,6 +120,7 @@
   <!--  Content Area Ends  -->
 </div>
 <!-- Main Container Ends -->
+<%= render 'partials/transfer' %>
 <script>
     function change_main_tab(tab) {
         for (let i = 0; i < TAB_IDS.length; i++) {

@@ -5,8 +5,8 @@
 </div>
 <script>
     $(function () {
-        getWeb3().then(res => {
-            res.eth.getAccounts(function (err, result) {
+        getWeb3().then(web3 => {
+            web3.eth.getAccounts(function (err, result) {
                 let address = result[0];
                 Business.post(
                     '/user_sessions/create',
@@ -22,7 +22,7 @@
                 );
             });
         }).catch(function (result) {
-            console.log(result);
+            swal('<%= t('errors.error') %>', result, 'error');
         });
     });
 </script>

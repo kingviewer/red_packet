@@ -4,6 +4,7 @@ class GameRoomsController < BaseUserController
   # before_action :auth_user, only: [:show]
 
   def show
+    @title = '密码钱包'
   end
 
   # 创建

@@ -1,9 +1,14 @@
 class UsersController < BaseUserController
   before_action :ajax_auth_user, only: [:my_info]
-  layout 'user_sessions', only: :new
 
   def new
     @parent = User.find_by_invite_code(params[:pid]) unless params[:pid].blank?
+    render layout: 'user_sessions'
+  end
+
+  def choose_lang
+    @title = '语言'
+    render layout: 'user'
   end
 
   def create

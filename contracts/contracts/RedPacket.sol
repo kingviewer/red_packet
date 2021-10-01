@@ -434,7 +434,7 @@ contract Ownable is Context {
     }
 }
 
-contract Bomb is Context, Ownable {
+contract RedPacket is Context, Ownable {
     using SafeMath for uint256;
     using Address for address;
 

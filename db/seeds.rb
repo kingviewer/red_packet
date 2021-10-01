@@ -11,3 +11,7 @@ unless User.exists?(address: '0x9aA2e22c8F117a540CA1c008E12e84f6A2CD349f')
   root_user.gen_invite_code
   root_user.save!
 end
+
+Game.create(usdt_amount: 10, player_amount: 5, loser_amount: 2) unless Game.exists?(usdt_amount: 10)
+Game.create(usdt_amount: 20, player_amount: 6, loser_amount: 2) unless Game.exists?(usdt_amount: 20)
+Game.create(usdt_amount: 50, player_amount: 10, loser_amount: 4) unless Game.exists?(usdt_amount: 50)

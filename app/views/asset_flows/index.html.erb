@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-12 bg-primary p-t-10">
+    <span class="font-15">账户余额</span>
+  </div>
+  <div class="col-12 bg-primary">
+    <span class="font-25">124587.12345678</span> <span class="font-15">USDT</span>
+  </div>
+</div>
+<div class="row bg-primary p-t-15 text-white">
+  <div class="col-6">
+    <span class="font-15">可用(USDT)</span>
+    <br>
+    <span class="font-weight-bold m-b-10 font-15" id="available">0.68535785</span>
+  </div>
+  <div class="col-6">
+    <span class="font-15">冻结(USDT)</span>
+    <span class="font-weight-bold m-b-10" id="frozen">0.00000000</span>
+  </div>
+</div>
+<div class="row bg-primary">
+  <div class="col-4 p-10 text-center">
+    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_deposit_modal()">托管</button>
+  </div>
+  <div class="col-4 p-10 text-center">
+    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_withdraw_modal()">提取</button>
+  </div>
+  <div class="col-4 p-10 text-center">
+    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_transfer_modal()">划转</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 layout-spacing">
+    <div class="widget widget-chart-one">
+      <div class="widget-content m-10 p-t-10 p-b-10">
+        <div class="text-center" id="div_no_record">
+          <span class="text-center text-muted font-12"><i class="las la-exclamation-circle"></i> 无记录</span>
+        </div>
+        <div class="mb-2 border-bottom border-light pb-2">
+          <span class="text-primary font-17">+1234.12345678 USDT</span>
+          <br>
+          <span class="text-danger font-13">推广奖励</span>
+          <span class="text-muted font-13 float-right">2021-01-21 11:00:12</span>
+        </div>
+        <div class="mb-2 border-bottom border-light pb-2">
+          <span class="text-primary font-17">+1234.12345678 USDT</span>
+          <br>
+          <span class="text-danger font-13">推广奖励</span>
+          <span class="text-muted font-13 float-right">2021-01-21 11:00:12</span>
+        </div>
+        <div class="text-center">
+          <span class="text-center text-muted font-12"><i class="la la-arrow-down"></i> 加载更多</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render 'partials/transfer' %>

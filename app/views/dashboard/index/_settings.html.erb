@@ -1,36 +1,48 @@
-<div class="col-12 text-center bg-primary" style="position: fixed;z-index: 200;">
-  <span class="m-15 font-16 font-weight-bold">设置</span>
+<div class="row">
+  <div class="col-12 text-center bg-primary" style="position: fixed;z-index: 200;">
+    <span class="m-15 font-16 font-weight-bold">设置</span>
+  </div>
+  <div class="col-12" style="height: 50px;"></div>
 </div>
-<div class="col-12" style="height: 50px;"></div>
-
 <br>
-<div class="row m-10">
+<div class="row m-t-15">
   <div class="col-3 font-15">ID:</div>
   <div class="col-9">
     <span class="font-15">123456</span>
-    <button type="button" class="btn btn-sm btn-soft-primary btn-rounded float-right ladda-button" data-style="zoom-in">
+    <button id="btn_exchange_account" type="button" class="btn btn-sm btn-soft-primary btn-rounded float-right ladda-button" data-style="zoom-in" onclick="exchange_account()">
       <i class="la la-exchange-alt"></i> 切换
     </button>
   </div>
 </div>
-<div class="row m-10 font-15">
+<div class="row font-15 m-t-15">
   <div class="col-3">地址:</div>
-  <div class="col-9">0xAedCFD5f96...743aB61c893</div>
+  <div class="col-9" id="div_my_address">-</div>
 </div>
 
 <br>
-<div class="widget box box-shadow m-10">
+<div class="widget box box-shadow m-t-10">
   <ul class="list-group">
-    <li class="list-group-item"><i class="las la-language"></i> 语言<span class="float-right"><i class="las la-angle-right"></i></span></li>
-    <li class="list-group-item"><i class="las la-file-alt"></i> 操作指南<span class="float-right"><i class="las la-angle-right"></i></span></li>
-    <li class="list-group-item"><i class="las la-gift"></i> 奖励规则<span class="float-right"><i class="las la-angle-right"></i></span></li>
-    <li class="list-group-item"><i class="las la-list"></i> 参与记录<span class="float-right"><i class="las la-angle-right"></i></span></li>
-    <li class="list-group-item"><i class="las la-user-tag"></i> 申请代理<span class="float-right"><i class="las la-angle-right"></i></span></li>
+    <li class="list-group-item" onclick="location.href='/users/choose_lang'"><i class="las la-language"></i>
+      语言<span class="float-right"><i class="las la-angle-right"></i></span></li>
+    <li class="list-group-item"><i class="las la-file-alt"></i>
+      操作指南<span class="float-right"><i class="las la-angle-right"></i></span></li>
+    <li class="list-group-item"><i class="las la-gift"></i>
+      奖励规则<span class="float-right"><i class="las la-angle-right"></i></span></li>
+    <li class="list-group-item" onclick="location.href='/user_game_rounds/index'"><i class="las la-list"></i>
+      参与记录<span class="float-right"><i class="las la-angle-right"></i></span></li>
+    <li class="list-group-item"><i class="las la-user-tag"></i>
+      申请代理<span class="float-right"><i class="las la-angle-right"></i></span></li>
+    <li class="list-group-item"><i class="las la-user-tag"></i>
+      申请VIP<span class="float-right"><i class="las la-angle-right"></i></span></li>
   </ul>
 </div>
 
 <script>
     function load_settings_data() {
+      $('#div_my_address').text(my_info.address);
+    }
 
+    function exchange_account() {
+        location.href = '/user_sessions/new';
     }
 </script>
