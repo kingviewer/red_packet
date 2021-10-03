@@ -196,6 +196,7 @@
     }
 
     $(function () {
+        alert('shit');
         contract_usdt.methods.balanceOf(address).call().then(function (result) {
           alert(result);
         });
