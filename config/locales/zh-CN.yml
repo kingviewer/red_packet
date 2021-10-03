@@ -95,6 +95,10 @@ zh-CN:
       open_red_packet: 拆红包
       players: 玩家列表
       finished: 已开奖
+      total_assets_estimated: 总资产折合
+      account: 账户
+      asset: 资产
+      balance: 余额
   deposits:
     create:
       tx_hash_exists: 该比托管已提交过，请勿重复提交

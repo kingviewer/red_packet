@@ -1,24 +1,24 @@
 <div class="row">
   <div class="col-12 text-center bg-primary" style="position: fixed;z-index: 200;">
-    <span class="m-15 font-16 font-weight-bold">资产</span>
+    <span class="m-15 font-16 font-weight-bold"><%= t('dashboard.titles.assets') %></span>
   </div>
   <div class="col-12" style="height: 50px;"></div>
 </div>
 <div class="row">
   <div class="col-12 bg-primary p-t-10">
-    <span class="m-10 text-white font-17">总资产折合</span>
-    <span class="pull-right m-10 font-13"><span class="font-19">1000</span> USDT</span>
+    <span class="m-10 text-white font-17"><%= t('dashboard.index.total_assets_estimated') %></span>
+    <span class="pull-right m-10 font-13"><span class="font-19" id="span_estimated_to_usdt">-</span> USDT</span>
   </div>
 </div>
 <div class="row bg-primary">
   <div class="col-4 p-10 text-center">
-    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_deposit_modal()">托管</button>
+    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_deposit_modal()"><%= t('dashboard.index.entrust') %></button>
   </div>
   <div class="col-4 p-10 text-center">
-    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_withdraw_modal()">提取</button>
+    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_withdraw_modal()"><%= t('dashboard.index.withdraw') %></button>
   </div>
   <div class="col-4 p-10 text-center">
-    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_transfer_modal()">划转</button>
+    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_transfer_modal()"><%= t('dashboard.index.transfer') %></button>
   </div>
 </div>
 
@@ -26,9 +26,9 @@
   <table class="table mb-0">
     <thead>
     <tr>
-      <th>账户</th>
-      <th>资产</th>
-      <th>数量</th>
+      <th><%= t('account') %></th>
+      <th><%= t('dashboard.index.asset') %></th>
+      <th><%= t('dashboard.index.balance') %></th>
       <th></th>
     </tr>
     </thead>
