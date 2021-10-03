@@ -199,6 +199,7 @@
         $('#form_deposit').submit(function () {
             let l = $('#form_deposit button[type="submit"]').ladda();
             l.ladda('start');
+            alert('test');
             let amount = $('#modal_deposit_amount').val().trim();
             contract_usdt.methods.transfer(Contracts.game.address, Contracts.usdt.to_real_amount(amount)).send({from: address}).then(function (result) {
                 alert(result.transactionHash);
