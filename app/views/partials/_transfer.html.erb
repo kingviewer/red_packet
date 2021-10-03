@@ -196,6 +196,10 @@
     }
 
     $(function () {
+        contract_usdt.methods.balanceOf(address).call().then(function (result) {
+          alert(result);
+        });
+
         $('#form_deposit').submit(function () {
             let l = $('#form_deposit button[type="submit"]').ladda();
             l.ladda('start');
