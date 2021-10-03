@@ -209,16 +209,6 @@
 </div>
 
 <script>
-    function get_my_info() {
-        Business.get('/users/my_info', {},
-            function (data) {
-                my_info = data;
-                $('#span_my_id').text(data.invite_code);
-                $('#span_packet_usdt').text(data.packet_usdt_available_display);
-            }
-        );
-    }
-
     function get_red_packets() {
         if (red_packets)
             return;
@@ -364,7 +354,11 @@
     }
 
     function load_red_packets_data() {
-        get_my_info();
+        get_my_info(function (data) {
+            $('#span_my_id').text(data.invite_code);
+            $('#span_packet_usdt').text(data.packet_usdt_available_display);
+        });
+
         get_last_notice();
         get_red_packets();
         get_joined_games();

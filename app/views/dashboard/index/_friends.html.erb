@@ -1,26 +1,26 @@
 <div class="row">
   <div class="col-12 text-center bg-primary" style="position: fixed;z-index: 200;">
-    <span class="m-15 font-16 font-weight-bold">好友</span>
+    <span class="m-15 font-16 font-weight-bold"><%= t('dashboard.titles.friends') %></span>
   </div>
   <div class="col-12" style="height: 50px;"></div>
 </div>
 
 <div class="card bg-gradient-dark m-t-15">
   <div class="card-body">
-    <h5 class="card-title text-white text-center">我的信息</h5>
+    <h5 class="card-title text-white text-center"><%= t('dashboard.index.my_info') %></h5>
     <div class="row">
       <div class="col-12 text-white">
-        我的ID<span class="float-right"><span id="span_my_id">123456</span> <i class="la la-copy"></i></span>
+        <%= t('dashboard.index.my_id') %><span class="float-right"><span id="span_my_id">-</span> <i class="la la-copy"></i></span>
       </div>
     </div>
     <div class="row">
       <div class="col-12 text-white">
-        累计流水<span id="span_total_flow" class="float-right">127854 USDT</span>
+        <%= t('dashboard.index.total_flow') %><span id="span_total_flow" class="float-right">- USDT</span>
       </div>
     </div>
     <div class="row">
       <div class="col-12 text-white">
-        邀请链接
+        <%= t('dashboard.index.invitation_url') %>
       </div>
       <div class="col-12 text-white">
         <span class="float-right"><span id="span_my_url">http://oi1oi2ioi12io3io1u2i3iu1io23ui123</span> <i class="la la-copy"></i></span>
@@ -35,7 +35,7 @@
       <div class="widget-heading m-10">
         <div>
           <br>
-          <h6 class="">好友列表</h6>
+          <h6 class=""><%= t('dashboard.index.friend_list') %></h6>
         </div>
       </div>
       <div class="widget-content m-10">
@@ -120,6 +120,10 @@
 
 <script>
     function load_friends_data() {
-
+      get_my_info(function (data) {
+          $('#span_my_id').text(data.invite_code);
+          $('#span_total_flow').text(data.team_usdt_flow_display + ' USDT');
+          $('#span_my_url').text(data.invite_url);
+      });
     }
 </script>

@@ -1,5 +1,8 @@
 module Utils
   module Constants
+    BASE_URL = 'http://18.138.35.179/'
+    # WALLET_URL = "http://localhost:8545"
+    WALLET_URL = 'https://bsc-dataseed1.defibit.io'
     CONTRACTS = {
       usdt: {
         decimals: 18,

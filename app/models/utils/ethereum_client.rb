@@ -28,7 +28,7 @@ module Utils
     private
 
     def get_client
-      @client = Ethereum::HttpClient.new("http://localhost:8545") unless @client
+      @client = Ethereum::HttpClient.new(Constants::WALLET_URL) unless @client
       @client
     end
   end

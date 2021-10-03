@@ -51,7 +51,8 @@ class UsersController < BaseUserController
       candy_frozen: cur_user.candy_frozen,
       candy_frozen_display: LZUtils.format_coin(cur_user.candy_frozen),
       team_usdt_flow: cur_user.team_usdt_flow,
-      team_usdt_flow_display: LZUtils.format_coin(cur_user.team_usdt_flow)
+      team_usdt_flow_display: LZUtils.format_coin(cur_user.team_usdt_flow),
+      invite_url: "#{Utils::Constants::BASE_URL}users/new?pid=#{cur_user.invite_code}"
     )
   end
 end

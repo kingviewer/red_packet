@@ -99,6 +99,10 @@ zh-CN:
       account: 账户
       asset: 资产
       balance: 余额
+      my_info: 我的信息
+      total_flow: 累计流水
+      invitation_url: 邀请链接
+      friend_list: 好友列表
   deposits:
     create:
       tx_hash_exists: 该比托管已提交过，请勿重复提交

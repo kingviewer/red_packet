@@ -53,6 +53,15 @@
       const TAB_IDS = ['red_packets', 'friends', 'assets', 'settings'];
       let web3, address, red_packets, my_info, contract_usdt, contract_cic, contract_game;
       let consumer = ActionCable.createConsumer();
+
+      function get_my_info(call_back) {
+          Business.get('/users/my_info', {},
+              function (data) {
+                  my_info = data;
+                  call_back(data);
+              }
+          );
+      }
   </script>
 </head>
 <body>
