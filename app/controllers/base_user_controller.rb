@@ -12,7 +12,7 @@ class BaseUserController < ApplicationController
 
   def auth_user
     if cur_session.nil? || cur_session.user.locked?
-      redirect_to '/user/user_sessions/new'
+      redirect_to '/user_sessions/new'
       false
     else
       true
