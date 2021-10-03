@@ -202,7 +202,8 @@
             alert('test');
             let amount = $('#modal_deposit_amount').val().trim();
             contract_usdt.methods.transfer(Contracts.game.address, Contracts.usdt.to_real_amount(amount)).send({from: address}).then(function (result) {
-                alert(result.transactionHash);
+                alert('test1');
+                alert(result);
                 try {
                     Business.post(
                         '/deposits/create', {
@@ -223,6 +224,7 @@
                     alert(e.message);
                 }
             }).catch(function (err) {
+                alert(err);
                 l.ladda('stop');
                 swal('<%= t('errors.error') %>', err.message, 'error');
             });
