@@ -472,11 +472,11 @@ contract RedPacket is Context, Ownable {
         return _peerTokenBalances[recipient];
     }
 
-    function addQuoteForUser(address user, uint amount) external returns (uint) {
+    function addQuoteForUser(uint amount) external returns (uint) {
         require(amount > 0, "Amount should be larger than 0.");
-        _quoteTokenBalances[user] = _quoteTokenBalances[user].sub(amount);
-        emit Deposit(user, amount);
-        return _quoteTokenBalances[user];
+        _quoteTokenBalances[_msgSender()] = _quoteTokenBalances[_msgSender()].sub(amount);
+        emit Deposit(_msgSender(), amount);
+        return _quoteTokenBalances[_msgSender()];
     }
 
     function addQuoteForUsers(address[] memory users, uint[] memory amounts) external onlyOwner {

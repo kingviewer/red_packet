@@ -1,5 +1,12 @@
 class GamesController < BaseUserController
-  before_action :ajax_auth_user
+  layout 'user'
+  before_action :ajax_auth_user, except: :index
+  before_action :auth_user, only: :index
+
+  def show
+    @title = t('.title')
+    @game = Game.find_by(id: params[:id])
+  end
 
   # 获取全部红包列表
   def list_all
@@ -21,10 +28,25 @@ class GamesController < BaseUserController
     data = []
     GameWaiter.includes(:game).where(user_id: cur_session.user_id).order(id: :desc).each do |waiter|
       data << {
-        id: waiter.id,
-        usdt_amount: game.usdt_amount,
-        player_amount: game.player_amount,
-        waiter_amount: game.waiter_amount
+        id: waiter.game.id,
+        usdt_amount: waiter.game.usdt_amount,
+        player_amount: waiter.game.player_amount,
+        player_amount_display: t('dashboard.index.person', number: waiter.game.player_amount),
+        waiter_amount: waiter.game.waiter_amount,
+        created_at: waiter.formatted_created_at
+      }
+    end
+    success(data)
+  end
+
+  # 获取指定红包的参与者列表
+  def list_waiters
+    data = []
+    GameWaiter.includes(:user).where(game_id: params[:id]).order(id: :desc).each do |waiter|
+      data << {
+        invite_code: waiter.user.invite_code,
+        address: waiter.user.encrypted_address,
+        created_at: waiter.formatted_created_at
       }
     end
     success(data)
@@ -46,14 +68,22 @@ class GamesController < BaseUserController
             )
             cur_user.reload
             raise t('game_rooms.join.usdt_available_insufficient') if cur_user.packet_usdt_available < 0
-            GameWaiter.create(
+            waiter = GameWaiter.create(
               user_id: cur_user.id,
               game_id: game.id
             )
             Game.where(id: game.id).update_all('waiter_amount = waiter_amount + 1')
             BroadcastJoinGameJob.perform_later(game, cur_user)
+            game.reload
             game.check_win
-            success
+            success(
+              id: game.id,
+              usdt_amount: game.usdt_amount,
+              player_amount: game.player_amount,
+              player_amount_display: t('dashboard.index.person', number: game.player_amount),
+              waiter_amount: game.waiter_amount,
+              created_at: waiter.formatted_created_at
+            )
           end
         end
       rescue => e

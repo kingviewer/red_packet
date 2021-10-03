@@ -31,3 +31,4 @@
 /db/schema.rb
 /Gemfile.lock
 /contracts/build/
+/dump.rdb

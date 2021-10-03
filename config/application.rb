@@ -34,5 +34,9 @@ module RedPacket
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # set Active Job adapter to sidekiq
+    config.active_job.queue_adapter = :sidekiq
+    config.action_mailer.deliver_later_queue_name = :default
   end
 end

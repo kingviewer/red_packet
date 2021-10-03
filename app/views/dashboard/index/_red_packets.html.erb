@@ -50,29 +50,10 @@
     <div class="widget-heading m-10">
       <div>
         <br>
-        <h6 class="">匹配记录</h6>
+        <h6 class=""><%= t('dashboard.index.i_joined') %></h6>
       </div>
     </div>
-    <div class="widget-content m-10">
-      <div class="mb-2 border-bottom border-light pb-2">
-        <span class="text-primary font-15">100 USDT/15人</span>
-        <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-        <span class="font-12 mb-0 text-muted">我(XIQ912)进入匹配队列</span>
-        <a class="float-right text-gray font-12">查看详情 ></a>
-      </div>
-      <div class="mb-2 border-bottom border-light pb-2">
-        <span class="text-primary font-15">100 USDT/15人</span>
-        <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-        <span class="font-12 mb-0 text-muted">我(XIQ912)进入匹配队列</span>
-        <a class="float-right text-gray font-12">查看详情 ></a>
-      </div>
-      <div>
-        <span class="text-primary font-15">100 USDT/15人</span>
-        <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-        <span class="font-12 mb-0 text-muted">我(XIQ912)进入匹配队列</span>
-        <a class="float-right text-gray font-12">查看详情 ></a>
-      </div>
-      <br>
+    <div id="joined_list" class="widget-content m-10 p-b-10">
     </div>
   </div>
 </div>
@@ -309,12 +290,75 @@
         let l = $('#btn_join_game').ladda();
         l.ladda('start');
         Business.post(
-            '/games/join', {id: game_id, authenticity_token: '<%= form_authenticity_token %>'}, function () {
+            '/games/join', {id: game_id, authenticity_token: '<%= form_authenticity_token %>'}, function (data) {
                 l.ladda('stop');
                 $('#modal_join_game').modal('hide');
+                $('#joined_list').prepend('<div id="joined_item_' + data.id + '" class="mb-2 border-bottom border-light pb-2">' +
+                    '<span class="text-primary font-15">' + data.usdt_amount + ' USDT/' + data.player_amount_display + '</span>' +
+                    '<span class="float-right text-danger font-12"><i class="las la-clock"></i> ' + data.created_at + '</span>' +
+                    '<span class="font-12 mb-0 text-muted"><%= t('dashboard.index.processing') %></span>' +
+                    '<a class="float-right text-gray font-12" href="/games/index?id=' + data.id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
+                    '</div>');
+                subscribe_game(game_id);
             }, function (data) {
                 l.ladda('stop');
                 swal('<%= t('errors.error') %>', data.msg, 'error');
+            }
+        );
+    }
+
+    function subscribe_game(game_id) {
+        consumer.subscriptions.create(
+            {channel: "GamesChannel", game_id: game_id},
+            {
+                connected: function () {
+                },
+                disconnected: function () {
+                },
+                received: function (msg) {
+                    if (msg.action === 'join') {
+                        let div = $('#joined_item_' + msg.id);
+                        if (div.length && div.length > 0) {
+                            div.find('.time').text(msg.time);
+                            div.find('.desc').text(msg.invite_code + ' <%= t('dashboard.index.joins_game') %>');
+                        }
+                    } else if (msg.action === 'win') {
+                        let div = $('#joined_item_' + msg.id);
+                        if (div.length && div.length > 0) {
+                            div.find('.time').text(msg.time);
+                            div.find('.desc').text('<%= t('dashboard.index.game_round_finished') %>');
+                            div.find('a').attr('href', '/game_rounds/show?id=' + msg.game_round_id).text('<%= t('dashboard.index.open_red_packet') %>');
+                            div.attr('id', 'joined_item_' + msg.id + '_win');
+                        }
+                    }
+                }
+            }
+        );
+    }
+
+    function get_joined_games() {
+        Business.get('/games/list_my_pending', {},
+            function (data) {
+                if (data.length > 0) {
+                    let html = '';
+                    for (let i = 0; i < data.length; i++) {
+                        let item = data[i];
+                        html += '<div id="joined_item_' + item.id + '" class="mb-2 border-bottom border-light pb-2">' +
+                            '<span class="text-primary font-15">' + item.usdt_amount + ' USDT/' + item.player_amount_display + '</span>' +
+                            '<span class="float-right text-danger font-12"><i class="las la-clock"></i> <span class="time">' + item.created_at + '</span></span>' +
+                            '<br><span class="font-12 mb-0 text-muted desc"><%= t('dashboard.index.processing') %></span>' +
+                            '<a class="float-right text-gray font-12" href="/games/index?id=' + item.id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
+                            '</div>';
+                    }
+                    $('#joined_list').html(html);
+                    for (let i = 0; i < data.length; i++) {
+                        subscribe_game(data[i].id);
+                    }
+                } else {
+                    $('#joined_list').html('<div class="text-center" id="div_no_record">' +
+                        '<span class="text-center text-muted font-12"><i class="las la-exclamation-circle"></i> <%= t('common.no_record') %></span>' +
+                        '</div>');
+                }
             }
         );
     }
@@ -323,5 +367,6 @@
         get_my_info();
         get_last_notice();
         get_red_packets();
+        get_joined_games();
     }
 </script>

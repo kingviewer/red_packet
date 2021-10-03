@@ -41,26 +41,26 @@
       <form id="form_withdraw">
         <div class="modal-body">
           <div class="form-group">
-            <label>选择币种</label>
-            <select class="form-control" required>
+            <label><%= t('dashboard.index.choose_asset') %></label>
+            <select id="modal_withdraw_asset" class="form-control" required onchange="on_withdraw_asset_change()">
               <option value="usdt">USDT</option>
               <option value="cic">CIC</option>
             </select>
           </div>
           <div class="form-group">
-            <label>提取金额</label>
+            <label><%= t('dashboard.index.amount') %></label>
             <div class="input-group">
-              <input type="number" class="form-control" placeholder="0.00" min="0.000001" required>
+              <input id="modal_withdraw_amount" type="number" class="form-control" placeholder="0.00" min="0.000001" required>
               <div class="input-group-append">
-                <span class="input-group-text">USDT</span>
+                <span id="modal_withdraw_symbol" class="input-group-text">USDT</span>
               </div>
             </div>
-            <span class="font-12 text-muted m-t-5">可提金额</span>
-            <span class="font-12 text-muted float-right m-t-5">1203.123456 USDT</span>
+            <span class="font-12 text-muted m-t-5"><%= t('dashboard.index.withdraw_available') %></span>
+            <span id="modal_withdraw_balance" class="font-12 text-muted float-right m-t-5">- USDT</span>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary btn-block btn-rounded ladda-button" data-style="zoom-in">提交</button>
+          <button type="submit" class="btn btn-primary btn-block btn-rounded ladda-button" data-style="zoom-in"><%= t('tips.submit') %></button>
         </div>
       </form>
     </div>
@@ -72,45 +72,46 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">划转</h5>
+        <h5 class="modal-title"><%= t('dashboard.index.transfer') %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <i class="las la-times"></i>
         </button>
       </div>
       <form id="form_transfer">
+        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
         <div class="modal-body">
           <div class="form-group">
-            <label>选择币种</label>
-            <select class="form-control" required>
+            <label><%= t('dashboard.index.choose_asset') %></label>
+            <select name="transfer[asset_type]" class="form-control" required onchange="on_transfer_asset_change()">
               <option value="usdt">USDT</option>
               <option value="cic">CIC</option>
             </select>
           </div>
           <div class="form-group">
-            <label>转出账户</label>
-            <select class="form-control" required>
-              <option value="packet">红包账户</option>
-              <option value="wallet">钱包账户</option>
+            <label><%= t('dashboard.index.transfer_from') %></label>
+            <select name="transfer[from]" class="form-control" required onchange="on_transfer_from_change()">
+              <option value="packet"><%= t('utils.accounts.packet') %></option>
+              <option value="wallet"><%= t('utils.accounts.wallet') %></option>
             </select>
           </div>
           <div class="form-group">
-            <label>转入账户</label>
-            <input type="text" class="form-control" value="钱包账户" disabled>
+            <label><%= t('dashboard.index.transfer_to') %></label>
+            <input name="transfer[to]" type="text" class="form-control" value="<%= t('utils.accounts.wallet') %>" disabled>
           </div>
           <div class="form-group">
-            <label>金额</label>
+            <label><%= t('dashboard.index.amount') %></label>
             <div class="input-group">
-              <input type="number" class="form-control" placeholder="0.00" min="0.000001" required>
+              <input name="transfer[amount]" type="number" class="form-control" placeholder="0.00" min="0.000001" step="0.000001" required>
               <div class="input-group-append">
-                <span class="input-group-text">USDT</span>
+                <span id="modal_transfer_symbol" class="input-group-text">USDT</span>
               </div>
             </div>
-            <span class="font-12 text-muted m-t-5">转出账户余额</span>
-            <span class="font-12 text-muted float-right m-t-5">1203.123456 USDT</span>
+            <span class="font-12 text-muted m-t-5"><%= t('dashboard.index.balance_of_transfer_from') %></span>
+            <span id="modal_transfer_balance" class="font-12 text-muted float-right m-t-5">- USDT</span>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary btn-block btn-rounded ladda-button" data-style="zoom-in">提交</button>
+          <button type="submit" class="btn btn-primary btn-block btn-rounded ladda-button" data-style="zoom-in"><%= t('tips.confirm') %></button>
         </div>
       </form>
     </div>
@@ -130,12 +131,68 @@
 
     function show_withdraw_modal() {
         $('#form_withdraw')[0].reset();
+        on_withdraw_asset_change();
         $('#modal_withdraw').modal('show');
     }
 
     function show_transfer_modal() {
         $('#form_transfer')[0].reset();
+        on_transfer_asset_change();
         $('#modal_transfer').modal('show');
+    }
+
+    function on_withdraw_asset_change() {
+        let asset = $('#modal_withdraw_asset').val();
+        if (asset === 'usdt') {
+            $('#modal_withdraw_symbol').text('USDT');
+            $('#modal_withdraw_balance').text('- USDT');
+            contract_game.methods.quoteBalanceOf(address).call().then(function (result) {
+                let display_amount = Contracts.usdt.to_display_amount(result)
+                $('#modal_withdraw_balance').text(display_amount + ' USDT');
+                $('#modal_withdraw_amount').attr('max', display_amount);
+            });
+        } else {
+            $('#modal_withdraw_symbol').text('CIC');
+            $('#modal_withdraw_balance').text('- CIC');
+            contract_game.methods.peerBalanceOf(address).call().then(function (result) {
+                let display_amount = Contracts.cic.to_display_amount(result)
+                $('#modal_withdraw_balance').text(display_amount + ' CIC');
+                $('#modal_withdraw_amount').attr('max', display_amount);
+            });
+        }
+    }
+
+    function on_transfer_asset_change() {
+        let asset = $('#form_transfer select[name="transfer[asset_type]"]').val();
+        $('#form_transfer select[name="transfer[from]"]').val('packet');
+        $('#form_transfer input[name="transfer[to]"]').val('<%= t('utils.accounts.wallet') %>');
+        if (asset === 'usdt') {
+            $('#form_transfer select[name="transfer[from]"]').removeAttr('disabled');
+            $('#modal_transfer_symbol').text('USDT');
+            $('#modal_transfer_balance').text(my_info.packet_usdt_available_display + ' USDT');
+            $('#form_transfer input[name="transfer[amount]"]').attr('max', my_info.packet_usdt_available);
+        } else {
+            $('#form_transfer select[name="transfer[from]"]').attr('disabled', 'disabled');
+            $('#modal_transfer_symbol').text('CIC');
+            $('#modal_transfer_balance').text(my_info.candy_available_display + ' CIC');
+            $('#form_transfer input[name="transfer[amount]"]').attr('max', my_info.candy_available);
+        }
+    }
+
+    function on_transfer_from_change() {
+        let from = $('#form_transfer select[name="transfer[from]"]').val();
+        if (from === 'packet') {
+            $('#form_transfer input[name="transfer[to]"]').val('<%= t('utils.accounts.wallet') %>');
+            $('#form_transfer input[name="transfer[amount]"]').attr('max', my_info.packet_usdt_available);
+            $('#modal_transfer_balance').text(my_info.packet_usdt_available_display + ' USDT');
+        } else {
+            $('#form_transfer input[name="transfer[to]"]').val('<%= t('utils.accounts.packet') %>');
+            contract_game.methods.quoteBalanceOf(address).call().then(function (result) {
+                let amount = Contracts.usdt.to_display_amount(result);
+                $('#form_transfer input[name="transfer[amount]"]').attr('max', amount);
+                $('#modal_transfer_balance').text(amount + ' USDT');
+            });
+        }
     }
 
     $(function () {
@@ -145,7 +202,10 @@
             let amount = $('#modal_deposit_amount').val().trim();
             contract_usdt.methods.transfer(Contracts.game.address, Contracts.usdt.to_real_amount(amount)).send({from: address}).then(function (result) {
                 Business.post(
-                    '/deposits/create', {tx_hash: result.transactionHash, authenticity_token: '<%= form_authenticity_token %>'},
+                    '/deposits/create', {
+                        tx_hash: result.transactionHash,
+                        authenticity_token: '<%= form_authenticity_token %>'
+                    },
                     function () {
                         l.ladda('stop');
                         $('#modal_deposit').modal('hide');
@@ -159,6 +219,64 @@
                 l.ladda('stop');
                 swal('<%= t('errors.error') %>', err.message, 'error');
             });
+
+            return false;
+        });
+
+        $('#form_withdraw').submit(function () {
+            let l = $('#form_deposit button[type="submit"]').ladda();
+            l.ladda('start');
+            let asset_type = $('#modal_withdraw_asset').val(), amount = $('#modal_withdraw_amount').val().trim();
+            if (asset_type === 'usdt')
+                contract_game.methods.withdrawQuote(address, Contracts.usdt.to_real_amount((amount))).send({from: address}).then(function () {
+                    l.ladda('stop');
+                    $('#modal_withdraw').modal('hide');
+                    swal('<%= t('tips.success') %>', '<%= t('dashboard.index.withdraw_successfully') %>', 'success');
+                }).catch(function (err) {
+                    l.ladda('stop');
+                    swal('<%= t('errors.error') %>', err.message, 'error');
+                });
+            else
+                contract_game.methods.withdrawPeer(address, Contracts.cic.to_real_amount((amount))).send({from: address}).then(function () {
+                    l.ladda('stop');
+                    $('#modal_withdraw').modal('hide');
+                    swal('<%= t('tips.success') %>', '<%= t('dashboard.index.withdraw_successfully') %>', 'success');
+                }).catch(function (err) {
+                    l.ladda('stop');
+                    swal('<%= t('errors.error') %>', err.message, 'error');
+                });
+
+            return false;
+        });
+
+        $('#form_transfer').submit(function () {
+            let l = $('#form_transfer button[type="submit"]').ladda();
+            l.ladda('start');
+            let asset = $('#form_transfer select[name="transfer[asset_type]"]').val(),
+                from = $('#form_transfer select[name="transfer[from]"]').val(),
+                amount = $('#form_transfer input[name="transfer[amount]"]').val().trim();
+            if (asset === 'usdt' && from === 'wallet')
+                contract_game.methods.addQuoteForUser(Contracts.usdt.to_real_amount(amount)).send({from: address}).then(function (result) {
+                    l.ladda('stop');
+                    $('#modal_transfer').modal('hide');
+                    swal('<%= t('tips.success') %>', '<%= t('dashboard.index.transfer_successfully') %>', 'success');
+                }).catch(function (err) {
+                    l.ladda('stop');
+                    swal('<%= t('errors.error') %>', err.message, 'error');
+                });
+            else {
+                Business.submit_form('/transfers/create', 'form_transfer',
+                    function () {
+                        l.ladda('stop');
+                        $('#modal_transfer').modal('hide');
+                        swal('<%= t('tips.success') %>', '<%= t('dashboard.index.transfer_successfully') %>', 'success');
+                        location.reload();
+                    }, function (err) {
+                        l.ladda('stop');
+                        swal('<%= t('errors.error') %>', err.msg, 'error');
+                    }
+                );
+            }
 
             return false;
         });

@@ -7,7 +7,9 @@ class BroadcastJoinGameJob < ApplicationJob
       action: :join,
       id: game.id,
       user_id: user.id,
-      address: user.encrypted_address
+      invite_code: user.invite_code,
+      address: user.encrypted_address,
+      time: LZUtils.format_time(Time.now)
     )
   end
 end

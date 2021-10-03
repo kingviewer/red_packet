@@ -16,6 +16,7 @@ class UsersController < BaseUserController
       error(t('.create.parent_not_exist'))
     else
       user = User.new(params.require(:user).permit(:address))
+      user.address = user.address.downcase
       if User.exists?(address: user.address)
         error(t('.address_already_exists'))
       else

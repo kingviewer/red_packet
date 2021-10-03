@@ -7,7 +7,7 @@ class GameRoomsChannel < ApplicationCable::Channel
 
   def subscribed
     if GameRoom.playing.exists?(id: params[:game_room_id])
-      stream_for(GameRoomsChannel.channel_name(params[:game_room_id]))
+      stream_from(GameRoomsChannel.channel_name(params[:game_room_id]))
     else
       reject_subscription
     end

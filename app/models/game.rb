@@ -116,8 +116,6 @@ class Game < ApplicationRecord
         end
       end
 
-
-
       {
         losers: losers,
         winners: winners
@@ -129,42 +127,29 @@ class Game < ApplicationRecord
     if waiter_amount == player_amount
       users = User.joins(:game_waiters).where(game_waiters: { game_id: id })
       result = Game.judge_winners(game.usdt_amount, users, game.loser_amount)
-      global_config = GlobalConfig.first
-
-      # 输家给Candy
+      GameWaiter.where(game_id: id).delete_all
+      # 创建GameRound记录
+      game_round = GameRound.create(game_id: id)
       result[:losers].each do |loser|
-        candy_amount = (game.usdt_amount * 0.01 / global_config.cigar_usdt_price).floor(6)
-        User.where(id: loser.id).update_all(
-          ['packet_usdt_frozen = packet_usdt_frozen - ?, candy_available = candy_available + ?', game.usdt_amount,
-           candy_amount]
-        )
-        AssetFlow.create(
+        UserGameRound.create(
           user_id: loser.id,
-          asset_type: :usdt,
-          flow_type: :lose,
-          amount: -game.usdt_amount
+          game_round_id: game_round.id,
+          usdt_frozen: usdt_amount,
+          usdt_won: 0,
+          loser: true
         )
-        AssetFlow.create(
-          user_id: loser.id,
-          asset_type: :candy,
-          flow_type: :lose_reward,
-          amount: candy_amount
+      end
+      result[:winners].each do |winner|
+        UserGameRound.create(
+          user_id: winner[:user].id,
+          game_round_id: game_round.id,
+          usdt_frozen: usdt_amount,
+          usdt_won: winner[:win],
+          loser: false
         )
       end
 
-      # 赢家给USDT
-      result[:winners].each do |winner|
-        User.where(winner[:user].id).update_all(
-          ['packet_usdt_available = packet_usdt_available + ?, packet_usdt_frozen = packet_usdt_frozen - ?',
-           game.usdt_amount + winner[:win], game.usdt_amount]
-        )
-        AssetFlow.create(
-          user_id: winner[:user].id,
-          asset_type: :usdt,
-          flow_type: :win,
-          amount: winner[:win]
-        )
-      end
+      BroadcastGameWinJob.perform_later(self, game_round)
     end
   end
 end

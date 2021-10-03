@@ -11,47 +11,30 @@ class GameRoom < ApplicationRecord
     users = User.joins(:user_room).where(user_rooms: { game_room_id: id, joined: true })
     if users.count == game.player_amount # 开奖
       result = Game.judge_winners(game.usdt_amount, users, loser_amount)
-      global_config = GlobalConfig.first
-
-      # 输家给Candy
-      result[:losers].each do |loser|
-        candy_amount = (game.usdt_amount * 0.01 / global_config.cigar_usdt_price).floor(6)
-        User.where(id: loser.id).update_all(
-          ['packet_usdt_frozen = packet_usdt_frozen - ?, candy_available = candy_available + ?', game.usdt_amount,
-           candy_amount]
-        )
-        AssetFlow.create(
-          user_id: loser.id,
-          asset_type: :usdt,
-          flow_type: :lose,
-          amount: -game.usdt_amount
-        )
-        AssetFlow.create(
-          user_id: loser.id,
-          asset_type: :candy,
-          flow_type: :lose_reward,
-          amount: candy_amount
-        )
-      end
-
-      # 赢家给USDT
-      result[:winners].each do |winner|
-        User.where(winner[:user].id).update_all(
-          ['packet_usdt_available = packet_usdt_available + ?, packet_usdt_frozen = packet_usdt_frozen - ?',
-           game.usdt_amount + winner[:win], game.usdt_amount]
-        )
-        AssetFlow.create(
-          user_id: winner[:user].id,
-          asset_type: :usdt,
-          flow_type: :win,
-          amount: winner[:win]
-        )
-      end
-
       # 所有joind改为false
       UserRoom.where(game_room_id: id, joined: true).update_all(joined: false)
+      # 创建GameRound记录
+      game_round = GameRound.create(game_id: game_id, game_room_id: id)
+      result[:losers].each do |loser|
+        UserGameRound.create(
+          user_id: loser.id,
+          game_round_id: game_round.id,
+          usdt_frozen: game.usdt_amount,
+          usdt_won: 0,
+          loser: true
+        )
+      end
+      result[:winners].each do |winner|
+        UserGameRound.create(
+          user_id: winner[:user].id,
+          game_round_id: game_round.id,
+          usdt_frozen: game.usdt_amount,
+          usdt_won: winner[:win],
+          loser: false
+        )
+      end
 
-      BroadcastRoomWinJob.perform_later(self, result[:winners])
+      BroadcastRoomWinJob.perform_later(self, game_round)
     end
   end
 end

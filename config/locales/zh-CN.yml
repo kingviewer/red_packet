@@ -20,6 +20,12 @@ zh-CN:
     confirm_operation: 确认操作
     cancel: 取消
     submit: 提交
+  utils:
+    accounts:
+      packet: 红包账户
+      wallet: 钱包账户
+  models:
+    game_room:
   users:
     new:
       sign_up_tip: 请输入您的邀请人ID进行注册
@@ -48,6 +54,8 @@ zh-CN:
       room_stopped: 该密码红包已经结束
       usdt_available_insufficient: USDT可用余额不足
   games:
+    show:
+      title: 红包详情
     join:
       game_not_exist: 该红包不存在
       already_joined: 您已经参与了该红包，不可重复参与
@@ -71,6 +79,22 @@ zh-CN:
       amount: 金额
       current_balance: 当前余额
       entrust_successfully: 托管成功
+      choose_asset: 选择币种
+      withdraw_available: 可提金额
+      withdraw_successfully: 提取成功
+      transfer_from: 转出账户
+      transfer_to: 转入账户
+      balance_of_transfer_from: 转出账户余额
+      transfer_successfully: 划转成功
+      balance_insufficient: 可用余额不足
+      i_joined: 我参与的
+      processing: 进行中
+      view_detail: 查看详情
+      joins_game: "进入匹配队列"
+      game_round_finished: 红包匹配完成，点击"拆红包"查看中奖结果。
+      open_red_packet: 拆红包
+      players: 玩家列表
+      finished: 已开奖
   deposits:
     create:
       tx_hash_exists: 该比托管已提交过，请勿重复提交
