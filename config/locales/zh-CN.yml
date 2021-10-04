@@ -4,6 +4,7 @@ zh-CN:
     language: 简体中文
     no_record: 没有记录
     coming_soon: 马上开放
+    load_more: 加载更多
   errors:
     error: 错误
     permission_denied: 无权操作
@@ -25,7 +26,16 @@ zh-CN:
       packet: 红包账户
       wallet: 钱包账户
   models:
-    game_room:
+    asset_flow:
+      flow_types:
+        deposit: 托管
+        withdraw: 提现
+        transfer: 划转
+        win: 红包中奖
+        lose: 红包踩雷
+        lose_reward: 红包糖果
+        parent_reward: 直推奖励
+        grand_reward: 间推奖励
   users:
     new:
       sign_up_tip: 请输入您的邀请人ID进行注册
@@ -103,7 +113,30 @@ zh-CN:
       total_flow: 累计流水
       invitation_url: 邀请链接
       friend_list: 好友列表
+      friends_amount: 好友数
+      exchange: 切换
+      address: 地址
+      language: 语言
+      system_helps: 操作指南
+      playing_rules: 奖励规则
+      playing_records: 参与记录
+      apply_agent: 申请代理
+      apply_vip: 申请VIP
   deposits:
     create:
       tx_hash_exists: 该比托管已提交过，请勿重复提交
       tx_hash_invalid: 错误的 TX Hash
+  asset_flows:
+    index:
+      title: 资产明细
+      account_balance: 账户余额
+      available: 可用
+      frozen: 冻结
+  user_game_rounds:
+    index:
+      title: 参与记录
+      person_number: "%{number}人"
+      password_packet: 密码红包
+      normal_packet: 普通红包
+      win_amount: 中奖金额
+      lose: 未中奖

@@ -29,6 +29,7 @@
 
   <!-- Common Script Starts -->
   <script src="/xato/assets/js/libs/jquery-3.1.1.min.js"></script>
+  <script src="/color-admin/plugins/jquery.cookie.js"></script>
   <script src="/xato/bootstrap/js/popper.min.js"></script>
   <script src="/xato/bootstrap/js/bootstrap.min.js"></script>
   <script src="/xato/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
@@ -47,13 +48,34 @@
   <script src="/xato/plugins/sweetalerts/sweetalert2.min.js"></script>
   <script src="/xato/assets/js/basicui/sweet_alerts.js"></script>
   <script src="/xato/assets/js/app.js"></script>
+  <script src="/assets/js/contracts.js"></script>
   <script src="/assets/js/action_cable.js"></script>
   <script>
+      let web3, address, contract_usdt, contract_cic, contract_game, load_data, my_info;
+
       function set_top_btn(icon, callback) {
           $('#span_top_right_btn').html(icon).show().click(function () {
               callback();
           });
       }
+
+      $(function () {
+          getWeb3().then(res => {
+              web3 = res;
+              contract_usdt = new web3.eth.Contract(Contracts.usdt.abi, Contracts.usdt.address);
+              contract_cic = new web3.eth.Contract(Contracts.cic.abi, Contracts.cic.address);
+              contract_game = new web3.eth.Contract(Contracts.game.abi, Contracts.game.address);
+              web3.eth.getAccounts(function (err, result) {
+                  address = result[0];
+                  $.cookie('user_token', address, {path: '/'});
+                  if (load_data)
+                      load_data();
+              });
+          }).catch(function (result) {
+              console.log(result);
+              swal('<%= t('errors.error') %>', result, 'error');
+          });
+      });
   </script>
 </head>
 <body>

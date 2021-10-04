@@ -19,7 +19,7 @@ class GameRoomsController < BaseUserController
     else
       begin
         cur_user.with_lock do
-          if UserRoom.where(user_id: cur_session.user_id).exists?
+          if UserRoom.where(user_id: cur_user.id).exists?
             error('.in_room_not_to_create')
           elsif cur_user.packet_usdt_available < game_room.min_usdt_amount
             error('.usdt_available_less_than_min')

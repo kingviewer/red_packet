@@ -18,6 +18,8 @@ Business.ajax = function (url, params, method, success_func, failed_func, ignore
             if (data.responseJSON) {
                 if (data.responseJSON.code === 'login_to_operate')
                     location.href = '/user_sessions/new';
+                else if (data.responseJSON.code === 'user_not_exist')
+                    location.href = '/users/new'
                 else
                     failed_func({msg: data.responseJSON.msg, code: data.responseJSON.code});
             }

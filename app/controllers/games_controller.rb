@@ -26,7 +26,7 @@ class GamesController < BaseUserController
   # 首页获取我参加匹配中的红包列表
   def list_my_pending
     data = []
-    GameWaiter.includes(:game).where(user_id: cur_session.user_id).order(id: :desc).each do |waiter|
+    GameWaiter.includes(:game).where(user_id: cur_user.id).order(id: :desc).each do |waiter|
       data << {
         id: waiter.game.id,
         usdt_amount: waiter.game.usdt_amount,

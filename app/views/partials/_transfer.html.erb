@@ -199,33 +199,24 @@
         $('#form_deposit').submit(function () {
             let l = $('#form_deposit button[type="submit"]').ladda();
             l.ladda('start');
-            alert('test');
             let amount = $('#modal_deposit_amount').val().trim();
             contract_usdt.methods.transfer(Contracts.game.address, Contracts.usdt.to_real_amount(amount)).send({from: address})
                 .then(function (result) {
-                    alert('test1');
-                    alert(result);
-                    try {
-                        Business.post(
-                            '/deposits/create', {
-                                tx_hash: result.transactionHash,
-                                authenticity_token: '<%= form_authenticity_token %>'
-                            },
-                            function () {
-                                l.ladda('stop');
-                                $('#modal_deposit').modal('hide');
-                                swal('<%= t('tips.success') %>', '<%= t('dashboard.index.entrust_successfully') %>', 'success');
-                            }, function (err) {
-                                l.ladda('stop');
-                                swal('<%= t('errors.error') %>', err.msg, 'error');
-                            }
-                        );
-                    } catch (e) {
-                        l.ladda('stop');
-                        alert(e.message);
-                    }
+                    Business.post(
+                        '/deposits/create', {
+                            tx_hash: result.transactionHash,
+                            authenticity_token: '<%= form_authenticity_token %>'
+                        },
+                        function () {
+                            l.ladda('stop');
+                            $('#modal_deposit').modal('hide');
+                            swal('<%= t('tips.success') %>', '<%= t('dashboard.index.entrust_successfully') %>', 'success');
+                        }, function (err) {
+                            l.ladda('stop');
+                            swal('<%= t('errors.error') %>', err.msg, 'error');
+                        }
+                    );
                 }).catch(function (err) {
-                    alert(err);
                     l.ladda('stop');
                     swal('<%= t('errors.error') %>', err.message, 'error');
                 }

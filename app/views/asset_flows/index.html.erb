@@ -1,31 +1,32 @@
 <div class="row">
   <div class="col-12 bg-primary p-t-10">
-    <span class="font-15">账户余额</span>
+    <span class="font-15"><%= t('.account_balance') %></span>
   </div>
   <div class="col-12 bg-primary">
-    <span class="font-25">124587.12345678</span> <span class="font-15">USDT</span>
+    <span class="font-25" id="balance">-</span> <span class="font-15"><%= @symbol %></span>
   </div>
 </div>
-<div class="row bg-primary p-t-15 text-white">
+<div class="row bg-primary p-t-15 text-white" id="div_available_frozen" style="display: none">
   <div class="col-6">
-    <span class="font-15">可用(USDT)</span>
+    <span class="font-15"><%= t('.available') %>(<%= @symbol %>)</span>
     <br>
-    <span class="font-weight-bold m-b-10 font-15" id="available">0.68535785</span>
+    <span class="font-weight-bold m-b-10 font-15" id="available">-</span>
   </div>
   <div class="col-6">
-    <span class="font-15">冻结(USDT)</span>
-    <span class="font-weight-bold m-b-10" id="frozen">0.00000000</span>
+    <span class="font-15"><%= t('.frozen') %>(<%= @symbol %>)</span>
+    <br>
+    <span class="font-weight-bold m-b-10" id="frozen">-</span>
   </div>
 </div>
 <div class="row bg-primary">
   <div class="col-4 p-10 text-center">
-    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_deposit_modal()">托管</button>
+    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_deposit_modal()"><%= t('dashboard.index.entrust') %></button>
   </div>
   <div class="col-4 p-10 text-center">
-    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_withdraw_modal()">提取</button>
+    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_withdraw_modal()"><%= t('dashboard.index.withdraw') %></button>
   </div>
   <div class="col-4 p-10 text-center">
-    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_transfer_modal()">划转</button>
+    <button type="button" class="btn btn-soft-warning btn-rounded" style="width: 80%" onclick="show_transfer_modal()"><%= t('dashboard.index.transfer') %></button>
   </div>
 </div>
 
@@ -33,26 +34,73 @@
   <div class="col-12 layout-spacing">
     <div class="widget widget-chart-one">
       <div class="widget-content m-10 p-t-10 p-b-10">
-        <div class="text-center" id="div_no_record">
-          <span class="text-center text-muted font-12"><i class="las la-exclamation-circle"></i> 无记录</span>
+        <div class="text-center" id="div_no_record" style="display: none">
+          <span class="text-center text-muted font-12"><i class="las la-exclamation-circle"></i> <%= t('common.no_record') %></span>
         </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-17">+1234.12345678 USDT</span>
-          <br>
-          <span class="text-danger font-13">推广奖励</span>
-          <span class="text-muted font-13 float-right">2021-01-21 11:00:12</span>
+        <div class="text-center" id="div_load_more" style="display: none">
+          <span class="text-center text-muted font-12" onclick="get_flows()"><i class="la la-arrow-down"></i> <%= t('common.load_more') %></span>
         </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-17">+1234.12345678 USDT</span>
-          <br>
-          <span class="text-danger font-13">推广奖励</span>
-          <span class="text-muted font-13 float-right">2021-01-21 11:00:12</span>
-        </div>
-        <div class="text-center">
-          <span class="text-center text-muted font-12"><i class="la la-arrow-down"></i> 加载更多</span>
+        <div id="flows">
         </div>
       </div>
     </div>
   </div>
 </div>
 <%= render 'partials/transfer' %>
+<script>
+    let account_type = '<%= @account_type %>', asset_type = '<%= @asset_type %>', page = 0, limit = 20;
+
+    function get_flows() {
+        $('#div_load_more').hide();
+        Business.get(
+            '/asset_flows/list_my', {account_type: account_type, asset_type: asset_type, page: page, limit: limit},
+            function (data) {
+                if (data.length > 0) {
+                    let html = '';
+                    for (let i = 0; i < data.length; i++) {
+                        let item = data[i];
+                        html += '<div class="mb-2 border-bottom border-light pb-2">' +
+                            '<span class="text-primary font-17">' + item.amount + ' <%= @symbol %></span>' +
+                            '<br>' +
+                            '<span class="text-danger font-13">' + item.flow_type_name + '</span>' +
+                            '<span class="text-muted font-13 float-right">' + item.created_at + '</span>' +
+                            '</div>';
+                    }
+                    $('#flows').append(html);
+                    page ++;
+                    if (data.length === limit)
+                        $('#div_load_more').show();
+                } else if (page === 0)
+                    $('#div_no_record').show();
+            }
+        );
+    }
+
+    load_data = function () {
+        if (account_type === 'packet' && asset_type === 'usdt')
+            $('#div_available_frozen').show();
+        else
+            $('#div_available_frozen').hide();
+
+        Business.get('/users/my_info', {},
+            function (data) {
+                my_info = data;
+                if (account_type === 'wallet') {
+                    if (asset_type === 'usdt')
+                        $('#balance').text(data.chain_usdt_display);
+                    else
+                        $('#balance').text(data.chain_cigar_display);
+                } else {
+                    if (asset_type === 'usdt') {
+                        $('#balance').text(data.packet_usdt_display);
+                        $('#available').text(data.packet_usdt_available_display);
+                        $('#frozen').text(data.packet_usdt_frozen_display);
+                    } else
+                        $('#balance').text(data.candy_display);
+                }
+            }
+        );
+
+        get_flows();
+    };
+</script>

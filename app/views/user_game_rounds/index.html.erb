@@ -2,29 +2,53 @@
   <div class="col-12 layout-spacing">
     <div class="widget widget-chart-one">
       <div class="widget-content p-10 m-t-15">
-        <div class="text-center" id="div_no_record">
-          <span class="text-center text-muted font-12"><i class="las la-exclamation-circle"></i> 无记录</span>
+        <div class="text-center" id="div_no_record" style="display: none">
+          <span class="text-center text-muted font-12"><i class="las la-exclamation-circle"></i> <%= t('common.no_record') %></span>
         </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">1025 USDT, 10人</span>
-          <span class="text-danger float-right">密码红包</span>
-          <br>
-          <span class="text-danger font-13">中奖金额: 1234.12345678 USDT</span>
-          <br>
-          <span class="font-13">2021-09-30 00:12:34</span>
+        <div class="text-center" id="div_load_more" style="display: none">
+          <span class="text-center text-muted font-12" onclick="get_game_rounds()"><i class="la la-arrow-down"></i> <%= t('common.load_more') %></span>
         </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">1025 USDT, 10人</span>
-          <span class="text-danger float-right">普通红包</span>
-          <br>
-          <span class="font-13">未中奖</span>
-          <br>
-          <span class="font-13">2021-09-30 00:12:34</span>
-        </div>
-        <div class="text-center">
-          <span class="text-center text-muted font-12"><i class="la la-arrow-down"></i> 加载更多</span>
+        <div id="records">
         </div>
       </div>
     </div>
   </div>
 </div>
+<script>
+    let page = 0, limit = 20;
+
+    function get_game_rounds() {
+        $('#div_load_more').hide();
+        Business.get(
+            '/user_game_rounds/list_my', {page: page, limit: limit},
+            function (data) {
+                if (data.length > 0) {
+                    let html = '';
+                    for (let i = 0; i < data.length; i++) {
+                        let item = data[i];
+                        html += '<div class="mb-2 border-bottom border-light pb-2">' +
+                            '<span class="text-primary font-15">' + item.desc + '</span>' +
+                            '<span class="text-danger float-right">' + item.packet_type + '</span>' +
+                            '<br>';
+                        if (item.loser)
+                            html += '<span class="font-13"><%= t('.lose') %></span>';
+                        else
+                            html += '<span class="text-danger font-13"><%= t('.win_amount') %>: ' + item.usdt_won + ' USDT</span>';
+                        html += '<br>' +
+                            '<span class="font-13">' + item.created_at + '</span>' +
+                            '</div>';
+                    }
+                    $('#records').append(html);
+                    page++;
+                    if (data.length === limit)
+                        $('#div_load_more').show();
+                } else if (page === 0)
+                    $('#div_no_record').show();
+            }
+        );
+    }
+
+    load_data = function () {
+        get_game_rounds();
+    };
+</script>

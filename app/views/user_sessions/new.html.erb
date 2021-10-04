@@ -14,10 +14,7 @@
                     function (result) {
                         location.href = '/dashboard/index';
                     }, function (err) {
-                        if (err.code === 'user_not_exist')
-                            location.href = '/users/new';
-                        else
-                            swal('<%= t('errors.error') %>', err.msg, 'error');
+                        swal('<%= t('errors.error') %>', err.msg, 'error');
                     }
                 );
             });

@@ -7,6 +7,8 @@ class CreateGlobalConfigs < ActiveRecord::Migration[6.1]
       t.decimal :parent_reward_rate, null: false, default: 0.01, precision: 5, scale: 4, comment: '直推分润比例'
       t.decimal :grand_reward_rate, null: false, default: 0.005, precision: 5, scale: 4, comment: '间推分润比例'
 
+      t.bigint :inner_deposit_sniffer_block, null: false, default: 1, comment: 'Deposit Sniffer开始区块'
+
       t.timestamps
     end
   end

@@ -327,6 +327,7 @@
     }
 
     function get_joined_games() {
+        $('#joined_list').empty();
         Business.get('/games/list_my_pending', {},
             function (data) {
                 if (data.length > 0) {

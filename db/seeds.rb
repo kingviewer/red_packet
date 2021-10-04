@@ -1,3 +1,5 @@
+GlobalConfig.create unless GlobalConfig.exists?
+
 admin_account = Rails.application.credentials.dig(:default_admin, :account)
 Admin.create(
   account: admin_account,

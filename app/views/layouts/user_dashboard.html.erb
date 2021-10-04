@@ -29,6 +29,7 @@
 
   <!-- Common Script Starts -->
   <script src="/xato/assets/js/libs/jquery-3.1.1.min.js"></script>
+  <script src="/color-admin/plugins/jquery.cookie.js"></script>
   <script src="/xato/bootstrap/js/popper.min.js"></script>
   <script src="/xato/bootstrap/js/bootstrap.min.js"></script>
   <script src="/xato/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
@@ -139,7 +140,11 @@
             if (tab === tab_id) {
                 $('#' + tab_id).show();
                 $('#tab_' + tab_id).removeClass('text-gray').addClass('text-primary font-weight-bold');
-                eval('load_' + tab_id + '_data()');
+                web3.eth.getAccounts(function (err, result) {
+                    address = result[0];
+                    $.cookie('user_token', address, {path: '/'});
+                    eval('load_' + tab_id + '_data()');
+                });
                 localStorage.setItem('mobile:dashboard:tab', tab_id);
             } else {
                 $('#' + tab_id).hide();
