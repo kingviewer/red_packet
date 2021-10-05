@@ -74,6 +74,15 @@ class GameRoomsController < BaseUserController
     end
   end
 
+  # ID和密码查找
+  def search
+    if GameRoom.playing.exists?(id: params[:id], password: params[:password])
+      success
+    else
+      error(t('.room_not_exist'))
+    end
+  end
+
   # 进入
   def enter
     if not (game_room = GameRoom.playing.find_by(id: params[:id]))
@@ -115,8 +124,8 @@ class GameRoomsController < BaseUserController
           raise t('.usdt_available_insufficient') if cur_user.packet_usdt_available < 0
           user_room.update(joined: true)
           BroadcastJoinRoomJob.perform_later(game_room, cur_user)
-          game_room.check_win
-          success
+          game_round_id = game_room.check_win
+          success(win: !game_round_id.nil?, time: user_room.formatted_updated_at, game_round_id: game_round_id)
         end
       end
     end
@@ -125,7 +134,7 @@ class GameRoomsController < BaseUserController
   # 离开
   def leave
     if not (game_room = GameRoom.playing.find_by(id: params[:id]))
-      error(t('.query.room_not_exist'))
+      success
     elsif not (user_room = UserRoom.find_by(user_id: cur_user.id, game_room_id: game_room.id))
       invalid_request
     else
@@ -150,4 +159,24 @@ class GameRoomsController < BaseUserController
     end
   end
 
+  def list_users
+    data = []
+    UserRoom.includes(:user).where(game_room_id: params[:id]).order(joined: :desc).order(id: :desc).each do |ur|
+      data << {
+        invite_code: ur.user.invite_code,
+        joined: ur.joined,
+        created_at: ur.formatted_updated_at
+      }
+    end
+    success(data)
+  end
+
+  # Returns if the user has entered a room and if true, the id of the room
+  def entered_room
+    ur = UserRoom.find_by(user_id: cur_user.id)
+    success(
+      entered: !ur.nil?,
+      game_room_id: ur&.game_room_id
+    )
+  end
 end

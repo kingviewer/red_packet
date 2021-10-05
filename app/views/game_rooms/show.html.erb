@@ -10,7 +10,9 @@
   </div>
   <div class="col-12 text-center" id="span_person"><%= t('user_game_rounds.index.person_number', number: '-') %></div>
   <div class="col-12">
-    <button id="btn_join_now" type="button" class="btn btn-primary btn-block btn-rounded m-t-15"><%= t('.join_now') %></button>
+    <button id="btn_join_now" type="button" class="btn btn-primary btn-block btn-rounded m-t-15" style="display: none" onclick="join_room()">
+      <%= t('.join_now') %>
+    </button>
   </div>
 </div>
 
@@ -20,37 +22,18 @@
       <div class="widget-heading m-10">
         <div>
           <br>
-          <h6 class="">开奖记录</h6>
+          <h6 class=""><%= t('.win_records') %></h6>
         </div>
       </div>
-      <div class="widget-content m-10">
-        <div class="text-center" id="div_no_record">
-          <span class="text-center text-muted font-12"><i class="las la-exclamation-circle"></i> 无记录</span>
+      <div class="widget-content m-10 p-b-10">
+        <div class="text-center" id="div_no_record" style="display: none">
+          <span class="text-center text-muted font-12"><i class="las la-exclamation-circle"></i> <%= t('common.no_record') %></span>
         </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">已参与</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <button class="btn btn-sm btn-rounded btn-outline-danger btn-block m-t-10" onclick="location.href='/game_rounds/show?id=1'">拆红包</button>
+        <div class="text-center" id="div_load_more" style="display: none" onclick="get_rounds()">
+          <span class="text-center text-muted font-12"><i class="la la-arrow-down"></i> <%= t('common.load_more') %></span>
         </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">已参与</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-danger">中奖金额: 12345 USDT</span>
-          <span class="font-13 float-right">查看详情 ></span>
+        <div id="round_records">
         </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-muted font-15">未参与</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-danger">中奖金额: - USDT</span>
-          <span class="font-13 float-right">查看详情 ></span>
-        </div>
-        <div class="text-center">
-          <span class="text-center text-muted font-12"><i class="la la-arrow-down"></i> 加载更多</span>
-        </div>
-        <br>
       </div>
     </div>
   </div>
@@ -60,102 +43,12 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">玩家列表</h5>
+        <h5 class="modal-title"><%= t('dashboard.index.players') %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <i class="las la-times"></i>
         </button>
       </div>
-      <div class="modal-body pre-scrollable">
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-danger">已参与</span>
-        </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-muted">未参与</span>
-        </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-muted">未参与</span>
-        </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-muted">未参与</span>
-        </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-muted">未参与</span>
-        </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-muted">未参与</span>
-        </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-muted">未参与</span>
-        </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-muted">未参与</span>
-        </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-muted">未参与</span>
-        </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-muted">未参与</span>
-        </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-muted">未参与</span>
-        </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-muted">未参与</span>
-        </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-muted">未参与</span>
-        </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-muted">未参与</span>
-        </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <span class="float-right text-danger font-12"><i class="las la-clock"></i> 2021-05-05 10:00:12</span>
-          <br>
-          <span class="font-13 mb-0 text-muted">未参与</span>
-        </div>
+      <div class="modal-body pre-scrollable" id="div_players">
       </div>
     </div>
   </div>
@@ -170,37 +63,198 @@
     <% end %>
 
     function get_room_info() {
-        if (room_id)
-            Business.get(
-                '/game_rooms/query', {id: room_id},
-                function (data) {
-                    has_joined = data.joined;
-                    $('#span_usdt_amount').text(data.usdt_amount);
-                    $('#span_room_id').text(data.id);
-                    $('#progress').css('width: ' + data.progress + '%');
-                    $('#span_person').text(data.player_amount_display);
+        Business.get(
+            '/game_rooms/query', {id: room_id},
+            function (data) {
+                has_joined = data.joined;
+                $('#span_usdt_amount').text(data.usdt_amount);
+                $('#span_room_id').text(data.id);
+                $('#progress').css('width: ' + data.progress + '%');
+                $('#span_person').text(data.player_amount_display);
+                if (has_joined)
+                    $('#btn_join_now').show().text('<%= t('.joined') %>').attr('disabled', 'disabled');
+                else
+                    $('#btn_join_now').show().text('<%= t('.join_now') %>').removeAttr('disabled');
+            }
+        );
+    }
+
+    function get_users() {
+        Business.get(
+            '/game_rooms/list_users', {id: room_id},
+            function (data) {
+                let html = '';
+                for (let i = 0; i < data.length; i++) {
+                    let item = data[i];
+                    html += '<div class="mb-2 border-bottom border-light pb-2">' +
+                        '<span class="text-primary font-15">ID: ' + item.invite_code + '</span>' +
+                        '<span class="float-right text-danger font-12"><i class="las la-clock"></i> ' + item.created_at + '</span>' +
+                        '<br>';
+                    if (item.joined)
+                        html += '<span class="font-13 mb-0 text-danger"><%= t('.joined') %></span></div>';
+                    else
+                        html += '<span class="font-13 mb-0 text-muted"><%= t('.not_joined') %></span></div>';
                 }
-            );
-        else
-            swal('<%= t('errors.error') %>', '<%= t('errors.invalid_params') %>', 'error');
+                $('#div_players').html(html);
+            }
+        );
     }
 
     function show_players() {
+        $('#div_players').empty();
         $('#modal_players').modal('show');
+        get_users();
+    }
+
+    function enter_room() {
+        Business.post(
+            '/game_rooms/enter', {id: room_id, authenticity_token: '<%= form_authenticity_token %>'},
+            function () {
+                subscribe_game_room();
+            }
+        );
+    }
+
+    function join_room() {
+        let l = $('#btn_join_now').ladda();
+        l.ladda('start');
+
+        Business.post(
+            '/game_rooms/join', {id: room_id, authenticity_token: '<%= form_authenticity_token %>'},
+            function (data) {
+                l.ladda('stop');
+                if (data.win) {
+                    $('#div_no_record').hide();
+                    $('#round_records').prepend(
+                        '<div class="mb-2 border-bottom border-light pb-2">' +
+                        '<span class="text-primary font-15"><%= t('.joined') %></span>' +
+                        '<span class="float-right text-danger font-12"><i class="las la-clock"></i> ' + data.time + '</span>' +
+                        '<br>' +
+                        '<button class="btn btn-sm btn-rounded btn-outline-danger btn-block m-t-10" onclick="location.href=\'/game_rounds/show?id=' + data.game_round_id + '\'"><%= t('dashboard.index.open_red_packet') %></button>' +
+                        '</div>'
+                    );
+                }
+                has_joined = true;
+                $('#btn_join_now').text('<%= t('.joined') %>').attr('disabled', 'disabled');
+                get_room_info();
+            }, function (err) {
+                l.ladda('stop');
+                swal('<%= t('errors.error') %>', err.msg, 'error');
+            }
+        );
     }
 
     function on_exit() {
-        if (has_joined) {
-
-        }
+        if (!room_id)
+            history.back();
+        else if (has_joined)
+            swal({
+                    title: "<%= t('tips.confirm_operation') %>",
+                    text: '<%= t('.joined_leave_tip') %>',
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "<%= t('tips.confirm') %>",
+                    cancelButtonText: "<%= t('tips.cancel') %>",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                }
+            ).then(function () {
+                Business.post(
+                    '/game_rooms/leave',
+                    {
+                        id: room_id,
+                        authenticity_token: '<%= form_authenticity_token %>'
+                    }, function () {
+                        history.back();
+                    }
+                );
+            });
+        else
+            Business.post(
+                '/game_rooms/leave',
+                {
+                    id: room_id,
+                    authenticity_token: '<%= form_authenticity_token %>'
+                }, function () {
+                    history.back();
+                }
+            );
     }
 
-    $(function () {
-        $('#top_left_back').attr('onclick', 'on_exit();');
-        set_top_btn('<i class="la la-users"></i>', function () {
-            show_players();
-        });
+    let page_rounds = 0, limit_rounds = 20;
 
-        get_room_info();
-    });
+    function get_rounds() {
+        $('#div_load_more').hide();
+        Business.get('/game_rounds/list_by_room', {game_room_id: room_id, limit: limit_rounds, page: page_rounds},
+            function (data) {
+                if (data.length > 0) {
+                    let html = '';
+                    for (let i = 0; i < data.length; i++) {
+                        let item = data[i];
+                        html += '<div class="mb-2 border-bottom border-light pb-2">';
+                        if (item.joined)
+                            html += '<span class="text-primary font-15"><%= t('.joined') %></span>';
+                        else
+                            html += '<span class="text-muted font-15"><%= t('.not_joined') %></span>';
+                        html += '<span class="float-right text-danger font-12"><i class="las la-clock"></i> ' + item.created_at + '</span>' +
+                            '<br>';
+                        if (item.joined && !item.loser)
+                            html += '<span class="font-13 mb-0 text-danger"><%= t('user_game_rounds.index.win_amount') %>: ' + item.usdt_won + ' USDT</span>';
+                        else if (item.joined && item.loser)
+                            html += '<span class="font-13 mb-0 text-muted"><%= t('user_game_rounds.index.lose') %></span>';
+                        else
+                            html += '<span class="font-13 mb-0 text-muted"><%= t('user_game_rounds.index.win_amount') %>: - USDT</span>';
+                        html += '<span class="font-13 float-right" onclick="location.href=\'/game_rounds/show?id=' + item.id + '\'"><%= t('dashboard.index.view_detail') %> ></span>' +
+                            '</div>';
+                    }
+                    $('#round_records').append(html);
+                    page_rounds++;
+                    if (data.length === limit_rounds)
+                        $('#div_load_more').show();
+                } else if (page_rounds === 0)
+                    $('#div_no_record').show();
+            }
+        );
+    }
+
+    function subscribe_game_room() {
+        consumer.subscriptions.create(
+            {channel: "GameRoomsChannel", game_room_id: room_id},
+            {
+                connected: function () {
+                },
+                disconnected: function () {
+                },
+                received: function (msg) {
+                    if (msg.action === 'join') {
+                        get_room_info();
+                    } else if (msg.action === 'win') {
+                        get_room_info();
+                        $('#round_records').prepend(
+                            '<div class="mb-2 border-bottom border-light pb-2">' +
+                            '<span class="text-primary font-15"><%= t('.joined') %></span>' +
+                            '<span class="float-right text-danger font-12"><i class="las la-clock"></i> ' + msg.time + '</span>' +
+                            '<br>' +
+                            '<button class="btn btn-sm btn-rounded btn-outline-danger btn-block m-t-10" onclick="location.href=\'/game_rounds/show?id=' + msg.game_round_id + '\'"><%= t('dashboard.index.open_red_packet') %></button>' +
+                            '</div>'
+                        );
+                    }
+                }
+            }
+        );
+    }
+
+    load_data = function () {
+        if (room_id) {
+            $('#top_left_back').attr('onclick', 'on_exit();');
+            set_top_btn('<i class="la la-users"></i>', function () {
+                show_players();
+            });
+
+            get_room_info();
+            get_rounds();
+            enter_room();
+        } else
+            swal('<%= t('errors.error') %>', '<%= t('errors.invalid_params') %>', 'error');
+    };
 </script>

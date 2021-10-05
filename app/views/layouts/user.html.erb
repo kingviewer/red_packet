@@ -52,6 +52,7 @@
   <script src="/assets/js/action_cable.js"></script>
   <script>
       let web3, address, contract_usdt, contract_cic, contract_game, load_data, my_info;
+      let consumer = ActionCable.createConsumer();
 
       function set_top_btn(icon, callback) {
           $('#span_top_right_btn').html(icon).show().click(function () {

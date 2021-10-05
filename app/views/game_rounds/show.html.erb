@@ -1,11 +1,13 @@
 <div class="row m-t-15">
   <div class="col-12 text-center">
-    <span>总奖金 <span class="text-warning font-30">500</span><span class="text-warning">.00</span> USDT</span>
+    <span><%= t('.total_funds') %> <span class="text-warning font-30" id="total_funds">-</span> USDT</span>
   </div>
   <div class="col-12 m-t-10 p-l-20 p-r-20">
   </div>
-  <div class="col-12 text-center text-danger">中奖金额: 123.12345678 USDT</div>
-<!--  <div class="col-12 text-center text-muted">未中奖</div>-->
+  <div class="col-12 text-center text-danger" style="display: none"><%= t('user_game_rounds.index.win_amount') %>:
+    <span id="win_amount">-</span> USDT
+  </div>
+  <div id="div_lose" class="col-12 text-center text-muted" style="display: none"><%= t('user_game_rounds.index.lose') %></div>
 </div>
 
 <div class="row">
@@ -14,32 +16,64 @@
       <div class="widget-heading m-10">
         <div>
           <br>
-          <h6 class="">玩家列表</h6>
+          <h6 class=""><%= t('dashboard.index.players') %></h6>
         </div>
       </div>
-      <div class="widget-content m-10">
+      <div class="widget-content m-10 p-b-10" id="players">
         <div class="mb-2 border-bottom border-light pb-2">
           <span class="text-primary font-15">ID: XT129X</span>
           <br>
-          <span class="text-danger font-13">中奖金额: 1234.12345678 USDT</span>
+          <span class="text-danger font-13"><%= t('user_game_rounds.index.win_amount') %>: 1234.12345678 USDT</span>
         </div>
         <div class="mb-2 border-bottom border-light pb-2">
           <span class="text-primary font-15">ID: XT129X</span>
           <br>
-          <span class="text-danger font-13">中奖金额: 1234.12345678 USDT</span>
+          <span class="text-muted font-13"><%= t('user_game_rounds.index.lose') %></span>
         </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <br>
-          <span class="text-danger font-13">中奖金额: 1234.12345678 USDT</span>
-        </div>
-        <div class="mb-2 border-bottom border-light pb-2">
-          <span class="text-primary font-15">ID: XT129X</span>
-          <br>
-          <span class="text-muted font-13">未中奖</span>
-        </div>
-        <br>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+    let round_id = <%= @round_id %>;
+
+    function get_round_info() {
+        Business.get('/game_rounds/info', {id: round_id},
+            function (data) {
+                $('#total_funds').text(data.total_funds);
+                if (data.joined) {
+                    if (data.loser)
+                        $('#div_lose').show();
+                    else
+                        $('#win_amount').text(data.usdt_won).parent().show();
+                }
+            }
+        );
+    }
+
+    function get_players() {
+        Business.get('/game_rounds/all_players', {id: round_id}, function (data) {
+            let html = '';
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
+                html += '<div class="mb-2 border-bottom border-light pb-2">' +
+                    '<span class="text-primary font-15">ID: ' + item.invite_code + '</span>' +
+                    '<br>';
+                if (item.loser)
+                    html += '<span class="text-muted font-13"><%= t('user_game_rounds.index.lose') %></span></div>';
+                else
+                    html += '<span class="text-danger font-13"><%= t('user_game_rounds.index.win_amount') %>: ' + item.usdt_won + ' USDT</span></div>';
+            }
+            $('#players').html(html);
+        });
+    }
+
+    load_data = function () {
+        if (round_id) {
+            get_round_info();
+            get_players();
+        } else
+            swal('<%= t('errors.error') %>', '<%= t('errors.invalid_params') %>', 'error');
+    };
+</script>

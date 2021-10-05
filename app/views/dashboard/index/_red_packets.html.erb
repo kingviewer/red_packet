@@ -111,25 +111,24 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">参与密码红包</h5>
+        <h5 class="modal-title"><%= t('dashboard.index.join_encrypted_packet') %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <i class="las la-times"></i>
         </button>
       </div>
       <form id="form_join_room">
-        <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
         <div class="modal-body">
           <div class="form-group">
-            <label>密码红包房间号</label>
-            <input type="text" class="form-control" placeholder="请输入密码红包的房间号" required>
+            <label><%= t('dashboard.index.encrypted_packet_room_id') %></label>
+            <input name="game_room[id]" type="text" class="form-control" required>
           </div>
           <div class="form-group">
-            <label>红包密码</label>
-            <input type="text" class="form-control" placeholder="请输入红包的密码" required>
+            <label><%= t('dashboard.index.packet_password') %></label>
+            <input name="game_room[password]" type="text" class="form-control" required>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary btn-block btn-rounded ladda-button" data-style="zoom-in">提交</button>
+          <button type="submit" class="btn btn-primary btn-block btn-rounded ladda-button" data-style="zoom-in"><%= t('tips.submit') %></button>
         </div>
       </form>
     </div>
@@ -341,6 +340,27 @@
                 function (data) {
                     l.ladda('stop');
                     location.href = '/game_rooms/show?id=' + data.id;
+                }, function (err) {
+                    l.ladda('stop');
+                    swal('<%= t('errors.error') %>', err.msg, 'error');
+                }
+            );
+
+            return false;
+        });
+
+        $('#form_join_room').submit(function () {
+            let l = $('#form_join_room button[type="submit"]').ladda();
+            l.ladda('start');
+            let room_id = $('#form_join_room input[name="game_room[id]"]').val();
+            Business.get(
+                '/game_rooms/search',
+                {
+                    id: room_id,
+                    password: $('#form_join_room input[name="game_room[password]"]').val()
+                }, function () {
+                    l.ladda('stop');
+                    location.href = '/game_rooms/show?id=' + room_id;
                 }, function (err) {
                     l.ladda('stop');
                     swal('<%= t('errors.error') %>', err.msg, 'error');

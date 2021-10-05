@@ -33,8 +33,8 @@ class GameRoom < ApplicationRecord
           loser: false
         )
       end
-
       BroadcastRoomWinJob.perform_later(self, game_round)
+      game_round.id
     end
   end
 end

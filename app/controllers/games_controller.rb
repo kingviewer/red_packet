@@ -60,7 +60,7 @@ class GamesController < BaseUserController
       begin
         game.with_lock do
           if GameWaiter.where(user_id: cur_user.id, game_id: game.id).exists?
-            error('.already_joined')
+            error(t('.already_joined'))
           else
             User.where(id: cur_user.id).update_all(
               ['packet_usdt_available = packet_usdt_available - ?, packet_usdt_frozen = packet_usdt_frozen + ?',

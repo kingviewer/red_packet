@@ -144,6 +144,12 @@
                     address = result[0];
                     $.cookie('user_token', address, {path: '/'});
                     eval('load_' + tab_id + '_data()');
+                    Business.get('/game_rooms/entered_room', {},
+                        function (data) {
+                            if (data.entered)
+                                location.href = '/game_rooms/show?id=' + data.game_room_id;
+                        }
+                    );
                 });
                 localStorage.setItem('mobile:dashboard:tab', tab_id);
             } else {

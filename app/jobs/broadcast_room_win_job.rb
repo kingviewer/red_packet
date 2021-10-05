@@ -5,7 +5,8 @@ class BroadcastRoomWinJob < ApplicationJob
     ActionCable.server.broadcast(
       GameRoomsChannel.channel_name(game_room.id),
       action: :win,
-      game_round_id: game_round.id
+      game_round_id: game_round.id,
+      time: LZUtils.format_time(Time.now)
     )
   end
 end

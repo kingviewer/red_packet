@@ -36,6 +36,7 @@
                             html += '<span class="text-danger font-13"><%= t('.win_amount') %>: ' + item.usdt_won + ' USDT</span>';
                         html += '<br>' +
                             '<span class="font-13">' + item.created_at + '</span>' +
+                            '<span class="font-13 float-right" onclick="location.href=\'/game_rounds/show?id=' + item.game_round_id + '\'"><%= t('dashboard.index.view_detail') %> ></span>' +
                             '</div>';
                     }
                     $('#records').append(html);
