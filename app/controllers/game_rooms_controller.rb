@@ -1,10 +1,11 @@
 class GameRoomsController < BaseUserController
   layout 'user'
   before_action :ajax_auth_user, except: [:show]
-  # before_action :auth_user, only: [:show]
+  before_action :auth_user, only: [:show]
 
   def show
-    @title = '密码钱包'
+    @title = t('dashboard.index.encrypted_packet')
+    @room_id = params[:id]
   end
 
   # 创建
@@ -12,28 +13,35 @@ class GameRoomsController < BaseUserController
     game_room = GameRoom.new(params.require(:game_room).permit(:game_id, :min_usdt_amount, :password, :loser_amount))
     if not (game = Game.find_by(id: game_room.game_id))
       error(t('.game_not_exist'))
-    elsif game.min_usdt_amount < game.usdt_amount
+    elsif game_room.min_usdt_amount < game.usdt_amount
       error(t('.min_usdt_amount_less_than_game_required'))
-    elsif game_room.loser_amount >= game.player_amount
+    elsif game_room.loser_amount >= game.player_amount || game_room.loser_amount < 1
       error(t('.loser_amount_lager_than_player_amount'))
     else
       begin
         cur_user.with_lock do
           if UserRoom.where(user_id: cur_user.id).exists?
             error('.in_room_not_to_create')
-          elsif cur_user.packet_usdt_available < game_room.min_usdt_amount
-            error('.usdt_available_less_than_min')
           else
-            game_room.user_id = cur_user.id
-            game_room.save!
-            UserRoom.create(user_id: cur_user.id, game_room_id: game_room.id)
-            success(
-              id: game_room.id,
-              usdt_amount: game.usdt_amount,
-              player_amount: game.player_amount,
-              loser_amount: game_room.loser_amount,
-              min_usdt_amount: game_room.min_usdt_amount
+            User.where(id: cur_user.id).update_all(
+              ['packet_usdt_available = packet_usdt_available - ?, packet_usdt_frozen = packet_usdt_frozen + ?',
+               game_room.game.usdt_amount, game_room.game.usdt_amount]
             )
+            cur_user.reload
+            if cur_user.packet_usdt_available < game_room.min_usdt_amount
+              error('.usdt_available_less_than_min')
+            else
+              game_room.user_id = cur_user.id
+              game_room.save!
+              UserRoom.create(user_id: cur_user.id, game_room_id: game_room.id, joined: true)
+              success(
+                id: game_room.id,
+                usdt_amount: game.usdt_amount,
+                player_amount: game.player_amount,
+                loser_amount: game_room.loser_amount,
+                min_usdt_amount: game_room.min_usdt_amount
+              )
+            end
           end
         end
       rescue => e
@@ -46,15 +54,19 @@ class GameRoomsController < BaseUserController
   def query
     if (game_room = GameRoom.playing.find_by(id: params[:id]))
       ur = UserRoom.find_by(game_room_id: game_room.id, user_id: cur_user.id)
+      user_amount = UserRoom.where(game_room_id: game_room.id).count
+      joiner_amount = UserRoom.where(game_room_id: game_room.id, joined: true).count
       success(
         id: game_room.id,
-        usdt_amount: game.usdt_amount,
-        player_amount: game.player_amount,
+        usdt_amount: game_room.game.usdt_amount.to_i,
+        player_amount: game_room.game.player_amount,
         loser_amount: game_room.loser_amount,
         min_usdt_amount: game_room.min_usdt_amount,
-        user_amount: UserRoom.where(game_room_id: game_room.id).count,
-        joiner_amount: UserRoom.where(game_room_id: game_room.id, joined: true).count,
-        entered: !ur.nil,
+        user_amount: user_amount,
+        joiner_amount: joiner_amount,
+        progress: (joiner_amount * 100 / game_room.game.player_amount).to_i,
+        player_amount_display: t('user_game_rounds.index.person_number', number: "#{joiner_amount}/#{game_room.game.player_amount}"),
+        entered: !ur.nil?,
         joined: !ur.nil? && ur.joined
       )
     else

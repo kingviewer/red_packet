@@ -88,7 +88,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">密码红包</h5>
+        <h5 class="modal-title"><%= t('dashboard.index.encrypted_packet') %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <i class="las la-times"></i>
         </button>
@@ -96,10 +96,10 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-12">
-            <button type="button" class="btn btn-primary btn-block btn-rounded ladda-button" onclick="join_room()" data-style="zoom-in">参与密码红包</button>
+            <button type="button" class="btn btn-primary btn-block btn-rounded ladda-button" onclick="join_room()" data-style="zoom-in"><%= t('dashboard.index.join_encrypted_packet') %></button>
           </div>
           <div class="col-12 m-t-20">
-            <button type="button" class="btn btn-primary btn-block btn-rounded" onclick="create_room()">创建密码红包</button>
+            <button type="button" class="btn btn-primary btn-block btn-rounded" onclick="create_room()"><%= t('dashboard.index.create_encrypted_packet') %></button>
           </div>
         </div>
       </div>
@@ -117,6 +117,7 @@
         </button>
       </div>
       <form id="form_join_room">
+        <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
         <div class="modal-body">
           <div class="form-group">
             <label>密码红包房间号</label>
@@ -128,7 +129,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary btn-block btn-rounded ladda-button" data-style="zoom-in">提交</button>
+          <button type="submit" class="btn btn-primary btn-block btn-rounded ladda-button" data-style="zoom-in">提交</button>
         </div>
       </form>
     </div>
@@ -139,39 +140,39 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">创建密码红包</h5>
+        <h5 class="modal-title"><%= t('dashboard.index.create_encrypted_packet') %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <i class="las la-times"></i>
         </button>
       </div>
       <form id="form_create_room">
+        <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
         <div class="modal-body">
           <div class="form-group">
-            <label>红包金额</label>
-            <select class="form-control" required>
-              <option value="1">100.00 USDT</option>
+            <label><%= t('dashboard.index.packet_usdt') %></label>
+            <select name="game_room[game_id]" class="form-control" required>
             </select>
           </div>
           <div class="form-group">
-            <label>最低红包账户余额</label>
+            <label><%= t('dashboard.index.min_balance_required') %></label>
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="0.00" required>
+              <input name="game_room[min_usdt_amount]" type="text" class="form-control" placeholder="0.00" required>
               <div class="input-group-append">
                 <span class="input-group-text">USDT</span>
               </div>
             </div>
           </div>
           <div class="form-group">
-            <label>踩雷人数</label>
-            <input type="number" min="1" class="form-control" placeholder="最小为1，最大为红包参与人数减1" required>
+            <label><%= t('dashboard.index.loser_amount') %></label>
+            <input name="game_room[loser_amount]" type="number" min="1" class="form-control" placeholder="<%= t('dashboard.index.loser_amount_tip') %>" required>
           </div>
           <div class="form-group">
-            <label>红包密码</label>
-            <input type="text" class="form-control" required>
+            <label><%= t('dashboard.index.packet_password') %></label>
+            <input name="game_room[password]" type="text" class="form-control" required>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary btn-block btn-rounded ladda-button" data-style="zoom-in">提交</button>
+          <button type="submit" class="btn btn-primary btn-block btn-rounded ladda-button" data-style="zoom-in"><%= t('tips.submit') %></button>
         </div>
       </form>
     </div>
@@ -194,7 +195,7 @@
                 else
                     item_html = '<div class="text-center m-l-2" style="flex: 1">';
                 let item = data[i];
-                item_html += '<div class="card" onclick="join_gain(' + i + ')">' +
+                item_html += '<div class="card" onclick="join_game(' + i + ')">' +
                     '<div class="card-header bg-primary text-white text-center">' +
                     item.usdt_amount + ' USDT' +
                     '</div>' +
@@ -203,6 +204,7 @@
                     '</div>' +
                     '</div>';
                 $('#' + row_id).append(item_html);
+                $('#form_create_room select[name="game_room[game_id]"]').append('<option value="' + item.id + '">' + item.usdt_amount + ' USDT, ' + item.player_amount_display + '</option>');
             }
         });
     }
@@ -216,7 +218,7 @@
         });
     }
 
-    function join_gain(index) {
+    function join_game(index) {
         if (red_packets) {
             let game = red_packets[index];
             $('#span_join_game_usdt').text(game.usdt_amount);
@@ -329,5 +331,23 @@
         get_last_notice();
         get_red_packets();
         get_joined_games();
+
+        $('#form_create_room').submit(function () {
+            let l = $('#form_create_room button[type="submit"]').ladda();
+            l.ladda('start');
+
+            Business.submit_form(
+                '/game_rooms/create', 'form_create_room',
+                function (data) {
+                    l.ladda('stop');
+                    location.href = '/game_rooms/show?id=' + data.id;
+                }, function (err) {
+                    l.ladda('stop');
+                    swal('<%= t('errors.error') %>', err.msg, 'error');
+                }
+            );
+
+            return false;
+        });
     }
 </script>

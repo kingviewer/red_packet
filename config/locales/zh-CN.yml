@@ -49,12 +49,15 @@ zh-CN:
     new:
       connecting_wallet: 正在连接钱包...
   game_rooms:
+    show:
+      game_room_id: 房间号
+      join_now: 立即参与
     create:
       game_not_exist: 该红包金额不存在
       min_usdt_amount_less_than_game_required: 最低保证金不应低于红包金额
       in_room_not_to_create: 您当前正在参与一个密码红包，不可再次创建密码红包
       usdt_available_less_than_min: 您的USDT可用余额小于要创建的密码房的最低保证金
-      loser_amount_lager_than_player_amount: 输家数量应小于玩家数量
+      loser_amount_lager_than_player_amount: 输家数量应小于玩家数量且大于等于1
     query:
       room_not_exist: 该密码红包不存在或已结束
     enter:
@@ -122,6 +125,13 @@ zh-CN:
       playing_records: 参与记录
       apply_agent: 申请代理
       apply_vip: 申请VIP
+      join_encrypted_packet: 参与密码红包
+      create_encrypted_packet: 创建密码红包
+      packet_usdt: 红包金额
+      min_balance_required: 最低红包账户余额
+      loser_amount: 踩雷人数
+      loser_amount_tip: 最小为1，最大为红包参与人数减1
+      packet_password: 红包密码
   deposits:
     create:
       tx_hash_exists: 该比托管已提交过，请勿重复提交

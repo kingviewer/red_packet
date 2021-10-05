@@ -1,16 +1,16 @@
 <div class="row m-t-15">
   <div class="col-12 text-center">
-    <span><span class="text-warning font-30">100</span><span class="text-warning">.00</span> USDT</span>
+    <span><span class="text-warning font-30" id="span_usdt_amount">-</span> USDT</span>
   </div>
-  <div class="col-12 text-center">进行中...</div>
+  <div class="col-12 text-center"><%= t('.game_room_id') %>: <span class="text-primary" id="span_room_id">-</span></div>
   <div class="col-12 m-t-10 p-l-20 p-r-20">
     <div class="progress br-30">
-      <div class="progress-bar br-0 progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 50%"></div>
+      <div id="progress" class="progress-bar br-0 progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%"></div>
     </div>
   </div>
-  <div class="col-12 text-center">25/100 人</div>
+  <div class="col-12 text-center" id="span_person"><%= t('user_game_rounds.index.person_number', number: '-') %></div>
   <div class="col-12">
-    <button type="button" class="btn btn-primary btn-block btn-rounded m-t-15">立即参与</button>
+    <button id="btn_join_now" type="button" class="btn btn-primary btn-block btn-rounded m-t-15"><%= t('.join_now') %></button>
   </div>
 </div>
 
@@ -162,13 +162,45 @@
 </div>
 
 <script>
+    let has_joined = false;
+    <% if @room_id %>
+    let room_id = <%= @room_id %>;
+    <% else %>
+    let room_id;
+    <% end %>
+
+    function get_room_info() {
+        if (room_id)
+            Business.get(
+                '/game_rooms/query', {id: room_id},
+                function (data) {
+                    has_joined = data.joined;
+                    $('#span_usdt_amount').text(data.usdt_amount);
+                    $('#span_room_id').text(data.id);
+                    $('#progress').css('width: ' + data.progress + '%');
+                    $('#span_person').text(data.player_amount_display);
+                }
+            );
+        else
+            swal('<%= t('errors.error') %>', '<%= t('errors.invalid_params') %>', 'error');
+    }
+
     function show_players() {
-      $('#modal_players').modal('show');
+        $('#modal_players').modal('show');
+    }
+
+    function on_exit() {
+        if (has_joined) {
+
+        }
     }
 
     $(function () {
+        $('#top_left_back').attr('onclick', 'on_exit();');
         set_top_btn('<i class="la la-users"></i>', function () {
             show_players();
         });
+
+        get_room_info();
     });
 </script>

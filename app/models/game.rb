@@ -48,13 +48,15 @@ class Game < ApplicationRecord
         )
         AssetFlow.create(
           user_id: loser.id,
-          asset_type: :usdt,
+          account_type: :packet,
+          asset_type: :cigar,
           flow_type: :lose,
           amount: -usdt_amount
         )
         AssetFlow.create(
           user_id: loser.id,
-          asset_type: :candy,
+          account_type: :packet,
+          asset_type: :cigar,
           flow_type: :lose_reward,
           amount: candy_amount
         )
@@ -62,24 +64,26 @@ class Game < ApplicationRecord
 
       # 赢家给USDT
       winners.each do |winner|
-        User.where(winner[:user].id).update_all(
+        User.where(id: winner[:user].id).update_all(
           ['packet_usdt_available = packet_usdt_available + ?, packet_usdt_frozen = packet_usdt_frozen - ?',
            usdt_amount + winner[:win], usdt_amount]
         )
         AssetFlow.create(
           user_id: winner[:user].id,
+          account_type: :packet,
           asset_type: :usdt,
           flow_type: :win,
           amount: winner[:win]
         )
         # 直推
         if (parent = winner[:user].parent)
-          reward_amount = (winners[:win] * global_config.parent_reward_rate).floor(6)
+          reward_amount = (winner[:win] * global_config.parent_reward_rate).floor(6)
           if reward_amount > 0
             User.where(id: parent.id).update_all(['packet_usdt_available = packet_usdt_available + ?', reward_amount])
             AssetFlow.create(
               user_id: parent.id,
               asset_type: :usdt,
+              account_type: :packet,
               flow_type: :parent_reward,
               amount: reward_amount
             )
@@ -87,11 +91,12 @@ class Game < ApplicationRecord
 
           # 间推
           if (grand = parent.parent)
-            reward_amount = (winners[:win] * global_config.grand_reward_rate).floor(6)
+            reward_amount = (winner[:win] * global_config.grand_reward_rate).floor(6)
             if reward_amount > 0
               User.where(id: grand.id).update_all(['packet_usdt_available = packet_usdt_available + ?', reward_amount])
               AssetFlow.create(
                 user_id: grand.id,
+                account_type: :packet,
                 asset_type: :usdt,
                 flow_type: :grand_reward,
                 amount: reward_amount
@@ -101,13 +106,14 @@ class Game < ApplicationRecord
         end
 
         # 代理
-        if (agent = (winner[:user].agent))
+        if (agent = (winner[:user].first_agent))
           reward_amount = winner[:win] * agent.agent_commission_rate
           if reward_amount > 0
             User.where(id: agent.id).update_all(['packet_usdt_available = packet_usdt_available + ?', reward_amount])
             AssetFlow.create(
               user_id: agent.id,
               asset_type: :usdt,
+              account_type: :packet,
               flow_type: :agent_reward,
               amount: reward_amount
             )

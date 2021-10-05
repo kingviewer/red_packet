@@ -3,7 +3,7 @@ class User < ApplicationRecord
   enum state: [:normal, :locked]
 
   belongs_to :parent, foreign_key: :parent_id, class_name: 'User', required: false
-  belongs_to :agent, foreign_key: :agent_id, class_name: 'User', required: false
+  belongs_to :first_agent, foreign_key: :agent_id, class_name: 'User', required: false
   has_one :user_session
   has_many :children, foreign_key: :parent_id, class_name: 'User'
   has_many :game_room

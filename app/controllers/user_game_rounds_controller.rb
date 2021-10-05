@@ -17,6 +17,7 @@ class UserGameRoundsController < BaseUserController
         usdt_won: LZUtils.format_coin(round.usdt_won),
         loser: round.loser,
         desc: "#{LZUtils.format_coin(round.usdt_frozen)} USDT, #{t('user_game_rounds.index.person_number', number: round.game_round.game.player_amount)}",
+        packet_type: round.game_round.game_room.nil? ? t('.index.normal_packet') : t('.index.password_packet'),
         created_at: round.formatted_created_at
       }
     end
