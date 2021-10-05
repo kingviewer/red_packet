@@ -87,8 +87,8 @@ class GamesController < BaseUserController
           end
         end
       rescue => e
-        puts e.message
-        puts e.backtrace
+        Rails.logger.error e.message
+        Rails.logger.error e.backtrace.join("\n")
         error(e.message)
       end
     end
