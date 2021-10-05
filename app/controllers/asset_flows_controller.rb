@@ -19,7 +19,7 @@ class AssetFlowsController < BaseUserController
         id: flow.id,
         flow_type: flow.flow_type,
         flow_type_name: flow.flow_type_name,
-        amount: "#{flow.amount < 0 ? '-' : ''}#{LZUtils.format_coin(flow.amount)}",
+        amount: "#{flow.amount > 0 ? '+' : ''}#{LZUtils.format_coin(flow.amount)}",
         created_at: flow.formatted_created_at
       }
     end
