@@ -87,6 +87,8 @@ class GamesController < BaseUserController
           end
         end
       rescue => e
+        puts e.message
+        puts e.backtrace
         error(e.message)
       end
     end
