@@ -41,16 +41,16 @@ class Game < ApplicationRecord
 
       # 输家给Candy
       losers.each do |loser|
-        candy_amount = (game.usdt_amount * 0.01 / global_config.cigar_usdt_price).floor(6)
+        candy_amount = (usdt_amount * 0.01 / global_config.cigar_usdt_price).floor(6)
         User.where(id: loser.id).update_all(
-          ['packet_usdt_frozen = packet_usdt_frozen - ?, candy_available = candy_available + ?', game.usdt_amount,
+          ['packet_usdt_frozen = packet_usdt_frozen - ?, candy_available = candy_available + ?', usdt_amount,
            candy_amount]
         )
         AssetFlow.create(
           user_id: loser.id,
           asset_type: :usdt,
           flow_type: :lose,
-          amount: -game.usdt_amount
+          amount: -usdt_amount
         )
         AssetFlow.create(
           user_id: loser.id,
@@ -64,7 +64,7 @@ class Game < ApplicationRecord
       winners.each do |winner|
         User.where(winner[:user].id).update_all(
           ['packet_usdt_available = packet_usdt_available + ?, packet_usdt_frozen = packet_usdt_frozen - ?',
-           game.usdt_amount + winner[:win], game.usdt_amount]
+           usdt_amount + winner[:win], usdt_amount]
         )
         AssetFlow.create(
           user_id: winner[:user].id,
