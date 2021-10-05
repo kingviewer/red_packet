@@ -84,36 +84,6 @@
   </div>
 </div>
 
-<div class="modal fade" id="modal_joined_game" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">匹配红包</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <i class="las la-times"></i>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-12 text-center">
-            <span><span class="text-warning font-30">100</span><span class="text-warning">.00</span> USDT</span>
-          </div>
-          <div class="col-12 text-center">匹配中...</div>
-          <div class="col-12 m-t-10">
-            <div class="progress br-30">
-              <div class="progress-bar br-0 progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 50%"></div>
-            </div>
-          </div>
-          <div class="col-12 text-center">25/100 人</div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-block btn-rounded" disabled>拆红包</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="modal fade" id="modal_room_option" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -257,10 +227,6 @@
         }
     }
 
-    function show_joined_game(id) {
-        $('#modal_joined_game').modal('show');
-    }
-
     function choose_room_option() {
         $('#modal_room_option').modal('show');
     }
@@ -287,7 +253,7 @@
                     '<span class="text-primary font-15">' + data.usdt_amount + ' USDT/' + data.player_amount_display + '</span>' +
                     '<span class="float-right text-danger font-12"><i class="las la-clock"></i> ' + data.created_at + '</span>' +
                     '<span class="font-12 mb-0 text-muted"><%= t('dashboard.index.processing') %></span>' +
-                    '<a class="float-right text-gray font-12" href="/games/index?id=' + data.id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
+                    '<a class="float-right text-gray font-12" href="/games/show?id=' + data.id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
                     '</div>');
                 subscribe_game(game_id);
             }, function (data) {
@@ -338,7 +304,7 @@
                             '<span class="text-primary font-15">' + item.usdt_amount + ' USDT/' + item.player_amount_display + '</span>' +
                             '<span class="float-right text-danger font-12"><i class="las la-clock"></i> <span class="time">' + item.created_at + '</span></span>' +
                             '<br><span class="font-12 mb-0 text-muted desc"><%= t('dashboard.index.processing') %></span>' +
-                            '<a class="float-right text-gray font-12" href="/games/index?id=' + item.id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
+                            '<a class="float-right text-gray font-12" href="/games/show?id=' + item.id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
                             '</div>';
                     }
                     $('#joined_list').html(html);
