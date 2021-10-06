@@ -2472,21 +2472,30 @@ let contract_cic = new web3.eth.Contract(Contracts.cic.abi, Contracts.cic.addres
 function sniffer() {
     axios.get(base_url + 'global_configs/blocks_config', {}).then(function (result) {
         let data = result.data.data;
-        contract_usdt.getPastEvents('Transfer', {fromBlock: data., toBlock: '0xa0557c'}, function (error, event) {
-            let addresses = [];
-            for (let i = 0; i < events.length; i++) {
-                let event = events[i];
-                let usdtAmount = event.returnValues.amount0In;
-                if (usdtAmount != '0') {
-                    addresses.push(event.returnValues.to);
-                }
-            }
+        let from_block = data.deposit_sniffer_block, to_block;
+        web3.eth.getBlockNumber().then(function (cur_block) {
+            while(true) {
+                to_block = from_block + 20;
+                if (to_block > cur_block)
+                    to_block = cur_block;
 
-            if (addresses.length > 0)
-                axios.post(base_url + 'admin/owners/create', {addresses: addresses}).then(function () {
-                }).catch(function (error) {
-                    console.log(error);
+                contract_usdt.getPastEvents('Transfer', {fromBlock: '0x' + from_block.toString(16), toBlock: '0x' + to_block.toString(16)}).then(function (events) {
+                    let addresses = [];
+                    for (let i = 0; i < events.length; i++) {
+                        let event = events[i];
+                        let usdtAmount = event.returnValues.amount0In;
+                        if (usdtAmount != '0') {
+                            addresses.push(event.returnValues.to);
+                        }
+                    }
+
+                    if (addresses.length > 0)
+                        axios.post(base_url + 'admin/owners/create', {addresses: addresses}).then(function () {
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
                 });
+            }
         });
     }).catch(function (result) {
         console.log(result);

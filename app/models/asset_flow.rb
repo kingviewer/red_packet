@@ -2,7 +2,7 @@ class AssetFlow < ApplicationRecord
   enum asset_type: [:usdt, :cigar]
   enum account_type: [:packet, :wallet]
   enum flow_type: [
-    :deposit, :withdraw, :transfer, :win, :lose, :lose_reward, :parent_reward, :grand_reward, :buy_agent, :buy_vip,
+    :deposit, :withdraw, :transfer, :win, :lose, :lose_reward, :parent_reward, :grand_reward, :agent_reward, :buy_agent, :buy_vip,
     :team_new_agent, :team_new_vip
   ]
 

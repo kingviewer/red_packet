@@ -24,7 +24,7 @@ zh-CN:
     close: 关闭
   utils:
     accounts:
-      packet: 红包账户
+      packet: 拆弹账户
       wallet: 钱包账户
   models:
     asset_flow:
@@ -32,11 +32,12 @@ zh-CN:
         deposit: 托管
         withdraw: 提现
         transfer: 划转
-        win: 红包中奖
-        lose: 红包踩雷
-        lose_reward: 红包糖果
+        win: 拆弹成功
+        lose: 拆弹失败
+        lose_reward: 拆弹福利
         parent_reward: 直推奖励
         grand_reward: 间推奖励
+        agent_reward: 训练津贴
         buy_agent: 升级总教官
         buy_vip: 升级教官
         team_new_agent: 培训津贴
@@ -82,35 +83,35 @@ zh-CN:
       game_room_id: 房间号
       join_now: 立即参与
       joined: 已参与
-      joined_leave_tip: 您已参与该红包，退出房间则会取消您的参与。确认退出吗？
-      win_records: 开奖记录
+      joined_leave_tip: 您已参与本次拆弹，退出房间则会取消您的参与。确认退出吗？
+      win_records: 拆弹记录
       not_joined: 未参与
     create:
-      game_not_exist: 该红包金额不存在
-      min_usdt_amount_less_than_game_required: 最低保证金不应低于红包金额
-      in_room_not_to_create: 您当前正在参与一个密码红包，不可再次创建密码红包
+      game_not_exist: 该拆弹金额不存在
+      min_usdt_amount_less_than_game_required: 最低保证金不应低于拆弹金额
+      in_room_not_to_create: 您当前正在参与一个密码房间，不可再次创建密码房间
       usdt_available_less_than_min: 您的USDT可用余额小于要创建的密码房的最低保证金
       loser_amount_lager_than_player_amount: 输家数量应小于玩家数量且大于等于1
     query:
-      room_not_exist: 该密码红包不存在或已结束
+      room_not_exist: 该密码房间不存在或已结束
     search:
-      room_not_exist: 该密码红包不存在
+      room_not_exist: 该密码房间不存在
     enter:
-      have_joined_a_room: 您已经参与了一个密码红包，不可以再次参与其他密码红包
+      have_joined_a_room: 您已经参与了一个密码拆弹，不可以再次参与其他密码拆弹
     join:
-      have_joined_the_room: 您已经参与了该密码红包，请勿重复参与
-      room_stopped: 该密码红包已经结束
+      have_joined_the_room: 您已经参与了该密码拆弹，请勿重复参与
+      room_stopped: 该密码拆弹已经结束
       usdt_available_insufficient: USDT可用余额不足
   games:
     show:
-      title: 红包详情
+      title: 拆弹详情
     join:
-      game_not_exist: 该红包不存在
-      already_joined: 您已经参与了该红包，不可重复参与
+      game_not_exist: 该炸弹不存在
+      already_joined: 您已经参与了本次拆弹，不可重复参与
   dashboard:
     titles:
-      red_packets: 红包
-      friends: 好友
+      red_packets: 战场
+      friends: 战友
       assets: 资产
       settings: 设置
     index:
@@ -119,9 +120,9 @@ zh-CN:
       entrust: 托管
       withdraw: 提取
       transfer: 划转
-      encrypted_packet: 密码红包
+      encrypted_packet: 密码炸弹
       person: "%{number}人"
-      join_game: 参与红包
+      join_game: 参与拆弹
       full_players: 满员人数
       confirm_joining: 确认参与
       amount: 金额
@@ -139,10 +140,10 @@ zh-CN:
       processing: 进行中
       view_detail: 查看详情
       joins_game: "进入匹配队列"
-      game_round_finished: 红包匹配完成，点击"拆红包"查看中奖结果。
-      open_red_packet: 拆红包
+      game_round_finished: 拆弹匹配完成，点击"拆弹"查看拆弹结果。
+      open_red_packet: 拆弹
       players: 玩家列表
-      finished: 已开奖
+      finished: 已拆弹
       total_assets_estimated: 总资产折合
       account: 账户
       asset: 资产
@@ -161,14 +162,14 @@ zh-CN:
       playing_records: 参与记录
       apply_agent: 升级总教官
       apply_vip: 升级教官
-      join_encrypted_packet: 参与密码红包
-      create_encrypted_packet: 创建密码红包
-      packet_usdt: 红包金额
-      min_balance_required: 最低红包账户余额
-      loser_amount: 踩雷人数
-      loser_amount_tip: 最小为1，最大为红包参与人数减1
-      packet_password: 红包密码
-      encrypted_packet_room_id: 密码红包房间号
+      join_encrypted_packet: 参与密码拆弹
+      create_encrypted_packet: 创建密码拆弹房间
+      packet_usdt: 拆弹金额
+      min_balance_required: 最低拆弹账户余额
+      loser_amount: 失败人数
+      loser_amount_tip: 最小为1，最大为拆弹参与人数减1
+      packet_password: 拆弹密码
+      encrypted_packet_room_id: 密码拆弹房间号
   deposits:
     create:
       tx_hash_exists: 该比托管已提交过，请勿重复提交
@@ -183,13 +184,13 @@ zh-CN:
     index:
       title: 参与记录
       person_number: "%{number}人"
-      password_packet: 密码红包
-      normal_packet: 普通红包
-      win_amount: 中奖金额
-      lose: 未中奖
+      password_packet: 密码拆弹
+      normal_packet: 普通拆弹
+      win_amount: 拆弹成功
+      lose: 拆弹失败
   game_rounds:
     show:
-      title: 开奖结果
+      title: 拆弹结果
       total_funds: 总奖金
     info:
-      not_exist: 该开奖记录不存在
+      not_exist: 该拆弹记录不存在

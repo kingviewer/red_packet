@@ -2,8 +2,8 @@ class GlobalConfigsController < ApplicationController
   def blocks_config
     g = GlobalConfig.first
     success(
-      deposit_sniffer_block: { from: g.deposit_sniffer_block, to: g.deposit_sniffer_block + 99 },
-      inner_deposit_sniffer_block: { from: g.inner_deposit_sniffer_block, to: g.inner_deposit_sniffer_block + 99 }
+      deposit_sniffer_block: g.deposit_sniffer_block,
+      inner_deposit_sniffer_block: g.inner_deposit_sniffer_block
     )
   end
 

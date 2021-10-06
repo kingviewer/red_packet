@@ -21,7 +21,7 @@ class Game < ApplicationRecord
       end
 
       # 确定赢家赢得金额
-      total_usdt = usdt_amount * players.length
+      total_usdt = usdt_amount * loser_amount
       fee = (total_usdt * global_config.fee_rate).ceil(6)
       total_usdt -= fee
       rands = []
@@ -49,7 +49,7 @@ class Game < ApplicationRecord
         AssetFlow.create(
           user_id: loser.id,
           account_type: :packet,
-          asset_type: :cigar,
+          asset_type: :usdt,
           flow_type: :lose,
           amount: -usdt_amount
         )
@@ -75,53 +75,46 @@ class Game < ApplicationRecord
           flow_type: :win,
           amount: winner[:win]
         )
-        winner[:user].add_team_flow(winner[:win])
+        winner[:user].reward_flow(winner[:win])
 
         # 直推
         if (parent = winner[:user].parent)
-          reward_amount = (winner[:win] * global_config.parent_reward_rate).floor(6)
-          if reward_amount > 0
-            User.where(id: parent.id).update_all(['packet_usdt_available = packet_usdt_available + ?', reward_amount])
-            AssetFlow.create(
-              user_id: parent.id,
-              asset_type: :usdt,
-              account_type: :packet,
-              flow_type: :parent_reward,
-              amount: reward_amount
-            )
-          end
-
-          # 间推
-          if (grand = parent.parent)
-            reward_amount = (winner[:win] * global_config.grand_reward_rate).floor(6)
+          if parent.vip? || parent.agent?
+            reward_amount = (winner[:win] * global_config.parent_reward_rate).floor(6)
             if reward_amount > 0
-              User.where(id: grand.id).update_all(['packet_usdt_available = packet_usdt_available + ?', reward_amount])
+              User.where(id: parent.id).update_all(['packet_usdt_available = packet_usdt_available + ?', reward_amount])
               AssetFlow.create(
-                user_id: grand.id,
-                account_type: :packet,
+                user_id: parent.id,
                 asset_type: :usdt,
-                flow_type: :grand_reward,
+                account_type: :packet,
+                flow_type: :parent_reward,
                 amount: reward_amount
               )
             end
           end
-        end
 
-        # 代理
-        if (agent = (winner[:user].first_agent))
-          reward_amount = winner[:win] * agent.agent_commission_rate
-          if reward_amount > 0
-            User.where(id: agent.id).update_all(['packet_usdt_available = packet_usdt_available + ?', reward_amount])
-            AssetFlow.create(
-              user_id: agent.id,
-              asset_type: :usdt,
-              account_type: :packet,
-              flow_type: :agent_reward,
-              amount: reward_amount
-            )
+          # 间推
+          if (grand = parent.parent)
+            if grand.vip? || grand.agent?
+              reward_amount = (winner[:win] * global_config.grand_reward_rate).floor(6)
+              if reward_amount > 0
+                User.where(id: grand.id).update_all(['packet_usdt_available = packet_usdt_available + ?', reward_amount])
+                AssetFlow.create(
+                  user_id: grand.id,
+                  account_type: :packet,
+                  asset_type: :usdt,
+                  flow_type: :grand_reward,
+                  amount: reward_amount
+                )
+              end
+            end
           end
-          User.where(id: agent.id).update_all(['team_usdt_flow = team_usdt_flow + ?', winner[:win]])
         end
+      end
+
+      # 加流水
+      winners.each do |winner|
+        winner[:user].add_team_flow(winner[:win])
       end
 
       {

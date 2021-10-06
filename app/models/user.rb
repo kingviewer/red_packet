@@ -3,7 +3,6 @@ class User < ApplicationRecord
   enum state: [:normal, :locked]
 
   belongs_to :parent, foreign_key: :parent_id, class_name: 'User', required: false
-  belongs_to :first_agent, foreign_key: :agent_id, class_name: 'User', required: false
   has_one :user_session
   has_many :children, foreign_key: :parent_id, class_name: 'User'
   has_many :game_room
@@ -51,22 +50,17 @@ class User < ApplicationRecord
   end
 
   def add_team_flow(amount)
-    User.where(id: id).update(['team_usdt_flow = team_usdt_flow + ?', amount]) if agent?
+    User.where(id: id).update_all(['team_usdt_flow = team_usdt_flow + ?', amount]) if agent?
     parent&.add_team_flow(amount)
   end
 
-  # 用户购买代理，往上奖励
-  def reward_buying_role(amount, flow_type, asset_type)
+  # 红包流水，代理往上奖励
+  def reward_flow(amount)
     prev_rate = 0
     same_rewarded = false
     prev_reward_amount = 0
     dst_user = parent
-    field_name =
-      if asset_type == :usdt
-        'packet_usdt_available'
-      else
-        'candy_available'
-      end
+    field_name = 'packet_usdt_available'
     loop do
       if dst_user.agent?
         rate = dst_user.agent_commission_rate
@@ -77,8 +71,8 @@ class User < ApplicationRecord
           AssetFlow.create(
             user_id: dst_user.id,
             account_type: :packet,
-            asset_type: asset_type,
-            flow_type: flow_type,
+            asset_type: :usdt,
+            flow_type: :agent_reward,
             amount: reward_amount
           )
           prev_rate = rate
@@ -89,8 +83,8 @@ class User < ApplicationRecord
           AssetFlow.create(
             user_id: dst_user.id,
             account_type: :packet,
-            asset_type: asset_type,
-            flow_type: flow_type,
+            asset_type: :usdt,
+            flow_type: :agent_reward,
             amount: reward_amount
           )
           break if rate == MAX_COMMISSION_RATE
@@ -98,7 +92,17 @@ class User < ApplicationRecord
         end
       end
       break unless (dst_user = dst_user.parent)
-    end
+    end if dst_user
+  end
+
+  def reward_new_buy(amount, asset_type, flow_type)
+    dst_user = parent
+    8.times do |i|
+      reward_amount =
+        if i == 0
+          (amount * 0.4).floor(6)
+        end
+    end if dst_user
   end
 
   private
