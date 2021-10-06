@@ -75,6 +75,8 @@ class Game < ApplicationRecord
           flow_type: :win,
           amount: winner[:win]
         )
+        winner[:user].add_team_flow(winner[:win])
+
         # 直推
         if (parent = winner[:user].parent)
           reward_amount = (winner[:win] * global_config.parent_reward_rate).floor(6)

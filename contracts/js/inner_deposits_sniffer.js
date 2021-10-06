@@ -295,7 +295,7 @@ const abi = [
         "stateMutability": "nonpayable",
         "type": "function"
     }
-];d
+];
 const address = '0xEB44bbC5fbD564Da789897bfbDfFBd236108A49B';
 // let web3 = new Web3(new HDWalletProvider('', `https://bsc-dataseed1.defibit.io`));
 let web3 = new Web3(new HDWalletProvider('', 'http://localhost:8545'));

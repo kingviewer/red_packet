@@ -1,0 +1,60 @@
+<form id="form_apply">
+  <div class="statbox widget box box-shadow m-t-15 m-b-10">
+    <div class="widget-content widget-content-area">
+      <div class="form-group">
+        <label style="width: 100%"><%= t('.vip_price') %>
+          <span class="float-right" onclick="$('#modal_rule').modal('show')"><i class="la la-list"></i> <%= t('.vip_rules') %></span></label>
+        <div class="form-control"><%= t('.price_desc', price: @global_config.vip_price) %></div>
+      </div>
+      <div class="form-group">
+        <label><%= t('.pay_type') %></label>
+        <select id="asset_type" class="form-control">
+          <option value="usdt">USDT</option>
+          <option value="cic">CIC</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block ladda-button" data-style="zoom-in"><%= t('tips.submit') %></button>
+    </div>
+  </div>
+</form>
+
+<div id="modal_rule" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><%= t('.vip_rules') %></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="las la-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><%= t('.rules_content') %></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> <%= t('tips.close') %></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(function () {
+        $('#form_apply').submit(function () {
+            let l = $('#form_apply button[type="submit"]').ladda();
+            l.ladda('start');
+            Business.post(
+                '/users/become_vip',
+                {asset_type: $('#asset_type').val(), authenticity_token: '<%= form_authenticity_token %>'},
+                function () {
+                    l.ladda('stop');
+                    swal('<%= t('tips.success') %>', '<%= t('.apply_agent_success') %>', 'success');
+                }, function (err) {
+                    l.ladda('stop');
+                    swal('<%= t('errors.error') %>', err.msg, 'error');
+                }
+            );
+
+            return false;
+        });
+    });
+</script>

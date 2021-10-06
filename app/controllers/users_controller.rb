@@ -1,9 +1,22 @@
 class UsersController < BaseUserController
-  before_action :ajax_auth_user, only: [:my_info, :my_friends]
+  before_action :auth_user, only: [:apply_agent, :apply_vip]
+  before_action :ajax_auth_user, only: [:my_info, :my_friends, :become_agent, :become_vip]
 
   def new
     @parent = User.find_by_invite_code(params[:pid]) unless params[:pid].blank?
     render layout: 'user_sessions'
+  end
+
+  def apply_agent
+    @title = t('dashboard.index.apply_agent')
+    @global_config = GlobalConfig.first
+    render layout: 'user'
+  end
+
+  def apply_vip
+    @title = t('dashboard.index.apply_vip')
+    @global_config = GlobalConfig.first
+    render layout: 'user'
   end
 
   def choose_lang
@@ -39,6 +52,7 @@ class UsersController < BaseUserController
       invite_code: cur_user.invite_code,
       address: cur_user.encrypted_address,
       role: cur_user.role,
+      role_name: cur_user.role_name,
       chain_usdt: cur_user.chain_usdt_available,
       chain_usdt_display: LZUtils.format_coin(cur_user.chain_usdt_available),
       packet_usdt_available: cur_user.packet_usdt_available,
@@ -74,5 +88,97 @@ class UsersController < BaseUserController
       }
     end
     success(data)
+  end
+
+  def become_agent
+    global_config = GlobalConfig.first
+    cur_user.with_lock do
+      if cur_user.agent?
+        error(t('.already_agent'))
+      else
+        if params[:asset_type] == 'usdt'
+          if cur_user.packet_usdt_available < global_config.agent_price
+            error(t('dashboard.index.balance_insufficient'))
+          else
+            cur_user.packet_usdt_available -= global_config.agent_price
+            cur_user.role = :agent
+            cur_user.save
+            AssetFlow.create(
+              user_id: cur_user.id,
+              asset_type: :usdt,
+              account_type: :packet,
+              flow_type: :buy_agent,
+              amount: -global_config.agent_price
+            )
+            cur_user.reward_buying_role(global_config.agent_price, :team_new_agent, :usdt)
+            success
+          end
+        else
+          cic_price = global_config.agent_price * 0.5 / global_config.cigar_usdt_price
+          if cur_user.candy_available < cic_price
+            error(t('dashboard.index.balance_insufficient'))
+          else
+            cur_user.candy_available -= cic_price
+            cur_user.role = :agent
+            cur_user.save
+            AssetFlow.create(
+              user_id: cur_user.id,
+              asset_type: :cigar,
+              account_type: :packet,
+              flow_type: :buy_agent,
+              amount: -cic_price
+            )
+            cur_user.reward_buying_role(cic_price, :team_new_vip, :cigar)
+            success
+          end
+        end
+      end
+    end
+  end
+
+  def become_vip
+    global_config = GlobalConfig.first
+    cur_user.with_lock do
+      if cur_user.vip?
+        error(t('.already_vip'))
+      elsif cur_user.agent?
+        error(t('.already_agent'))
+      else
+        if params[:asset_type] == 'usdt'
+          if cur_user.packet_usdt_available < global_config.vip_price
+            error(t('dashboard.index.balance_insufficient'))
+          else
+            cur_user.packet_usdt_available -= global_config.vip_price
+            cur_user.role = :vip
+            cur_user.save
+            AssetFlow.create(
+              user_id: cur_user.id,
+              asset_type: :usdt,
+              account_type: :packet,
+              flow_type: :buy_vip,
+              amount: -global_config.vip_price
+            )
+            success
+          end
+        else
+          cic_price = global_config.vip_price * 0.5 / global_config.cigar_usdt_price
+          if cur_user.candy_available < cic_price
+            error(t('dashboard.index.balance_insufficient'))
+          else
+            cur_user.candy_available -= cic_price
+            cur_user.role = :vip
+            cur_user.save
+            AssetFlow.create(
+              user_id: cur_user.id,
+              asset_type: :cigar,
+              account_type: :packet,
+              flow_type: :buy_vip,
+              amount: -cic_price
+            )
+            success
+          end
+        end
+      end
+    end
   end
 end

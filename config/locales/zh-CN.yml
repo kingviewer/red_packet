@@ -21,6 +21,7 @@ zh-CN:
     confirm_operation: 确认操作
     cancel: 取消
     submit: 提交
+    close: 关闭
   utils:
     accounts:
       packet: 红包账户
@@ -36,6 +37,15 @@ zh-CN:
         lose_reward: 红包糖果
         parent_reward: 直推奖励
         grand_reward: 间推奖励
+        buy_agent: 升级总教官
+        buy_vip: 升级教官
+        team_new_agent: 培训津贴
+        team_new_vip: 培训津贴
+    user:
+      roles:
+        user: 新兵
+        vip: 教官
+        agent: 总教官
   users:
     new:
       sign_up_tip: 请输入您的邀请人ID进行注册
@@ -45,6 +55,25 @@ zh-CN:
     create:
       parent_not_exist: 邀请人不存在
       address_already_exists: 该地址已经注册
+    apply_agent:
+      agent_price: 费用
+      price_desc: "%{price} USDT 或 (50%价值的CIC)"
+      pay_type: 支付类型
+      agent_rules: 总教官规则
+      rules_content: 总教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则
+      apply_agent_success: 升级总教官成功
+    apply_vip:
+      vip_price: 费用
+      price_desc: "%{price} USDT 或 (50%价值的CIC)"
+      pay_type: 支付类型
+      vip_rules: 教官规则
+      rules_content: 教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则
+      apply_agent_success: 升级宗教官成功
+    become_agent:
+      already_agent: 您已经是总教官，无需再次升级
+    become_vip:
+      already_vip: 您已经是教官，请勿重复升级
+      already_agent: 您是总教官，无需升级教官
   user_sessions:
     new:
       connecting_wallet: 正在连接钱包...
@@ -125,12 +154,13 @@ zh-CN:
       friends_amount: 好友数
       exchange: 切换
       address: 地址
+      role: 角色
       language: 语言
       system_helps: 操作指南
       playing_rules: 奖励规则
       playing_records: 参与记录
-      apply_agent: 申请代理
-      apply_vip: 申请VIP
+      apply_agent: 升级总教官
+      apply_vip: 升级教官
       join_encrypted_packet: 参与密码红包
       create_encrypted_packet: 创建密码红包
       packet_usdt: 红包金额
