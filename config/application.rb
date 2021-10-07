@@ -38,5 +38,7 @@ module RedPacket
     # set Active Job adapter to sidekiq
     config.active_job.queue_adapter = :sidekiq
     config.action_mailer.deliver_later_queue_name = :default
+
+    config.hosts << "www.bombgame.org" << "bomb-balancer-2112350548.ap-southeast-1.elb.amazonaws.com" << "4o13wqiew20.cloudfront.net"
   end
 end
