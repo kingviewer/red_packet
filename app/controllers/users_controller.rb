@@ -7,6 +7,10 @@ class UsersController < BaseUserController
     render layout: 'user_sessions'
   end
 
+  def exists
+    success(exists: User.exists?(address: params[:address]))
+  end
+
   def apply_agent
     @title = t('dashboard.index.apply_agent')
     @global_config = GlobalConfig.first

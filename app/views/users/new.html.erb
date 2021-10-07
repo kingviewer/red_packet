@@ -23,10 +23,18 @@
         getWeb3().then(res => {
             res.eth.getAccounts(function (err, result) {
                 let address = result[0];
-                $('#input_address').val(address);
-                <% if @parent %>
-                $('#input_parent').val('<%= @parent.invite_code %>');
-                <% end %>
+                Business.get('/users/exists', {address: address}, function (data) {
+                        if (data.exists)
+                            location.href = '/';
+                        else {
+                            $('#input_address').val(address);
+                            <% if @parent %>
+                            $('#input_parent').val('<%= @parent.invite_code %>');
+                            <% end %>
+                        }
+                    }
+                );
+
             });
         }).catch(function (result) {
             console.log(result);
