@@ -95,13 +95,43 @@ class User < ApplicationRecord
     end if dst_user
   end
 
-  def reward_new_buy(amount, asset_type, flow_type)
+  def reward_new_buy(vip_usdt, agent_usdt, asset_type, flow_type)
     dst_user = parent
+    vip_reward = agent_reward = 0
+    field_name =
+      if asset_type == :usdt
+        'packet_usdt_available'
+      else
+        'candy_available'
+      end
     8.times do |i|
-      reward_amount =
         if i == 0
-          (amount * 0.4).floor(6)
+          vip_reward = (vip_usdt * 0.4).floor(6)
+          agent_reward = (agent_usdt * 0.4).floor(6)
+        else
+          vip_reward = (vip_reward * 0.5).floor(6)
+          agent_reward = (agent_reward * 0.5).floor(6)
         end
+      if dst_user.vip?
+        User.where(id: dst_user.id).update_all(["#{field_name} = #{field_name} + ?", vip_reward])
+        AssetFlow.create(
+          user_id: dst_user.id,
+          asset_type: asset_type,
+          account_type: :packet,
+          flow_type: flow_type,
+          amount: vip_reward
+        )
+      elsif dst_user.agent?
+        User.where(id: dst_user.id).update_all(["#{field_name} = #{field_name} + ?", agent_reward])
+        AssetFlow.create(
+          user_id: dst_user.id,
+          asset_type: asset_type,
+          account_type: :packet,
+          flow_type: flow_type,
+          amount: agent_reward
+        )
+      end
+      break unless (dst_user = dst_user.parent)
     end if dst_user
   end
 

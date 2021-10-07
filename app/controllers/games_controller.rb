@@ -75,14 +75,16 @@ class GamesController < BaseUserController
             Game.where(id: game.id).update_all('waiter_amount = waiter_amount + 1')
             BroadcastJoinGameJob.perform_later(game, cur_user)
             game.reload
-            game.check_win
+            game_round_id = game.check_win
             success(
               id: game.id,
               usdt_amount: game.usdt_amount,
               player_amount: game.player_amount,
               player_amount_display: t('dashboard.index.person', number: game.player_amount),
               waiter_amount: game.waiter_amount,
-              created_at: waiter.formatted_created_at
+              created_at: waiter.formatted_created_at,
+              win: !game_round_id.nil?,
+              game_round_id: game_round_id
             )
           end
         end

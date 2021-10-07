@@ -158,16 +158,17 @@
                     closeOnConfirm: false,
                     closeOnCancel: true
                 }
-            ).then(function () {
-                Business.post(
-                    '/game_rooms/leave',
-                    {
-                        id: room_id,
-                        authenticity_token: '<%= form_authenticity_token %>'
-                    }, function () {
-                        history.back();
-                    }
-                );
+            ).then(function (result) {
+                if (result.value)
+                    Business.post(
+                        '/game_rooms/leave',
+                        {
+                            id: room_id,
+                            authenticity_token: '<%= form_authenticity_token %>'
+                        }, function () {
+                            history.back();
+                        }
+                    );
             });
         else
             Business.post(

@@ -151,6 +151,7 @@ class Game < ApplicationRecord
       end
       update(waiter_amount: 0)
       BroadcastGameWinJob.perform_later(self, game_round)
+      game_round.id
     end
   end
 end

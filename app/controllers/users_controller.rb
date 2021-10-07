@@ -110,11 +110,11 @@ class UsersController < BaseUserController
               flow_type: :buy_agent,
               amount: -global_config.agent_price
             )
-            cur_user.reward_buying_role(global_config.agent_price, :team_new_agent, :usdt)
+            cur_user.reward_new_buy(global_config.vip_price, global_config.agent_price, :usdt, :team_new_agent)
             success
           end
         else
-          cic_price = global_config.agent_price * 0.5 / global_config.cigar_usdt_price
+          cic_price = (global_config.agent_price * 0.5 / global_config.cigar_usdt_price).ceil(6)
           if cur_user.candy_available < cic_price
             error(t('dashboard.index.balance_insufficient'))
           else
@@ -128,7 +128,10 @@ class UsersController < BaseUserController
               flow_type: :buy_agent,
               amount: -cic_price
             )
-            cur_user.reward_buying_role(cic_price, :team_new_vip, :cigar)
+            cur_user.reward_new_buy(
+              (global_config.vip_price * 0.5 / global_config.cigar_usdt_price).ceil(6), cic_price, :cigar,
+              :team_new_agent
+            )
             success
           end
         end
@@ -158,6 +161,7 @@ class UsersController < BaseUserController
               flow_type: :buy_vip,
               amount: -global_config.vip_price
             )
+            cur_user.reward_new_buy(global_config.vip_price, global_config.vip_price, :usdt, :team_new_vip)
             success
           end
         else
@@ -175,6 +179,7 @@ class UsersController < BaseUserController
               flow_type: :buy_vip,
               amount: -cic_price
             )
+            cur_user.reward_new_buy(cic_price, cic_price, :cigar, :team_new_vip)
             success
           end
         end

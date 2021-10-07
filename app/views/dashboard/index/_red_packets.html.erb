@@ -250,13 +250,22 @@
             '/games/join', {id: game_id, authenticity_token: '<%= form_authenticity_token %>'}, function (data) {
                 l.ladda('stop');
                 $('#modal_join_game').modal('hide');
-                $('#joined_list').prepend('<div id="joined_item_' + data.id + '" class="mb-2 border-bottom border-light pb-2">' +
-                    '<span class="text-primary font-15">' + data.usdt_amount + ' USDT/' + data.player_amount_display + '</span>' +
-                    '<span class="float-right text-danger font-12"><i class="las la-clock"></i> ' + data.created_at + '</span>' +
-                    '<br><span class="font-12 mb-0 text-muted"><%= t('dashboard.index.processing') %></span>' +
-                    '<a class="float-right text-gray font-12" href="/games/show?id=' + data.id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
-                    '</div>');
-                subscribe_game(game_id);
+                if (data.win)
+                    $('#joined_list').prepend('<div id="joined_item_' + data.id + '" class="mb-2 border-bottom border-light pb-2">' +
+                        '<span class="text-primary font-15">' + data.usdt_amount + ' USDT/' + data.player_amount_display + '</span>' +
+                        '<span class="float-right text-danger font-12"><i class="las la-clock"></i> ' + data.created_at + '</span>' +
+                        '<br><span class="font-12 mb-0 text-muted"><%= t('dashboard.index.packet_finished') %></span>' +
+                        '<a class="float-right text-gray font-12" href="/game_rounds/show?id=' + data.game_round_id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
+                        '</div>');
+                else {
+                    $('#joined_list').prepend('<div id="joined_item_' + data.id + '" class="mb-2 border-bottom border-light pb-2">' +
+                        '<span class="text-primary font-15">' + data.usdt_amount + ' USDT/' + data.player_amount_display + '</span>' +
+                        '<span class="float-right text-danger font-12"><i class="las la-clock"></i> ' + data.created_at + '</span>' +
+                        '<br><span class="font-12 mb-0 text-muted"><%= t('dashboard.index.processing') %></span>' +
+                        '<a class="float-right text-gray font-12" href="/games/show?id=' + data.id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
+                        '</div>');
+                    subscribe_game(game_id);
+                }
             }, function (data) {
                 l.ladda('stop');
                 swal('<%= t('errors.error') %>', data.msg, 'error');

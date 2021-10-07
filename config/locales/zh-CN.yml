@@ -69,7 +69,7 @@ zh-CN:
       pay_type: 支付类型
       vip_rules: 教官规则
       rules_content: 教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则
-      apply_agent_success: 升级宗教官成功
+      apply_vip_success: 升级教官成功
     become_agent:
       already_agent: 您已经是总教官，无需再次升级
     become_vip:
@@ -170,6 +170,7 @@ zh-CN:
       loser_amount_tip: 最小为1，最大为拆弹参与人数减1
       packet_password: 拆弹密码
       encrypted_packet_room_id: 密码拆弹房间号
+      packet_finished: 拆弹完成
   deposits:
     create:
       tx_hash_exists: 该比托管已提交过，请勿重复提交
