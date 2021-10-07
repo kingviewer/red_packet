@@ -42,6 +42,8 @@ zh-CN:
         buy_vip: 升级教官
         team_new_agent: 培训津贴
         team_new_vip: 培训津贴
+        vip_init_reward: 教官补贴
+        agent_init_reward: 总教官补贴
     user:
       roles:
         user: 新兵

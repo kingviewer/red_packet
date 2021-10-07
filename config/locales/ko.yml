@@ -42,6 +42,8 @@ ko:
         buy_vip: 교관 승격
         team_new_agent: 교육수당
         team_new_vip: 교육수당
+        vip_init_reward: 교관 리워드
+        agent_init_reward: 장관 리워드
     user:
       roles:
         user: 사병
