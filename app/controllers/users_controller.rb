@@ -104,7 +104,9 @@ class UsersController < BaseUserController
           if cur_user.packet_usdt_available < global_config.agent_price
             error(t('dashboard.index.balance_insufficient'))
           else
+            cigar_amount = ((global_config.agent_price * 0.2) / global_config.cigar_usdt_price).floor(6)
             cur_user.packet_usdt_available -= global_config.agent_price
+            cur_user.candy_available += cigar_amount
             cur_user.role = :agent
             cur_user.save
             AssetFlow.create(
@@ -114,6 +116,13 @@ class UsersController < BaseUserController
               flow_type: :buy_agent,
               amount: -global_config.agent_price
             )
+            AssetFlow.create(
+              user_id: cur_user.id,
+              asset_type: :cigar,
+              account_type: :packet,
+              flow_type: :agent_init_reward,
+              amount: cigar_amount
+            )
             cur_user.reward_new_buy(global_config.vip_price, global_config.agent_price, :usdt, :team_new_agent)
             success
           end
@@ -122,7 +131,9 @@ class UsersController < BaseUserController
           if cur_user.candy_available < cic_price
             error(t('dashboard.index.balance_insufficient'))
           else
+            cigar_amount = (cic_price * 0.2).floor(6)
             cur_user.candy_available -= cic_price
+            cur_user.candy_available += cigar_amount
             cur_user.role = :agent
             cur_user.save
             AssetFlow.create(
@@ -131,6 +142,13 @@ class UsersController < BaseUserController
               account_type: :packet,
               flow_type: :buy_agent,
               amount: -cic_price
+            )
+            AssetFlow.create(
+              user_id: cur_user.id,
+              asset_type: :cigar,
+              account_type: :packet,
+              flow_type: :agent_init_reward,
+              amount: cigar_amount
             )
             cur_user.reward_new_buy(
               (global_config.vip_price * 0.5 / global_config.cigar_usdt_price).ceil(6), cic_price, :cigar,
@@ -155,7 +173,9 @@ class UsersController < BaseUserController
           if cur_user.packet_usdt_available < global_config.vip_price
             error(t('dashboard.index.balance_insufficient'))
           else
+            cigar_amount = ((global_config.vip_price * 0.2) / global_config.cigar_usdt_price).floor(6)
             cur_user.packet_usdt_available -= global_config.vip_price
+            cur_user.candy_available += cigar_amount
             cur_user.role = :vip
             cur_user.save
             AssetFlow.create(
@@ -165,6 +185,13 @@ class UsersController < BaseUserController
               flow_type: :buy_vip,
               amount: -global_config.vip_price
             )
+            AssetFlow.create(
+              user_id: cur_user.id,
+              asset_type: :cigar,
+              account_type: :packet,
+              flow_type: :vip_init_reward,
+              amount: cigar_amount
+            )
             cur_user.reward_new_buy(global_config.vip_price, global_config.vip_price, :usdt, :team_new_vip)
             success
           end
@@ -173,7 +200,9 @@ class UsersController < BaseUserController
           if cur_user.candy_available < cic_price
             error(t('dashboard.index.balance_insufficient'))
           else
+            cigar_amount = (cic_price * 0.2).floor(6)
             cur_user.candy_available -= cic_price
+            cur_user.candy_available += cigar_amount
             cur_user.role = :vip
             cur_user.save
             AssetFlow.create(
@@ -182,6 +211,13 @@ class UsersController < BaseUserController
               account_type: :packet,
               flow_type: :buy_vip,
               amount: -cic_price
+            )
+            AssetFlow.create(
+              user_id: cur_user.id,
+              asset_type: :cigar,
+              account_type: :packet,
+              flow_type: :vip_init_reward,
+              amount: cigar_amount
             )
             cur_user.reward_new_buy(cic_price, cic_price, :cigar, :team_new_vip)
             success

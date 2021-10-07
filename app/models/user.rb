@@ -106,8 +106,8 @@ class User < ApplicationRecord
       end
     8.times do |i|
         if i == 0
-          vip_reward = (vip_usdt * 0.4).floor(6)
-          agent_reward = (agent_usdt * 0.4).floor(6)
+          vip_reward = (vip_usdt * 0.3).floor(6)
+          agent_reward = (agent_usdt * 0.3).floor(6)
         else
           vip_reward = (vip_reward * 0.5).floor(6)
           agent_reward = (agent_reward * 0.5).floor(6)

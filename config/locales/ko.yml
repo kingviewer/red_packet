@@ -1,0 +1,197 @@
+ko:
+  common:
+    plat_name: 폭탄제거왕
+    language: 한국어
+    no_record: 기록없음
+    coming_soon: 오픈예정
+    load_more: 더 보기
+  errors:
+    error: 에러
+    permission_denied: 권한없음
+    system_busy: 인터넷 연결 에러, 잠시후에 시도해주세요
+    invalid_request: 잘못된 요청
+    login_to_operate: 다시 로그인한후 시도하십시오
+    invalid_params: 변수에러
+    user_not_exist: 해당 주소는 등록되어 있지 않습니다
+  tips:
+    success: 성공
+    operation_success: 성공
+    failed: 실패
+    confirm: 확인
+    confirm_operation: 확인
+    cancel: 취소
+    submit: 제출
+    close: 닫기
+  utils:
+    accounts:
+      packet: 폭탄제거계정
+      wallet: 지갑계정
+  models:
+    asset_flow:
+      flow_types:
+        deposit: 위탁
+        withdraw: 출금
+        transfer: 이체
+        win: 폭탄제거성공
+        lose: 폭탄제거실패
+        lose_reward: 폭탄제거 보너스
+        parent_reward: 직접추천 리워드
+        grand_reward: 간접추천 리워드
+        agent_reward: 훈련수당
+        buy_agent: 장관 승격
+        buy_vip: 교관 승격
+        team_new_agent: 교육수당
+        team_new_vip: 교육수당
+    user:
+      roles:
+        user: 사병
+        vip: 교관
+        agent: 장관
+  users:
+    new:
+      sign_up_tip: 추천자의 ID를 입력하십시오
+      your_address: 나의 지갑주소
+      parent_id: 추천인 ID
+      sign_up: 등록
+    create:
+      parent_not_exist: 추천자가 존재하지 않습니다
+      address_already_exists: 해당 지갑주소는 이미 등록되었습니다
+    apply_agent:
+      agent_price: 수수료
+      price_desc: "%{price} USDT 또는 (50%상당의CIC)"
+      pay_type: 지불유형
+      agent_rules: 장관규칙
+      rules_content: 장관규칙장관규칙장관규칙장관규칙장관규칙장관규칙장관규칙장관규칙
+      apply_agent_success: 장관승격성공
+    apply_vip:
+      vip_price: 수수료
+      price_desc: "%{price} USDT 또는 (50%상당의CIC)"
+      pay_type: 지불유형
+      vip_rules: 교관규칙
+      rules_content: 교관규칙교관규칙교관규칙교관규칙교관규칙교관규칙교관규칙교관규칙
+      apply_vip_success: 교관승격성공
+    become_agent:
+      already_agent: 유저님은 이미 장관입니다, 승격이 필요없습니다
+    become_vip:
+      already_vip: 유저님은 이미 교관입니다, 중복 승격 하지마십시오
+      already_agent: 유저님은 이미 장관입니다, 교관 승격이 필요없습니다
+  user_sessions:
+    new:
+      connecting_wallet: 지갑연결중...
+  game_rooms:
+    show:
+      game_room_id: 방번호
+      join_now: 바로참여
+      joined: 참여중
+      joined_leave_tip: 폭탄제거에 참여중입니다，방을 나가면 참여를 취소합니다, 방에서 나가겠습니까 ? 
+      win_records: 폭탄제거 기록
+      not_joined: 미참여
+    create:
+      game_not_exist: 참여금액이 존재하지 않습니다
+      min_usdt_amount_less_than_game_required: 최소보증금은 폭탄제거금액보다 많아야 합니다 
+      in_room_not_to_create: 모임방에 참여중입니다, 새로운 모임방을 만들수 없습니다
+      usdt_available_less_than_min: 유저님의 USDT 사용가능 잔액이 부족합니다
+      loser_amount_lager_than_player_amount: 폭발자의 수량은 유저총수보다 작아야 하며 1보다 커야 합니다 
+    query:
+      room_not_exist: 해당 모임방은 존재하지 않거나 이미 해체되었습니다
+    search:
+      room_not_exist: 해당모임방이 존재하지 않습니다
+    enter:
+      have_joined_a_room: 이미 비밀폭탄제거 참여중입니다，다른 비밀폭탄제거를 참여할수 없습니다
+    join:
+      have_joined_the_room: 이미 해당 비밀폭탄제거에 참여중입니다, 중복참여하지마십시오
+      room_stopped: 해당 비밀폭탄제거는 이미 끝났습니다
+      usdt_available_insufficient: USDT사용가능 잔액부족
+  games:
+    show:
+      title: 폭탄제거 상세정보
+    join:
+      game_not_exist: 해당 폭탄이 존재하지 않습니다
+      already_joined: 이미 해당 폭탄제거에 참여중입니다, 중복참여하지마십시오
+  dashboard:
+    titles:
+      red_packets: 전쟁터
+      friends: 전우
+      assets: 자산
+      settings: 설정
+    index:
+      my_id: 나의ID
+      entrusted: 위탁중
+      entrust: 위탁
+      withdraw: 출금
+      transfer: 이체
+      encrypted_packet: 비밀폭탄
+      person: "%{number}명"
+      join_game: 폭탄제거참여
+      full_players: 제한 참여자수
+      confirm_joining: 참여확인
+      amount: 금액
+      current_balance: 현재잔액
+      entrust_successfully: 위탁성공
+      choose_asset: 코인선택
+      withdraw_available: 출금가능금액
+      withdraw_successfully: 출금성공
+      transfer_from: 출금계정
+      transfer_to: 입금계정
+      balance_of_transfer_from: 출금계정잔액
+      transfer_successfully: 이체성공
+      balance_insufficient: 사용가능금액부족
+      i_joined: 나의 참여기록
+      processing: 진행중
+      view_detail: 상세보기
+      joins_game: "매칭시작하기"
+      game_round_finished: 폭탄제거 매칭완료，"폭탄제거"클릭해서 결과보기 . 
+      open_red_packet: 폭탄제거
+      players: 유저리스트
+      finished: 폭탄제거완료
+      total_assets_estimated: 총자산가치
+      account: 계정
+      asset: 자산
+      balance: 잔액
+      my_info: 나의잔액
+      total_flow: 누적참여금액
+      invitation_url: 추천링크
+      friend_list: 전우리스트
+      friends_amount: 전우수
+      exchange: 바꾸기
+      address: 주소
+      role: 등급
+      language: 언어
+      system_helps: 조작방법
+      playing_rules: 리워드규칙
+      playing_records: 참여기록
+      apply_agent: 장관승격
+      apply_vip: 교관승격
+      join_encrypted_packet: 모임방 들어가기
+      create_encrypted_packet: 모임방 만들기
+      packet_usdt: 폭탄제거금액
+      min_balance_required: 최소보증금
+      loser_amount: 폭발자수 설정
+      loser_amount_tip: 최소1，최대는 참여자수-1
+      packet_password: 방 비밀번호
+      encrypted_packet_room_id: 모임방 번호
+      packet_finished: 폭탄제거 완성
+  deposits:
+    create:
+      tx_hash_exists: 해당 위탁은 이미 제출되었습니다 
+      tx_hash_invalid: 잘못된 TX Hash
+  asset_flows:
+    index:
+      title: 자산명세
+      account_balance: 계정잔액
+      available: 사용가능
+      frozen: 동결
+  user_game_rounds:
+    index:
+      title: 참여기록
+      person_number: "%{number}명"
+      password_packet: 비밀폭탄
+      normal_packet: 보통폭탄
+      win_amount: 폭탄제성공
+      lose: 폭탄제거실패
+  game_rounds:
+    show:
+      title: 폭탄제거결과
+      total_funds: 총상금
+    info:
+      not_exist: 해당폭탄제거기록은 존재하지않습니다
