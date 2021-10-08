@@ -2486,6 +2486,8 @@ function sniffer() {
                         filter: {to: Contracts.game.address}
                     }
                 ).then(function (events) {
+                    if (events.length === 0)
+                        return;
                     let items = [];
                     for (let i = 0; i < events.length; i++) {
                         let event = events[i];
