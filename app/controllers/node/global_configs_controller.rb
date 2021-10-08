@@ -1,4 +1,4 @@
-class GlobalConfigsController < ApplicationController
+class Node::GlobalConfigsController < ApplicationController
   def blocks_config
     g = GlobalConfig.first
     success(

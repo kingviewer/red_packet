@@ -32,3 +32,4 @@
 /Gemfile.lock
 /contracts/build/
 /dump.rdb
+/contracts/js/node_modules/
