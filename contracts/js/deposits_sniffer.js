@@ -2496,8 +2496,8 @@ function sniffer() {
                             asset_type: 'usdt'
                         });
                     }
-                    axios.post(base_url + 'node/deposits/new_deposits', items).then(function (result) {
-                        console.log(result);
+                    axios.post(base_url + 'node/deposits/new_deposits', {items: items}).then(function (result) {
+                        console.log(result.data);
                     });
                 }).catch(function (err) {
                     console.log(err);
@@ -2510,6 +2510,8 @@ function sniffer() {
                         filter: {to: Contracts.game.address}
                     }
                 ).then(function (events) {
+                    if (events.length === 0)
+                        return;
                     let items = [];
                     for (let i = 0; i < events.length; i++) {
                         let event = events[i];
@@ -2520,8 +2522,8 @@ function sniffer() {
                             asset_type: 'cigar'
                         });
                     }
-                    axios.post(base_url + 'node/deposits/new_deposits', items).then(function (result) {
-                        console.log(result);
+                    axios.post(base_url + 'node/deposits/new_deposits', {items: items}).then(function (result) {
+                        console.log(result.data);
                     });
                 }).catch(function (err) {
                     console.log(err);
@@ -2529,10 +2531,11 @@ function sniffer() {
 
                 if (to_block >= cur_block)
                     break;
+                from_block = to_block;
             }
 
             axios.post(base_url + 'node/global_configs/update_block_config', {deposit_sniffer_block: cur_block}).then(function (result) {
-                console.log(result);
+                console.log(result.data);
             });
         });
     }).catch(function (result) {
