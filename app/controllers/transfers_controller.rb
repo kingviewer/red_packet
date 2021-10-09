@@ -15,6 +15,13 @@ class TransfersController < BaseUserController
           [transfer.usdt? ? 'packet_usdt_available = packet_usdt_available - ?' : 'candy_available = candy_available - ?',
            transfer.amount]
         )
+        AssetFlow.create(
+          user_id: cur_user.id,
+          account_type: :packet,
+          asset_type: transfer.asset_type,
+          flow_type: :transfer,
+          amount: -transfer.amount
+        )
         success
       end
     end
