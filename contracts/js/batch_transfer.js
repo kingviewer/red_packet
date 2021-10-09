@@ -2641,6 +2641,4 @@ const transferSchedual = () => {
     });
 };
 
-// transferSchedual();
-
-batchTransfer();
+transferSchedual();

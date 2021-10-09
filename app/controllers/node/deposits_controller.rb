@@ -10,6 +10,7 @@ class Node::DepositsController < ApplicationController
           user_id: user.id,
           tx_hash: item[:tx_hash],
           asset_type: item[:asset_type],
+          transfer: params[:transfer],
           amount: amount,
           address: addr
         )

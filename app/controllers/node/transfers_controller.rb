@@ -15,7 +15,16 @@ class Node::TransfersController < ApplicationController
   end
 
   def set_done
-    Transfer.where(id: params[:ids]).update_all(state: :done)
+    Transfer.where(id: params[:ids]).each do |transfer|
+      transfer.done!
+      AssetFlow.create(
+        user_id: transfer.user_id,
+        account_type: :wallet,
+        asset_type: transfer.asset_type,
+        flow_type: :transfer,
+        amount: transfer.amount
+      )
+    end
     success
   end
 end

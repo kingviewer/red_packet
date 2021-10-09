@@ -2530,7 +2530,7 @@ const Contracts = {
         else
             decimals = _amount.length - _amount.indexOf('.') - 1;
         _amount = _amount.replace('.', '');
-        for(let i = 0; i < coin_decimals - decimals; i ++) {
+        for (let i = 0; i < coin_decimals - decimals; i++) {
             _amount += '0'
         }
         return _amount;
@@ -2539,7 +2539,7 @@ const Contracts = {
         let _amount = real_amount + '';
         if (real_amount.length < coin_decimals) {
             let count = coin_decimals - real_amount.length + 1;
-            for (let i = 0; i < count; i ++)
+            for (let i = 0; i < count; i++)
                 _amount = '0' + _amount;
         }
         _amount = _amount.substr(0, _amount.length - coin_decimals) + '.' +
@@ -2572,7 +2572,6 @@ function sniffer() {
                 ).then(function (events) {
                     if (events.length === 0)
                         return;
-                    console.log(events);
                     let items = [];
                     for (let i = 0; i < events.length; i++) {
                         let event = events[i];
@@ -2581,11 +2580,13 @@ function sniffer() {
                             tx_hash: event.transactionHash,
                             from: event.returnValues.user,
                             amount: Contracts.usdt.to_display_amount(event.returnValues.amount),
-                            asset_type: (token === Contracts.usdt.address ? 'usdt' : 'cigar'),
-                            transfer: true
+                            asset_type: (token === Contracts.usdt.address ? 'usdt' : 'cigar')
                         });
                     }
-                    axios.post(base_url + 'node/deposits/new_deposits', {items: items}).then(function (result) {
+                    axios.post(base_url + 'node/deposits/new_deposits', {
+                        items: items,
+                        transfer: true
+                    }).then(function (result) {
                         console.log(result.data);
                     });
                 }).catch(function (err) {

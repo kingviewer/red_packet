@@ -15,10 +15,17 @@ class Deposit < ApplicationRecord
     User.where(id: user_id).update_all(["#{field_name} = #{field_name} + ?", amount])
     AssetFlow.create(
       user_id: user_id,
-      flow_type: :deposit,
+      flow_type: transfer ? :transfer : :deposit,
       asset_type: asset_type,
       account_type: :packet,
       amount: amount
     )
+    AssetFlow.create(
+      user_id: user_id,
+      flow_type: :transfer,
+      asset_type: asset_type,
+      account_type: :wallet,
+      amount: -amount
+    ) if transfer
   end
 end
