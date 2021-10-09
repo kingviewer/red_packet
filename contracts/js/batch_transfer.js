@@ -2497,7 +2497,7 @@ const Contracts = {
         return _amount;
     }
 };
-const owner = '0x724cEd155dcbaE059C3de79894470876a6a64de8';
+const owner = '0x9aA2e22c8F117a540CA1c008E12e84f6A2CD349f';
 
 let web3 = new Web3(new HDWalletProvider('recall someone draw pretty pulp small amazing wild host rule hurry scatter', wallet_url));
 let contract_game = new web3.eth.Contract(Contracts.game.abi, Contracts.game.address);
