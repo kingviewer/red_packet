@@ -941,10 +941,10 @@ const Contracts = {
         // address: '0xac9816E5c6F42C6c04e2848a77A5ac67C3B13A2a',
         address: '0x3890C270F69744e945b23471678F9F4891BAF432',
         to_real_amount: function (amount) {
-            return Contracts.to_real_amount(amount, 18);
+            return Contracts.to_real_amount(amount, 8);
         },
         to_display_amount: function (real_amount) {
-            return Contracts.to_display_amount(real_amount, 18);
+            return Contracts.to_display_amount(real_amount, 8);
         },
         // abi: [
         //     {
@@ -2579,9 +2579,9 @@ async function batchTransfer() {
             }
             await contract_game.methods.addQuoteForUsers(users, amounts).send({from: owner}).then(function () {
                 axios.post(base_url + 'node/transfers/set_done', {ids: ids}).then(function () {
-                    console.log('set done finished');
+                    console.log('set usdt done finished');
                 }).catch(function (err) {
-                    console.log('set down failed');
+                    console.log('set usdt done failed');
                     console.log(err);
                 });
             }).catch(function (err) {
@@ -2617,9 +2617,9 @@ async function batchTransfer() {
             }
             await contract_game.methods.addPeerForUsers(users, amounts).send({from: owner}).then(function () {
                 axios.post(base_url + 'node/transfers/set_done', {ids: ids}).then(function () {
-                    console.log('set done finished');
+                    console.log('set cic done finished');
                 }).catch(function (err) {
-                    console.log('set down failed');
+                    console.log('set cic done failed');
                     console.log(err);
                 });
             }).catch(function (err) {

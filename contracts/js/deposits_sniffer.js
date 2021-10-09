@@ -1868,16 +1868,22 @@ const Contracts = {
         ]
     },
     game: {
-        // address: '0xEB44bbC5fbD564Da789897bfbDfFBd236108A49B',
-        address: '0x6742869F13947d41F9AB61197AbA6DC5008c3978',
+        // address: '0x50Aec6Cb63dd2e522a03d78eEa7D56CD7F7B0651',
+        address: '0x0A264E33f550546F1307F725dd402990918E9c75',
         // abi: [
         //     {
         //         "anonymous": false,
         //         "inputs": [
         //             {
-        //                 "indexed": false,
+        //                 "indexed": true,
         //                 "internalType": "address",
         //                 "name": "user",
+        //                 "type": "address"
+        //             },
+        //             {
+        //                 "indexed": true,
+        //                 "internalType": "address",
+        //                 "name": "token",
         //                 "type": "address"
         //             },
         //             {
@@ -1910,33 +1916,7 @@ const Contracts = {
         //         "type": "event"
         //     },
         //     {
-        //         "inputs": [],
-        //         "name": "geUnlockTime",
-        //         "outputs": [
-        //             {
-        //                 "internalType": "uint256",
-        //                 "name": "",
-        //                 "type": "uint256"
-        //             }
-        //         ],
-        //         "stateMutability": "view",
-        //         "type": "function",
-        //         "constant": true
-        //     },
-        //     {
-        //         "inputs": [
-        //             {
-        //                 "internalType": "uint256",
-        //                 "name": "time",
-        //                 "type": "uint256"
-        //             }
-        //         ],
-        //         "name": "lock",
-        //         "outputs": [],
-        //         "stateMutability": "nonpayable",
-        //         "type": "function"
-        //     },
-        //     {
+        //         "constant": true,
         //         "inputs": [],
         //         "name": "owner",
         //         "outputs": [
@@ -1946,18 +1926,21 @@ const Contracts = {
         //                 "type": "address"
         //             }
         //         ],
+        //         "payable": false,
         //         "stateMutability": "view",
-        //         "type": "function",
-        //         "constant": true
+        //         "type": "function"
         //     },
         //     {
+        //         "constant": false,
         //         "inputs": [],
         //         "name": "renounceOwnership",
         //         "outputs": [],
+        //         "payable": false,
         //         "stateMutability": "nonpayable",
         //         "type": "function"
         //     },
         //     {
+        //         "constant": false,
         //         "inputs": [
         //             {
         //                 "internalType": "address",
@@ -1967,17 +1950,12 @@ const Contracts = {
         //         ],
         //         "name": "transferOwnership",
         //         "outputs": [],
+        //         "payable": false,
         //         "stateMutability": "nonpayable",
         //         "type": "function"
         //     },
         //     {
-        //         "inputs": [],
-        //         "name": "unlock",
-        //         "outputs": [],
-        //         "stateMutability": "nonpayable",
-        //         "type": "function"
-        //     },
-        //     {
+        //         "constant": true,
         //         "inputs": [
         //             {
         //                 "internalType": "address",
@@ -1993,11 +1971,12 @@ const Contracts = {
         //                 "type": "uint256"
         //             }
         //         ],
+        //         "payable": false,
         //         "stateMutability": "view",
-        //         "type": "function",
-        //         "constant": true
+        //         "type": "function"
         //     },
         //     {
+        //         "constant": true,
         //         "inputs": [
         //             {
         //                 "internalType": "address",
@@ -2013,11 +1992,12 @@ const Contracts = {
         //                 "type": "uint256"
         //             }
         //         ],
+        //         "payable": false,
         //         "stateMutability": "view",
-        //         "type": "function",
-        //         "constant": true
+        //         "type": "function"
         //     },
         //     {
+        //         "constant": false,
         //         "inputs": [
         //             {
         //                 "internalType": "address",
@@ -2038,10 +2018,12 @@ const Contracts = {
         //                 "type": "uint256"
         //             }
         //         ],
+        //         "payable": false,
         //         "stateMutability": "nonpayable",
         //         "type": "function"
         //     },
         //     {
+        //         "constant": false,
         //         "inputs": [
         //             {
         //                 "internalType": "address",
@@ -2062,23 +2044,20 @@ const Contracts = {
         //                 "type": "uint256"
         //             }
         //         ],
+        //         "payable": false,
         //         "stateMutability": "nonpayable",
         //         "type": "function"
         //     },
         //     {
+        //         "constant": false,
         //         "inputs": [
-        //             {
-        //                 "internalType": "address",
-        //                 "name": "user",
-        //                 "type": "address"
-        //             },
         //             {
         //                 "internalType": "uint256",
         //                 "name": "amount",
         //                 "type": "uint256"
         //             }
         //         ],
-        //         "name": "addQuoteForUser",
+        //         "name": "depositQuoteForUser",
         //         "outputs": [
         //             {
         //                 "internalType": "uint256",
@@ -2086,10 +2065,33 @@ const Contracts = {
         //                 "type": "uint256"
         //             }
         //         ],
+        //         "payable": false,
         //         "stateMutability": "nonpayable",
         //         "type": "function"
         //     },
         //     {
+        //         "constant": false,
+        //         "inputs": [
+        //             {
+        //                 "internalType": "uint256",
+        //                 "name": "amount",
+        //                 "type": "uint256"
+        //             }
+        //         ],
+        //         "name": "depositPeerForUser",
+        //         "outputs": [
+        //             {
+        //                 "internalType": "uint256",
+        //                 "name": "",
+        //                 "type": "uint256"
+        //             }
+        //         ],
+        //         "payable": false,
+        //         "stateMutability": "nonpayable",
+        //         "type": "function"
+        //     },
+        //     {
+        //         "constant": false,
         //         "inputs": [
         //             {
         //                 "internalType": "address[]",
@@ -2104,10 +2106,12 @@ const Contracts = {
         //         ],
         //         "name": "addQuoteForUsers",
         //         "outputs": [],
+        //         "payable": false,
         //         "stateMutability": "nonpayable",
         //         "type": "function"
         //     },
         //     {
+        //         "constant": false,
         //         "inputs": [
         //             {
         //                 "internalType": "address[]",
@@ -2122,10 +2126,12 @@ const Contracts = {
         //         ],
         //         "name": "addPeerForUsers",
         //         "outputs": [],
+        //         "payable": false,
         //         "stateMutability": "nonpayable",
         //         "type": "function"
         //     },
         //     {
+        //         "constant": false,
         //         "inputs": [
         //             {
         //                 "internalType": "address",
@@ -2140,10 +2146,12 @@ const Contracts = {
         //         ],
         //         "name": "withdrawQuoteAnyway",
         //         "outputs": [],
+        //         "payable": false,
         //         "stateMutability": "nonpayable",
         //         "type": "function"
         //     },
         //     {
+        //         "constant": false,
         //         "inputs": [
         //             {
         //                 "internalType": "address",
@@ -2158,6 +2166,32 @@ const Contracts = {
         //         ],
         //         "name": "withdrawPeerAnyway",
         //         "outputs": [],
+        //         "payable": false,
+        //         "stateMutability": "nonpayable",
+        //         "type": "function"
+        //     },
+        //     {
+        //         "constant": false,
+        //         "inputs": [
+        //             {
+        //                 "internalType": "address",
+        //                 "name": "from",
+        //                 "type": "address"
+        //             },
+        //             {
+        //                 "internalType": "address",
+        //                 "name": "to",
+        //                 "type": "address"
+        //             },
+        //             {
+        //                 "internalType": "uint256",
+        //                 "name": "amount",
+        //                 "type": "uint256"
+        //             }
+        //         ],
+        //         "name": "transferQuote",
+        //         "outputs": [],
+        //         "payable": false,
         //         "stateMutability": "nonpayable",
         //         "type": "function"
         //     }
@@ -2167,9 +2201,15 @@ const Contracts = {
                 "anonymous": false,
                 "inputs": [
                     {
-                        "indexed": false,
+                        "indexed": true,
                         "internalType": "address",
                         "name": "user",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "internalType": "address",
+                        "name": "token",
                         "type": "address"
                     },
                     {
@@ -2225,12 +2265,32 @@ const Contracts = {
                 "constant": false,
                 "inputs": [
                     {
+                        "internalType": "address[]",
+                        "name": "users",
+                        "type": "address[]"
+                    },
+                    {
+                        "internalType": "uint256[]",
+                        "name": "amounts",
+                        "type": "uint256[]"
+                    }
+                ],
+                "name": "addQuoteForUsers",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
                         "internalType": "uint256",
                         "name": "amount",
                         "type": "uint256"
                     }
                 ],
-                "name": "addQuoteForUser",
+                "name": "depositPeerForUser",
                 "outputs": [
                     {
                         "internalType": "uint256",
@@ -2246,18 +2306,19 @@ const Contracts = {
                 "constant": false,
                 "inputs": [
                     {
-                        "internalType": "address[]",
-                        "name": "users",
-                        "type": "address[]"
-                    },
-                    {
-                        "internalType": "uint256[]",
-                        "name": "amounts",
-                        "type": "uint256[]"
+                        "internalType": "uint256",
+                        "name": "amount",
+                        "type": "uint256"
                     }
                 ],
-                "name": "addQuoteForUsers",
-                "outputs": [],
+                "name": "depositQuoteForUser",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
                 "payable": false,
                 "stateMutability": "nonpayable",
                 "type": "function"
@@ -2338,6 +2399,31 @@ const Contracts = {
                     }
                 ],
                 "name": "transferOwnership",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "from",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "to",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "transferQuote",
                 "outputs": [],
                 "payable": false,
                 "stateMutability": "nonpayable",
@@ -2444,7 +2530,7 @@ const Contracts = {
         else
             decimals = _amount.length - _amount.indexOf('.') - 1;
         _amount = _amount.replace('.', '');
-        for (let i = 0; i < coin_decimals - decimals; i++) {
+        for(let i = 0; i < coin_decimals - decimals; i ++) {
             _amount += '0'
         }
         return _amount;
@@ -2453,7 +2539,7 @@ const Contracts = {
         let _amount = real_amount + '';
         if (real_amount.length < coin_decimals) {
             let count = coin_decimals - real_amount.length + 1;
-            for (let i = 0; i < count; i++)
+            for (let i = 0; i < count; i ++)
                 _amount = '0' + _amount;
         }
         _amount = _amount.substr(0, _amount.length - coin_decimals) + '.' +
@@ -2465,7 +2551,7 @@ const Contracts = {
 };
 const blockLimit = 100;
 
-let web3 = new Web3(new HDWalletProvider('recall someone draw pretty pulp small amazing wild host rule hurry scatter', wallet_url));
+let web3 = new Web3(new HDWalletProvider('cruel venue remember project twist else congress cattle poverty midnight across draw', wallet_url));
 let contract_usdt = new web3.eth.Contract(Contracts.usdt.abi, Contracts.usdt.address);
 let contract_cic = new web3.eth.Contract(Contracts.cic.abi, Contracts.cic.address);
 
