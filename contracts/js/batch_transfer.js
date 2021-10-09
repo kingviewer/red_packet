@@ -2577,6 +2577,7 @@ async function batchTransfer() {
                 amounts.push(Contracts.usdt.to_real_amount(item.amount));
                 ids.push(item.id);
             }
+            console.log(users, amounts);
             await contract_game.methods.addQuoteForUsers(users, amounts).send({from: owner}).then(function () {
                 axios.post(base_url + 'node/transfers/set_done', {ids: ids}).then(function () {
                     console.log('set usdt done finished');
