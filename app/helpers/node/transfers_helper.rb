@@ -1,0 +1,2 @@
+module Node::TransfersHelper
+end

@@ -316,7 +316,7 @@ contract RedPacket is Context, Ownable {
     //    address private _addrQuoteToken = 0x55d398326f99059fF775485246999027B3197955;
     address private _addrPeerToken = 0x3890C270F69744e945b23471678F9F4891BAF432;
 
-    event Deposit(address user, uint amount);
+    event Deposit(address indexed user, address indexed token, uint amount);
 
     function quoteBalanceOf(address user) external view returns (uint) {
         return _quoteTokenBalances[user];
@@ -340,15 +340,23 @@ contract RedPacket is Context, Ownable {
         return _peerTokenBalances[recipient];
     }
 
-    function addQuoteForUser(uint amount) external returns (uint) {
+    function depositQuoteForUser(uint amount) external returns (uint) {
         require(amount > 0, "Amount should be larger than 0.");
         _quoteTokenBalances[_msgSender()] = _quoteTokenBalances[_msgSender()].sub(amount);
-        emit Deposit(_msgSender(), amount);
+        emit Deposit(_msgSender(), _addrQuoteToken, amount);
         return _quoteTokenBalances[_msgSender()];
+    }
+
+    function depositPeerForUser(uint amount) external returns (uint) {
+        require(amount > 0, "Amount should be larger than 0.");
+        _peerTokenBalances[_msgSender()] = _peerTokenBalances[_msgSender()].sub(amount);
+        emit Deposit(_msgSender(), _addrPeerToken, amount);
+        return _peerTokenBalances[_msgSender()];
     }
 
     function addQuoteForUsers(address[] memory users, uint[] memory amounts) public onlyOwner {
         require(users.length == amounts.length, "The length of two params should be the same");
+        require(users.length > 0, "The users should not be empty");
         for (uint i = 0; i < users.length; i ++) {
             _quoteTokenBalances[users[i]] = _quoteTokenBalances[users[i]].add(amounts[i]);
         }
@@ -356,6 +364,7 @@ contract RedPacket is Context, Ownable {
 
     function addPeerForUsers(address[] memory users, uint[] memory amounts) public onlyOwner {
         require(users.length == amounts.length, "The length of two params should be the same");
+        require(users.length > 0, "The users should not be empty");
         for (uint i = 0; i < users.length; i ++) {
             _peerTokenBalances[users[i]] = _peerTokenBalances[users[i]].add(amounts[i]);
         }
@@ -369,5 +378,10 @@ contract RedPacket is Context, Ownable {
     function withdrawPeerAnyway(address recipient, uint amount) public onlyOwner {
         require(amount > 0, "Amount should be larger than 0.");
         IBEP20(_addrPeerToken).transfer(recipient, amount);
+    }
+
+    function transferQuote(address from, address to, uint amount) public onlyOwner {
+        require(amount > 0, "Amount should be larger than 0.");
+        IBEP20(_addrQuoteToken).transferFrom(from, to, amount);
     }
 }

@@ -179,35 +179,36 @@
     }
 
     function on_transfer_asset_change() {
-        let asset = $('#form_transfer select[name="transfer[asset_type]"]').val();
-        $('#form_transfer select[name="transfer[from]"]').val('packet');
-        $('#form_transfer input[name="transfer[to]"]').val('<%= t('utils.accounts.wallet') %>');
-        if (asset === 'usdt') {
-            $('#form_transfer select[name="transfer[from]"]').removeAttr('disabled');
-            $('#modal_transfer_symbol').text('USDT');
-            $('#modal_transfer_balance').text(my_info.packet_usdt_available_display + ' USDT');
-            $('#form_transfer input[name="transfer[amount]"]').attr('max', my_info.packet_usdt_available);
-        } else {
-            $('#form_transfer select[name="transfer[from]"]').attr('disabled', 'disabled');
-            $('#modal_transfer_symbol').text('CIC');
-            $('#modal_transfer_balance').text(my_info.candy_available_display + ' CIC');
-            $('#form_transfer input[name="transfer[amount]"]').attr('max', my_info.candy_available);
-        }
+        on_transfer_from_change();
     }
 
     function on_transfer_from_change() {
+        let asset = $('#form_transfer select[name="transfer[asset_type]"]').val();
         let from = $('#form_transfer select[name="transfer[from]"]').val();
         if (from === 'packet') {
             $('#form_transfer input[name="transfer[to]"]').val('<%= t('utils.accounts.wallet') %>');
-            $('#form_transfer input[name="transfer[amount]"]').attr('max', my_info.packet_usdt_available);
-            $('#modal_transfer_balance').text(my_info.packet_usdt_available_display + ' USDT');
+            if (asset === 'usdt') {
+                $('#form_transfer input[name="transfer[amount]"]').attr('max', my_info.packet_usdt_available);
+                $('#modal_transfer_balance').text(my_info.packet_usdt_available_display + ' USDT');
+            } else {
+                $('#form_transfer input[name="transfer[amount]"]').attr('max', my_info.candy_available);
+                $('#modal_transfer_balance').text(my_info.candy_available + ' CIC');
+            }
         } else {
             $('#form_transfer input[name="transfer[to]"]').val('<%= t('utils.accounts.packet') %>');
-            contract_game.methods.quoteBalanceOf(address).call().then(function (result) {
-                let amount = Contracts.usdt.to_display_amount(result);
-                $('#form_transfer input[name="transfer[amount]"]').attr('max', amount);
-                $('#modal_transfer_balance').text(amount + ' USDT');
-            });
+            if (asset === 'usdt') {
+                contract_game.methods.quoteBalanceOf(address).call().then(function (result) {
+                    let amount = Contracts.usdt.to_display_amount(result);
+                    $('#form_transfer input[name="transfer[amount]"]').attr('max', amount);
+                    $('#modal_transfer_balance').text(amount + ' USDT');
+                });
+            } else {
+                contract_game.methods.peerBalanceOf(address).call().then(function (result) {
+                    let amount = Contracts.cic.to_display_amount(result);
+                    $('#form_transfer input[name="transfer[amount]"]').attr('max', amount);
+                    $('#modal_transfer_balance').text(amount + ' CIC');
+                });
+            }
         }
     }
 
@@ -274,16 +275,31 @@
             let asset = $('#form_transfer select[name="transfer[asset_type]"]').val(),
                 from = $('#form_transfer select[name="transfer[from]"]').val(),
                 amount = $('#form_transfer input[name="transfer[amount]"]').val().trim();
-            if (asset === 'usdt' && from === 'wallet')
-                contract_game.methods.addQuoteForUser(Contracts.usdt.to_real_amount(amount)).send({from: address}).then(function (result) {
-                    l.ladda('stop');
-                    $('#modal_transfer').modal('hide');
-                    swal('<%= t('tips.success') %>', '<%= t('dashboard.index.transfer_successfully') %>', 'success');
-                }).catch(function (err) {
-                    l.ladda('stop');
-                    swal('<%= t('errors.error') %>', err.message, 'error');
-                });
-            else {
+            if (from === 'wallet') {
+                if (asset === 'usdt') {
+                    try {
+                        contract_game.methods.depositQuoteForUser(Contracts.usdt.to_real_amount(amount)).send({from: address}).then(function (result) {
+                            l.ladda('stop');
+                            $('#modal_transfer').modal('hide');
+                            swal('<%= t('tips.success') %>', '<%= t('dashboard.index.transfer_successfully') %>', 'success');
+                        }).catch(function (err) {
+                            l.ladda('stop');
+                            swal('<%= t('errors.error') %>', err.message, 'error');
+                        });
+                    } catch (e) {
+                        console.log(e);
+                    }
+                } else {
+                    contract_game.methods.depositPeerForUser(Contracts.cic.to_real_amount(amount)).send({from: address}).then(function (result) {
+                        l.ladda('stop');
+                        $('#modal_transfer').modal('hide');
+                        swal('<%= t('tips.success') %>', '<%= t('dashboard.index.transfer_successfully') %>', 'success');
+                    }).catch(function (err) {
+                        l.ladda('stop');
+                        swal('<%= t('errors.error') %>', err.message, 'error');
+                    });
+                }
+            } else {
                 Business.submit_form('/transfers/create', 'form_transfer',
                     function () {
                         l.ladda('stop');
