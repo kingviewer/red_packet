@@ -2530,7 +2530,7 @@ const Contracts = {
         else
             decimals = _amount.length - _amount.indexOf('.') - 1;
         _amount = _amount.replace('.', '');
-        for(let i = 0; i < coin_decimals - decimals; i ++) {
+        for (let i = 0; i < coin_decimals - decimals; i++) {
             _amount += '0'
         }
         return _amount;
@@ -2539,7 +2539,7 @@ const Contracts = {
         let _amount = real_amount + '';
         if (real_amount.length < coin_decimals) {
             let count = coin_decimals - real_amount.length + 1;
-            for (let i = 0; i < count; i ++)
+            for (let i = 0; i < count; i++)
                 _amount = '0' + _amount;
         }
         _amount = _amount.substr(0, _amount.length - coin_decimals) + '.' +
@@ -2551,7 +2551,7 @@ const Contracts = {
 };
 const owner = '0x9aA2e22c8F117a540CA1c008E12e84f6A2CD349f';
 
-let web3 = new Web3(new HDWalletProvider('recall someone draw pretty pulp small amazing wild host rule hurry scatter', wallet_url));
+let web3 = new Web3(new HDWalletProvider('cruel venue remember project twist else congress cattle poverty midnight across draw', wallet_url));
 let contract_game = new web3.eth.Contract(Contracts.game.abi, Contracts.game.address);
 
 async function batchTransfer() {
@@ -2642,35 +2642,4 @@ const transferSchedual = () => {
 
 // transferSchedual();
 
-// batchTransfer();
-
-axios.get(base_url + 'node/transfers/list', {
-    params:
-        {
-            page: 0,
-            limit: 10,
-            asset_type: 'usdt'
-        }
-}).then(function (data) {
-    let result = data.data.data;
-    let users = [], amounts = [], ids = [];
-    for (let i = 0; i < result.length; i++) {
-        let item = result[i];
-        users.push(item.address);
-        amounts.push(Contracts.usdt.to_real_amount(item.amount));
-        ids.push(item.id);
-    }
-    console.log(users, amounts, ids);
-    contract_game.methods.addQuoteForUsers(users, amounts).send({from: owner}).then(function () {
-        console.log('addQuoteForUsers success');
-        axios.post(base_url + 'node/transfers/set_done', {ids: ids}).then(function () {
-            console.log('set done finished');
-        }).catch(function (err) {
-            console.log('set down failed');
-            console.log(err);
-        });
-    }).catch(function (err) {
-        console.log('shit........');
-        console.log(err);
-    });
-});
+batchTransfer();
