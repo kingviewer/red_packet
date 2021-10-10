@@ -3,6 +3,7 @@ class BroadcastJoinGameJob < ApplicationJob
 
   def perform(game, user)
     game.reload
+    p game
     ActionCable.server.broadcast(
       GamesChannel.channel_name(game.id),
       action: :join,
