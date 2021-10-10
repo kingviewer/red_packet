@@ -28,10 +28,10 @@ class GameRoundsController < BaseUserController
     if not (game_round = GameRound.find_by(id: params[:id]))
       error(t('.not_exist'))
     else
-      total_funds = game_round.user_game_rounds.where(loser: false).sum(:usdt_won)
       ur = game_round.user_game_rounds.find_by(user_id: cur_user.id)
+      game = game_round.game
       success(
-        total_funds: LZUtils.format_coin(total_funds),
+        usdt_person: t('dashboard.index.game_pserson_usdt', usdt_amount: game.usdt_amount.to_i, player_amount: game.player_amount),
         joined: !ur.nil?,
         loser: ur&.loser || false,
         usdt_won: ur && LZUtils.format_coin(ur.usdt_won)

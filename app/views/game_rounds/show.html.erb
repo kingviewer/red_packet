@@ -1,6 +1,6 @@
 <div class="row m-t-15">
   <div class="col-12 text-center">
-    <span><%= t('.total_funds') %> <span class="text-warning font-30" id="total_funds">-</span> USDT</span>
+    <span id="person_number" class="text-warning font-30">-</span>
   </div>
   <div class="col-12 m-t-10 p-l-20 p-r-20">
   </div>
@@ -41,7 +41,7 @@
     function get_round_info() {
         Business.get('/game_rounds/info', {id: round_id},
             function (data) {
-                $('#total_funds').text(data.total_funds);
+                $('#person_number').text(data.usdt_person);
                 if (data.joined) {
                     if (data.loser)
                         $('#div_lose').show();
