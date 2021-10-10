@@ -173,7 +173,7 @@ zh-CN:
       packet_password: 拆弹密码
       encrypted_packet_room_id: 密码拆弹房间号
       packet_finished: 拆弹完成
-      game_pserson_usdt: "#{usdt_amount}USDT, #{player_amount}人"
+      game_pserson_usdt: "%{usdt_amount}USDT, %{player_amount}人"
   deposits:
     create:
       tx_hash_exists: 该比托管已提交过，请勿重复提交
