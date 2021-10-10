@@ -173,7 +173,7 @@ ko:
       packet_password: 방 비밀번호
       encrypted_packet_room_id: 모임방 번호
       packet_finished: 폭탄제거 완성
-      game_pserson_usdt: "%{usdt_amount}USDT, %{player_amount}人"
+      game_pserson_usdt: "%{usdt_amount} USDT, %{player_amount}人"
   deposits:
     create:
       tx_hash_exists: 해당 위탁은 이미 제출되었습니다 
