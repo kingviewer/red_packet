@@ -6,7 +6,7 @@
     <div id="div_state" class="col-12 text-center"><%= t('dashboard.index.processing') %></div>
     <div class="col-12 m-t-10 p-l-20 p-r-20">
       <div class="progress br-30">
-        <div class="progress-bar br-0 progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: <%= (@game.waiter_amount * 100 / @game.player_amount).to_i %>%"></div>
+        <div id="progress_bar" class="progress-bar br-0 progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: <%= (@game.waiter_amount * 100 / @game.player_amount).to_i %>%"></div>
       </div>
     </div>
     <div id="span_person" class="col-12 text-center"><%= t('dashboard.index.person', number: "#{@game.waiter_amount}/#{@game.player_amount}") %></div>
@@ -31,7 +31,7 @@
   </div>
 
   <script>
-    let game_id = <%= @game.id || 0 %>;
+      let game_id = <%= @game.id || 0 %>;
 
       function get_players() {
           Business.get('/games/list_waiters', {id: game_id},
@@ -64,8 +64,10 @@
                               '<span class="text-primary font-15">' + msg.invite_code + '</span>' +
                               '<span class="float-right text-danger font-12"><i class="las la-clock"></i> ' + msg.time + '</span>' +
                               '</div>');
+                          $('#progress_bar').css('width', msg.progress + '%');
                       } else if (msg.action === 'win') {
-                          $('#div_open_packet').show().find('button').attr('click', 'location.href="/game_rounds/show?id=' + msg.game_round_id + '"');
+                          $('#progress_bar').css('width', '100%');
+                          $('#div_open_packet').show().find('button').attr('onclick', 'location.href="/game_rounds/show?id=' + msg.game_round_id + '"');
                           $('#div_state').text('<%= t('dashboard.index.finished') %>');
                       }
                   }

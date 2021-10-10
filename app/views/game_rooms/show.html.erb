@@ -69,7 +69,7 @@
                 has_joined = data.joined;
                 $('#span_usdt_amount').text(data.usdt_amount);
                 $('#span_room_id').text(data.id);
-                $('#progress').css('width: ' + data.progress + '%');
+                $('#progress').css('width', data.progress + '%');
                 $('#span_person').text(data.player_amount_display);
                 if (has_joined)
                     $('#btn_join_now').show().text('<%= t('.joined') %>').attr('disabled', 'disabled');
