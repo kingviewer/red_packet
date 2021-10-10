@@ -7,6 +7,7 @@ class BroadcastJoinGameJob < ApplicationJob
       action: :join,
       id: game.id,
       user_id: user.id,
+      person_number: t('dashboard.index.person', number: "#{game.waiter_amount}/#{game.player_amount}"),
       progress: (game.waiter_amount * 100 / game.player_amount).to_i,
       invite_code: user.invite_code,
       address: user.encrypted_address,
