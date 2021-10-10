@@ -38,8 +38,10 @@
               function (data) {
                   $('#span_usdt_amount').text(data.usdt_amount);
                   $('#span_person').text(data.person_number);
-                  $('#progress_bar').css('width', data.progress);
-                  subscribe_game();
+                  if (data.progress === '0%')
+                      $('#progress_bar').css('width', '100%');
+                  else
+                      $('#progress_bar').css('width', data.progress);
               }
           );
       }
@@ -90,6 +92,7 @@
       $(function () {
           get_game_info();
           get_players();
+          subscribe_game();
       });
   </script>
 <% else %>
