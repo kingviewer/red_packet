@@ -29,7 +29,7 @@ class GameRoomsController < BaseUserController
             )
             cur_user.reload
             if cur_user.packet_usdt_available < game_room.min_usdt_amount
-              error('.usdt_available_less_than_min')
+              error(t('.usdt_available_less_than_min'))
             else
               game_room.user_id = cur_user.id
               game_room.save!

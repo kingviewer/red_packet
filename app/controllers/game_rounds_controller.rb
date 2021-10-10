@@ -33,7 +33,7 @@ class GameRoundsController < BaseUserController
       success(
         total_funds: LZUtils.format_coin(total_funds),
         joined: !ur.nil?,
-        loser: ur.loser,
+        loser: ur&.loser || false,
         usdt_won: ur && LZUtils.format_coin(ur.usdt_won)
       )
     end
