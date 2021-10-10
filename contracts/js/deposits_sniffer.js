@@ -2584,7 +2584,7 @@ function sniffer() {
                             asset_type: 'usdt'
                         });
                     }
-                    axios.post(base_url + 'node/deposits/new_deposits', {items: items}).then(function (result) {
+                    axios.post(base_url + 'node/deposits/new_deposits', {items: items, transfer: false}).then(function (result) {
                         console.log(result.data);
                     });
                 }).catch(function (err) {

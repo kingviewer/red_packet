@@ -190,9 +190,11 @@
             if (asset === 'usdt') {
                 $('#form_transfer input[name="transfer[amount]"]').attr('max', my_info.packet_usdt_available);
                 $('#modal_transfer_balance').text(my_info.packet_usdt_available_display + ' USDT');
+                $('#modal_transfer_symbol').text('USDT');
             } else {
                 $('#form_transfer input[name="transfer[amount]"]').attr('max', my_info.candy_available);
                 $('#modal_transfer_balance').text(my_info.candy_available + ' CIC');
+                $('#modal_transfer_symbol').text('CIC');
             }
         } else {
             $('#form_transfer input[name="transfer[to]"]').val('<%= t('utils.accounts.packet') %>');
@@ -201,12 +203,14 @@
                     let amount = Contracts.usdt.to_display_amount(result);
                     $('#form_transfer input[name="transfer[amount]"]').attr('max', amount);
                     $('#modal_transfer_balance').text(amount + ' USDT');
+                    $('#modal_transfer_symbol').text('USDT');
                 });
             } else {
                 contract_game.methods.peerBalanceOf(address).call().then(function (result) {
                     let amount = Contracts.cic.to_display_amount(result);
                     $('#form_transfer input[name="transfer[amount]"]').attr('max', amount);
                     $('#modal_transfer_balance').text(amount + ' CIC');
+                    $('#modal_transfer_symbol').text('CIC');
                 });
             }
         }
