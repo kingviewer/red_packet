@@ -5,7 +5,6 @@ class BroadcastGameWinJob < ApplicationJob
     ActionCable.server.broadcast(
       GamesChannel.channel_name(game.id),
       id: game.id,
-      person_number: I18n.t('dashboard.index.person', number: "#{game.waiter_amount}/#{game.player_amount}"),
       game_round_id: game_round.id,
       action: :win
     )
