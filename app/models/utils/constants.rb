@@ -1,7 +1,7 @@
 module Utils
   module Constants
     # BASE_URL = 'http://localhost:3000/'
-    BASE_URL = 'http://www.bombgame.org/'
+    BASE_URL = 'https://www.bombgame.org/'
     # WALLET_URL = "http://localhost:8545"
     WALLET_URL = 'https://bsc-dataseed1.defibit.io'
     CONTRACTS = {
