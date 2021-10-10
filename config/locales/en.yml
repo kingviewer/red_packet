@@ -1,0 +1,199 @@
+en:
+  common:
+    plat_name: 拆弹专家
+    language: 简体中文
+    no_record: 没有记录
+    coming_soon: 马上开放
+    load_more: 加载更多
+  errors:
+    error: 错误
+    permission_denied: 无权操作
+    system_busy: 网络拥堵，请稍后再试
+    invalid_request: 非法请求
+    login_to_operate: 未登录或会话已过期，请登录后再操作
+    invalid_params: 参数无效或错误
+    user_not_exist: 该地址未注册
+  tips:
+    success: 成功
+    operation_success: 操作成功
+    failed: 失败
+    confirm: 确定
+    confirm_operation: 确认操作
+    cancel: 取消
+    submit: 提交
+    close: 关闭
+  utils:
+    accounts:
+      packet: 拆弹账户
+      wallet: 钱包账户
+  models:
+    asset_flow:
+      flow_types:
+        deposit: 托管
+        withdraw: 提现
+        transfer: 划转
+        win: 拆弹成功
+        lose: 拆弹失败
+        lose_reward: 拆弹福利
+        parent_reward: 直推奖励
+        grand_reward: 间推奖励
+        agent_reward: 训练津贴
+        buy_agent: 升级总教官
+        buy_vip: 升级教官
+        team_new_agent: 培训津贴
+        team_new_vip: 培训津贴
+        vip_init_reward: 教官补贴
+        agent_init_reward: 总教官补贴
+    user:
+      roles:
+        user: 新兵
+        vip: 教官
+        agent: 总教官
+  users:
+    new:
+      sign_up_tip: 请输入您的邀请人ID进行注册
+      your_address: 您的地址
+      parent_id: 邀请人ID
+      sign_up: 注册
+    create:
+      parent_not_exist: 邀请人不存在
+      address_already_exists: 该地址已经注册
+    apply_agent:
+      agent_price: 费用
+      price_desc: "%{price} USDT 或 (50%价值的CIC)"
+      pay_type: 支付类型
+      agent_rules: 总教官规则
+      rules_content: 总教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则
+      apply_agent_success: 升级总教官成功
+    apply_vip:
+      vip_price: 费用
+      price_desc: "%{price} USDT 或 (50%价值的CIC)"
+      pay_type: 支付类型
+      vip_rules: 教官规则
+      rules_content: 教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则
+      apply_vip_success: 升级教官成功
+    become_agent:
+      already_agent: 您已经是总教官，无需再次升级
+    become_vip:
+      already_vip: 您已经是教官，请勿重复升级
+      already_agent: 您是总教官，无需升级教官
+  user_sessions:
+    new:
+      connecting_wallet: 正在连接钱包...
+  game_rooms:
+    show:
+      game_room_id: 房间号
+      join_now: 立即参与
+      joined: 已参与
+      joined_leave_tip: 您已参与本次拆弹，退出房间则会取消您的参与。确认退出吗？
+      win_records: 拆弹记录
+      not_joined: 未参与
+    create:
+      game_not_exist: 该拆弹金额不存在
+      min_usdt_amount_less_than_game_required: 最低保证金不应低于拆弹金额
+      in_room_not_to_create: 您当前正在参与一个密码房间，不可再次创建密码房间
+      usdt_available_less_than_min: 您的USDT可用余额小于要创建的密码房的最低保证金
+      loser_amount_lager_than_player_amount: 输家数量应小于玩家数量且大于等于1
+    query:
+      room_not_exist: 该密码房间不存在或已结束
+    search:
+      room_not_exist: 该密码房间不存在
+    enter:
+      have_joined_a_room: 您已经参与了一个密码拆弹，不可以再次参与其他密码拆弹
+    join:
+      have_joined_the_room: 您已经参与了该密码拆弹，请勿重复参与
+      room_stopped: 该密码拆弹已经结束
+      usdt_available_insufficient: USDT可用余额不足
+  games:
+    show:
+      title: 拆弹详情
+    join:
+      game_not_exist: 该炸弹不存在
+      already_joined: 您已经参与了本次拆弹，不可重复参与
+  dashboard:
+    titles:
+      red_packets: 战场
+      friends: 战友
+      assets: 资产
+      settings: 设置
+    index:
+      my_id: 我的ID
+      entrusted: 托管中
+      entrust: 托管
+      withdraw: 提取
+      transfer: 划转
+      encrypted_packet: 密码炸弹
+      person: "%{number}人"
+      join_game: 参与拆弹
+      full_players: 满员人数
+      confirm_joining: 确认参与
+      amount: 金额
+      current_balance: 当前余额
+      entrust_successfully: 托管成功
+      choose_asset: 选择币种
+      withdraw_available: 可提金额
+      withdraw_successfully: 提取成功
+      transfer_from: 转出账户
+      transfer_to: 转入账户
+      balance_of_transfer_from: 转出账户余额
+      transfer_successfully: 划转成功
+      balance_insufficient: 可用余额不足
+      i_joined: 我参与的
+      processing: 进行中
+      view_detail: 查看详情
+      joins_game: "进入匹配队列"
+      game_round_finished: 拆弹匹配完成，点击"拆弹"查看拆弹结果。
+      open_red_packet: 拆弹
+      players: 玩家列表
+      finished: 已拆弹
+      total_assets_estimated: 总资产折合
+      account: 账户
+      asset: 资产
+      balance: 余额
+      my_info: 我的信息
+      total_flow: 累计流水
+      invitation_url: 邀请链接
+      friend_list: 战友列表
+      friends_amount: 战友数
+      exchange: 切换
+      address: 地址
+      role: 角色
+      language: 语言
+      system_helps: 操作指南
+      playing_rules: 奖励规则
+      playing_records: 参与记录
+      apply_agent: 升级总教官
+      apply_vip: 升级教官
+      join_encrypted_packet: 参与密码拆弹
+      create_encrypted_packet: 创建密码拆弹房间
+      packet_usdt: 拆弹金额
+      min_balance_required: 最低拆弹账户余额
+      loser_amount: 失败人数
+      loser_amount_tip: 最小为1，最大为拆弹参与人数减1
+      packet_password: 拆弹密码
+      encrypted_packet_room_id: 密码拆弹房间号
+      packet_finished: 拆弹完成
+  deposits:
+    create:
+      tx_hash_exists: 该比托管已提交过，请勿重复提交
+      tx_hash_invalid: 错误的 TX Hash
+  asset_flows:
+    index:
+      title: 资产明细
+      account_balance: 账户余额
+      available: 可用
+      frozen: 冻结
+  user_game_rounds:
+    index:
+      title: 参与记录
+      person_number: "%{number}人"
+      password_packet: 密码拆弹
+      normal_packet: 普通拆弹
+      win_amount: 拆弹成功
+      lose: 拆弹失败
+  game_rounds:
+    show:
+      title: 拆弹结果
+      total_funds: 总奖金
+    info:
+      not_exist: 该拆弹记录不存在

@@ -1,6 +1,6 @@
-(function (global, factory) {
-    typeof exports === "object" && typeof module !== "undefined" ? factory(exports) : typeof define === "function" && define.amd ? define(["exports"], factory) : factory(global.ActionCable = {});
-})(this, function (exports) {
+(function(global, factory) {
+    typeof exports === "object" && typeof module !== "undefined" ? factory(exports) : typeof define === "function" && define.amd ? define([ "exports" ], factory) : factory(global.ActionCable = {});
+})(this, function(exports) {
     "use strict";
     var adapters = {
         logger: self.console,
@@ -14,21 +14,21 @@
                     messages[_key] = arguments[_key];
                 }
                 messages.push(Date.now());
-                (_adapters$logger = adapters.logger).log.apply(_adapters$logger, ["[ActionCable]"].concat(messages));
+                (_adapters$logger = adapters.logger).log.apply(_adapters$logger, [ "[ActionCable]" ].concat(messages));
             }
         }
     };
-    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function(obj) {
         return typeof obj;
-    } : function (obj) {
+    } : function(obj) {
         return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
-    var classCallCheck = function (instance, Constructor) {
+    var classCallCheck = function(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
             throw new TypeError("Cannot call a class as a function");
         }
     };
-    var createClass = function () {
+    var createClass = function() {
         function defineProperties(target, props) {
             for (var i = 0; i < props.length; i++) {
                 var descriptor = props[i];
@@ -38,8 +38,7 @@
                 Object.defineProperty(target, descriptor.key, descriptor);
             }
         }
-
-        return function (Constructor, protoProps, staticProps) {
+        return function(Constructor, protoProps, staticProps) {
             if (protoProps) defineProperties(Constructor.prototype, protoProps);
             if (staticProps) defineProperties(Constructor, staticProps);
             return Constructor;
@@ -54,14 +53,13 @@
     var clamp = function clamp(number, min, max) {
         return Math.max(min, Math.min(max, number));
     };
-    var ConnectionMonitor = function () {
+    var ConnectionMonitor = function() {
         function ConnectionMonitor(connection) {
             classCallCheck(this, ConnectionMonitor);
             this.visibilityDidChange = this.visibilityDidChange.bind(this);
             this.connection = connection;
             this.reconnectAttempts = 0;
         }
-
         ConnectionMonitor.prototype.start = function start() {
             if (!this.isRunning()) {
                 this.startedAt = now();
@@ -104,14 +102,13 @@
         };
         ConnectionMonitor.prototype.poll = function poll() {
             var _this = this;
-            this.pollTimeout = setTimeout(function () {
+            this.pollTimeout = setTimeout(function() {
                 _this.reconnectIfStale();
                 _this.poll();
             }, this.getPollInterval());
         };
         ConnectionMonitor.prototype.getPollInterval = function getPollInterval() {
-            var _constructor$pollInte = this.constructor.pollInterval, min = _constructor$pollInte.min,
-                max = _constructor$pollInte.max, multiplier = _constructor$pollInte.multiplier;
+            var _constructor$pollInte = this.constructor.pollInterval, min = _constructor$pollInte.min, max = _constructor$pollInte.max, multiplier = _constructor$pollInte.multiplier;
             var interval = multiplier * Math.log(this.reconnectAttempts + 1);
             return Math.round(clamp(interval, min, max) * 1e3);
         };
@@ -136,9 +133,9 @@
         ConnectionMonitor.prototype.visibilityDidChange = function visibilityDidChange() {
             var _this2 = this;
             if (document.visibilityState === "visible") {
-                setTimeout(function () {
+                setTimeout(function() {
                     if (_this2.connectionIsStale() || !_this2.connection.isOpen()) {
-                        logger.log("ConnectionMonitor reopening stale connection on visibilitychange. visbilityState = " + document.visibilityState);
+                        logger.log("ConnectionMonitor reopening stale connection on visibilitychange. visibilityState = " + document.visibilityState);
                         _this2.connection.reopen();
                     }
                 }, 200);
@@ -166,12 +163,12 @@
             server_restart: "server_restart"
         },
         default_mount_path: "/cable",
-        protocols: ["actioncable-v1-json", "actioncable-unsupported"]
+        protocols: [ "actioncable-v1-json", "actioncable-unsupported" ]
     };
     var message_types = INTERNAL.message_types, protocols = INTERNAL.protocols;
     var supportedProtocols = protocols.slice(0, protocols.length - 1);
     var indexOf = [].indexOf;
-    var Connection = function () {
+    var Connection = function() {
         function Connection(consumer) {
             classCallCheck(this, Connection);
             this.open = this.open.bind(this);
@@ -180,7 +177,6 @@
             this.monitor = new ConnectionMonitor(this);
             this.disconnected = true;
         }
-
         Connection.prototype.send = function send(data) {
             if (this.isOpen()) {
                 this.webSocket.send(JSON.stringify(data));
@@ -268,8 +264,7 @@
         };
         Connection.prototype.uninstallEventHandlers = function uninstallEventHandlers() {
             for (var eventName in this.events) {
-                this.webSocket["on" + eventName] = function () {
-                };
+                this.webSocket["on" + eventName] = function() {};
             }
         };
         return Connection;
@@ -280,9 +275,7 @@
             if (!this.isProtocolSupported()) {
                 return;
             }
-            var _JSON$parse = JSON.parse(event.data), identifier = _JSON$parse.identifier,
-                message = _JSON$parse.message, reason = _JSON$parse.reason, reconnect = _JSON$parse.reconnect,
-                type = _JSON$parse.type;
+            var _JSON$parse = JSON.parse(event.data), identifier = _JSON$parse.identifier, message = _JSON$parse.message, reason = _JSON$parse.reason, reconnect = _JSON$parse.reconnect, type = _JSON$parse.type;
             switch (type) {
                 case message_types.welcome:
                     this.monitor.recordConnect();
@@ -341,7 +334,7 @@
         }
         return object;
     };
-    var Subscription = function () {
+    var Subscription = function() {
         function Subscription(consumer) {
             var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
             var mixin = arguments[2];
@@ -350,7 +343,6 @@
             this.identifier = JSON.stringify(params);
             extend(this, mixin);
         }
-
         Subscription.prototype.perform = function perform(action) {
             var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
             data.action = action;
@@ -368,13 +360,12 @@
         };
         return Subscription;
     }();
-    var Subscriptions = function () {
+    var Subscriptions = function() {
         function Subscriptions(consumer) {
             classCallCheck(this, Subscriptions);
             this.consumer = consumer;
             this.subscriptions = [];
         }
-
         Subscriptions.prototype.create = function create(channelName, mixin) {
             var channel = channelName;
             var params = (typeof channel === "undefined" ? "undefined" : _typeof(channel)) === "object" ? channel : {
@@ -399,26 +390,26 @@
         };
         Subscriptions.prototype.reject = function reject(identifier) {
             var _this = this;
-            return this.findAll(identifier).map(function (subscription) {
+            return this.findAll(identifier).map(function(subscription) {
                 _this.forget(subscription);
                 _this.notify(subscription, "rejected");
                 return subscription;
             });
         };
         Subscriptions.prototype.forget = function forget(subscription) {
-            this.subscriptions = this.subscriptions.filter(function (s) {
+            this.subscriptions = this.subscriptions.filter(function(s) {
                 return s !== subscription;
             });
             return subscription;
         };
         Subscriptions.prototype.findAll = function findAll(identifier) {
-            return this.subscriptions.filter(function (s) {
+            return this.subscriptions.filter(function(s) {
                 return s.identifier === identifier;
             });
         };
         Subscriptions.prototype.reload = function reload() {
             var _this2 = this;
-            return this.subscriptions.map(function (subscription) {
+            return this.subscriptions.map(function(subscription) {
                 return _this2.sendCommand(subscription, "subscribe");
             });
         };
@@ -427,8 +418,8 @@
             for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
                 args[_key - 1] = arguments[_key];
             }
-            return this.subscriptions.map(function (subscription) {
-                return _this3.notify.apply(_this3, [subscription, callbackName].concat(args));
+            return this.subscriptions.map(function(subscription) {
+                return _this3.notify.apply(_this3, [ subscription, callbackName ].concat(args));
             });
         };
         Subscriptions.prototype.notify = function notify(subscription, callbackName) {
@@ -439,9 +430,9 @@
             if (typeof subscription === "string") {
                 subscriptions = this.findAll(subscription);
             } else {
-                subscriptions = [subscription];
+                subscriptions = [ subscription ];
             }
-            return subscriptions.map(function (subscription) {
+            return subscriptions.map(function(subscription) {
                 return typeof subscription[callbackName] === "function" ? subscription[callbackName].apply(subscription, args) : undefined;
             });
         };
@@ -454,14 +445,13 @@
         };
         return Subscriptions;
     }();
-    var Consumer = function () {
+    var Consumer = function() {
         function Consumer(url) {
             classCallCheck(this, Consumer);
             this._url = url;
             this.subscriptions = new Subscriptions(this);
             this.connection = new Connection(this);
         }
-
         Consumer.prototype.send = function send(data) {
             return this.connection.send(data);
         };
@@ -478,15 +468,14 @@
                 return this.connection.open();
             }
         };
-        createClass(Consumer, [{
+        createClass(Consumer, [ {
             key: "url",
             get: function get$$1() {
                 return createWebSocketURL(this._url);
             }
-        }]);
+        } ]);
         return Consumer;
     }();
-
     function createWebSocketURL(url) {
         if (typeof url === "function") {
             url = url();
@@ -501,19 +490,16 @@
             return url;
         }
     }
-
     function createConsumer() {
         var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : getConfig("url") || INTERNAL.default_mount_path;
         return new Consumer(url);
     }
-
     function getConfig(name) {
         var element = document.head.querySelector("meta[name='action-cable-" + name + "']");
         if (element) {
             return element.getAttribute("content");
         }
     }
-
     exports.Connection = Connection;
     exports.ConnectionMonitor = ConnectionMonitor;
     exports.Consumer = Consumer;

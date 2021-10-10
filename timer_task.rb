@@ -3,10 +3,6 @@ require './config/environment'
 require 'clockwork'
 
 module TimerTask
-  # 同步充值记录
-  def self.sync_deposits
-    SyncDepositsJob.perform_later
-  end
 end
 
 module Clockwork
@@ -15,6 +11,6 @@ module Clockwork
   end
 
   every(1.minute, '同步充值') do
-    TimerTask.sync_deposits
+    # TimerTask.sync_deposits
   end
 end
