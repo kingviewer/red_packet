@@ -248,25 +248,16 @@
         });
 
         $('#form_withdraw').submit(function () {
-            let l = $('#form_deposit button[type="submit"]').ladda();
-            l.ladda('start');
+            $('#modal_withdraw').modal('hide');
             let asset_type = $('#modal_withdraw_asset').val(), amount = $('#modal_withdraw_amount').val().trim();
             if (asset_type === 'usdt')
                 contract_game.methods.withdrawQuote(address, Contracts.usdt.to_real_amount((amount))).send({from: address}).then(function () {
-                    l.ladda('stop');
-                    $('#modal_withdraw').modal('hide');
-                    swal('<%= t('tips.success') %>', '<%= t('dashboard.index.withdraw_successfully') %>', 'success');
                 }).catch(function (err) {
-                    l.ladda('stop');
                     swal('<%= t('errors.error') %>', err.message, 'error');
                 });
             else
                 contract_game.methods.withdrawPeer(address, Contracts.cic.to_real_amount((amount))).send({from: address}).then(function () {
-                    l.ladda('stop');
-                    $('#modal_withdraw').modal('hide');
-                    swal('<%= t('tips.success') %>', '<%= t('dashboard.index.withdraw_successfully') %>', 'success');
                 }).catch(function (err) {
-                    l.ladda('stop');
                     swal('<%= t('errors.error') %>', err.message, 'error');
                 });
 
