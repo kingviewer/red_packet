@@ -2,6 +2,7 @@ class BroadcastJoinGameJob < ApplicationJob
   queue_as :default
 
   def perform(game, user)
+    game.reload
     ActionCable.server.broadcast(
       GamesChannel.channel_name(game.id),
       action: :join,
