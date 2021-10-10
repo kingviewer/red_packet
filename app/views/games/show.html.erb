@@ -75,12 +75,12 @@
                               '<span class="text-primary font-15">' + msg.invite_code + '</span>' +
                               '<span class="float-right text-danger font-12"><i class="las la-clock"></i> ' + msg.time + '</span>' +
                               '</div>');
-                          $('#progress_bar').css('width', msg.progress + '%');
-                          $('#span_person').text(msg.person_number);
+                          get_game_info();
                       } else if (msg.action === 'win') {
                           $('#progress_bar').css('width', '100%');
                           $('#div_open_packet').show().find('button').attr('onclick', 'location.replace("/game_rounds/show?id=' + msg.game_round_id + '")');
                           $('#div_state').text('<%= t('dashboard.index.finished') %>');
+                          $('#span_person').hide();
                       }
                   }
               }
