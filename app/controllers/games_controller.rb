@@ -96,4 +96,16 @@ class GamesController < BaseUserController
       end
     end
   end
+
+  def info
+    if not (game = Game.find_by(id: params[:id]))
+      error(t('.join.game_not_exist'))
+    else
+      success(
+        usdt_amount: LZUtils.format_coin(game.usdt_amount),
+        person_number: t('user_game_rounds.index.person_number', number: "#{game.waiter_amount}/#{game.player_amount}"),
+        progress: "#{(game.waiter_amount * 100 / game.player_amount).to_i}%"
+      )
+    end
+  end
 end
