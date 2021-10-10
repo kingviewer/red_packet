@@ -68,7 +68,7 @@
                           $('#span_person').text(msg.person_number);
                       } else if (msg.action === 'win') {
                           $('#progress_bar').css('width', '100%');
-                          $('#div_open_packet').show().find('button').attr('onclick', 'location.href="/game_rounds/show?id=' + msg.game_round_id + '"');
+                          $('#div_open_packet').show().find('button').attr('onclick', 'location.replace("/game_rounds/show?id=' + msg.game_round_id + '")');
                           $('#div_state').text('<%= t('dashboard.index.finished') %>');
                       }
                   }
