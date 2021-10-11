@@ -27,12 +27,10 @@ class GamesController < BaseUserController
   def list_my_pending
     data = []
     GameWaiter.includes(:game).where(user_id: cur_user.id).order(id: :desc).each do |waiter|
+      game = waiter.game
       data << {
-        id: waiter.game.id,
-        usdt_amount: waiter.game.usdt_amount,
-        player_amount: waiter.game.player_amount,
-        player_amount_display: t('dashboard.index.person', number: waiter.game.player_amount),
-        waiter_amount: waiter.game.waiter_amount,
+        id: game.id,
+        desc: "#{game.usdt_amount.to_i} USDT, #{t('user_game_rounds.index.person_number', number: game.player_amount)}",
         created_at: waiter.formatted_created_at
       }
     end
@@ -79,9 +77,7 @@ class GamesController < BaseUserController
             game_round_id = game.check_win
             success(
               id: game.id,
-              usdt_amount: game.usdt_amount,
-              player_amount: game.player_amount,
-              player_amount_display: t('dashboard.index.person', number: game.player_amount),
+              desc: "#{game.usdt_amount.to_i} USDT, #{t('user_game_rounds.index.person_number', number: game.player_amount)}",
               waiter_amount: game.waiter_amount,
               created_at: waiter.formatted_created_at,
               win: !game_round_id.nil?,

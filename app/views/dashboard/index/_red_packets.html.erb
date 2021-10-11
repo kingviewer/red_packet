@@ -254,16 +254,18 @@
                 $('#modal_join_game').modal('hide');
                 if (data.win)
                     $('#joined_list').prepend('<div id="joined_item_' + data.id + '" class="mb-2 border-bottom border-light pb-2">' +
-                        '<span class="text-primary font-15">' + data.usdt_amount + ' USDT/' + data.player_amount_display + '</span>' +
-                        '<span class="float-right text-danger font-12"><i class="las la-clock"></i> ' + data.created_at + '</span>' +
-                        '<br><span class="font-12 mb-0 text-muted"><%= t('dashboard.index.packet_finished') %></span>' +
-                        '<a class="float-right text-gray font-12" href="/game_rounds/show?id=' + data.game_round_id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
+                        '<span class="text-primary font-15">' + data.desc + '</span>' +
+                        '<br><span class="font-13 text-warning state"><%= t('dashboard.index.finished') %></span>' +
+                        '<br>' +
+                        '<span class="font-13">' + data.created_at + '</span>' +
+                        '<a class="float-right text-gray font-12" href="/game_rounds/show?id=' + data.game_round_id + '"><%= t('dashboard.index.open_red_packet') %> ></a>' +
                         '</div>');
                 else {
                     $('#joined_list').prepend('<div id="joined_item_' + data.id + '" class="mb-2 border-bottom border-light pb-2">' +
-                        '<span class="text-primary font-15">' + data.usdt_amount + ' USDT/' + data.player_amount_display + '</span>' +
-                        '<span class="float-right text-danger font-12"><i class="las la-clock"></i> ' + data.created_at + '</span>' +
-                        '<br><span class="font-12 mb-0 text-muted"><%= t('dashboard.index.processing') %></span>' +
+                        '<span class="text-primary font-15">' + data.desc + '</span>' +
+                        '<br><span class="font-13 text-warning state"><%= t('dashboard.index.finished') %></span>' +
+                        '<br>' +
+                        '<span class="font-13">' + data.created_at + '</span>' +
                         '<a class="float-right text-gray font-12" href="/games/show?id=' + data.id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
                         '</div>');
                     subscribe_game(game_id);
@@ -285,17 +287,10 @@
                 disconnected: function () {
                 },
                 received: function (msg) {
-                    if (msg.action === 'join') {
+                    if (msg.action === 'win') {
                         let div = $('#joined_item_' + msg.id);
                         if (div.length && div.length > 0) {
-                            div.find('.time').text(msg.time);
-                            div.find('.desc').text(msg.invite_code + ' <%= t('dashboard.index.joins_game') %>');
-                        }
-                    } else if (msg.action === 'win') {
-                        let div = $('#joined_item_' + msg.id);
-                        if (div.length && div.length > 0) {
-                            div.find('.time').text(msg.time);
-                            div.find('.desc').text('<%= t('dashboard.index.game_round_finished') %>');
+                            div.find('.state').text('<%= t('dashboard.index.finished') %>');
                             div.find('a').attr('href', '/game_rounds/show?id=' + msg.game_round_id).text('<%= t('dashboard.index.open_red_packet') %>');
                             div.attr('id', 'joined_item_' + msg.id + '_win');
                         }
@@ -313,9 +308,10 @@
                     for (let i = 0; i < data.length; i++) {
                         let item = data[i];
                         html += '<div id="joined_item_' + item.id + '" class="mb-2 border-bottom border-light pb-2">' +
-                            '<span class="text-primary font-15">' + item.usdt_amount + ' USDT/' + item.player_amount_display + '</span>' +
-                            '<span class="float-right text-danger font-12"><i class="las la-clock"></i> <span class="time">' + item.created_at + '</span></span>' +
-                            '<br><span class="font-12 mb-0 text-muted desc"><%= t('dashboard.index.processing') %></span>' +
+                            '<span class="text-primary font-15">' + item.desc + '</span>' +
+                            '<br><span class="font-13 text-warning state"><%= t('dashboard.index.processing') %></span>' +
+                            '<br>' +
+                            '<span class="font-13">' + item.created_at + '</span>' +
                             '<a class="float-right text-gray font-12" href="/games/show?id=' + item.id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
                             '</div>';
                     }
@@ -342,12 +338,11 @@
                     let item = data[i];
                     html += '<div class="mb-2 border-bottom border-light pb-2">' +
                         '<span class="text-primary font-15">' + item.desc + '</span>' +
-                        '<span class="text-danger float-right">' + item.packet_type + '</span>' +
                         '<br>';
                     if (item.loser)
-                        html += '<span class="font-13"><%= t('.lose') %></span>';
+                        html += '<span class="font-13"><%= t('user_game_rounds.index.lose') %></span>';
                     else
-                        html += '<span class="text-danger font-13"><%= t('.win_amount') %>: ' + item.usdt_won + ' USDT</span>';
+                        html += '<span class="text-danger font-13"><%= t('user_game_rounds.index.win_amount') %>: ' + item.usdt_won + ' USDT</span>';
                     html += '<br>' +
                         '<span class="font-13">' + item.created_at + '</span>' +
                         '<span class="font-13 float-right" onclick="location.href=\'/game_rounds/show?id=' + item.game_round_id + '\'"><%= t('dashboard.index.view_detail') %> ></span>' +
