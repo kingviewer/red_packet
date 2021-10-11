@@ -29,9 +29,9 @@ class GameRoundsController < BaseUserController
       error(t('.not_exist'))
     else
       ur = game_round.user_game_rounds.find_by(user_id: cur_user.id)
-      game = game_round.game
+      record = game_round.game || game_round.game_room
       success(
-        usdt_person: t('dashboard.index.game_pserson_usdt', usdt_amount: game.usdt_amount.to_i, player_amount: game.player_amount),
+        usdt_person: t('dashboard.index.game_pserson_usdt', usdt_amount: record.usdt_amount.to_i, player_amount: record.player_amount),
         joined: !ur.nil?,
         loser: ur&.loser || false,
         usdt_won: ur && LZUtils.format_coin(ur.usdt_won)
