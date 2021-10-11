@@ -3,15 +3,22 @@
     <div class="widget widget-chart-one">
       <div class="widget-content m-10 p-t-10">
         <div class="mb-2 border-bottom border-light">
-          <span class="text-primary font-17 m-b-10">English</span>
+          <span class="text-primary font-17 m-b-10" onclick="set_lang('en')">English</span>
         </div>
         <div class="mb-2 border-bottom border-light">
-          <span class="text-primary font-17 m-b-10">简体中文</span>
+          <span class="text-primary font-17 m-b-10" onclick="set_lang('zh-CN')">简体中文</span>
         </div>
         <div class="mb-2 border-light">
-          <span class="text-primary font-17 m-b-10">한국어</span>
+          <span class="text-primary font-17 m-b-10" onclick="set_lang('ko')">한국어</span>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  function set_lang(lang) {
+      $.cookie('lang', lang, {path: '/'});
+      location.href = '/dashboard/index';
+  }
+</script>
