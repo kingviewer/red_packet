@@ -18,7 +18,7 @@ class GameRoom < ApplicationRecord
         UserGameRound.create(
           user_id: loser.id,
           game_round_id: game_round.id,
-          usdt_frozen: game.usdt_amount,
+          usdt_frozen: usdt_amount,
           usdt_won: 0,
           loser: true
         )
