@@ -62,17 +62,36 @@
 </div>
 
 <script>
+    let packet_estimate_to, quote_estimate_to, peer_estimate_to, cic_usdt_price;
+
+    function set_assets_estimated_to() {
+        $('#assets_estimated_to_usdt').text(
+            (parseFloat(packet_estimate_to) + parseFloat(quote_estimate_to) + parseFloat(peer_estimate_to) * cic_usdt_price).toFixed(6)
+        );
+    }
+
     function load_assets_data() {
+        packet_estimate_to = undefined;
+        quote_estimate_to = undefined;
+        peer_estimate_to = undefined;
+
         get_my_info(function (data) {
-            $('#assets_estimated_to_usdt').text(data.estimate_to_usdt);
+            cic_usdt_price = parseFloat(data.cigar_usdt_price);
+            packet_estimate_to = data.estimate_to_usdt;
             $('#assets_packet_usdt').text(data.packet_usdt_display);
             $('#assets_packet_cic').text(data.candy_display);
 
             contract_game.methods.quoteBalanceOf(address).call().then(function (result) {
                 $('#assets_wallet_usdt').text(Contracts.usdt.to_display_amount(result));
+                quote_estimate_to = result;
+                if (peer_estimate_to)
+                    set_assets_estimated_to();
             });
             contract_game.methods.peerBalanceOf(address).call().then(function (result) {
                 $('#assets_wallet_cic').text(Contracts.cic.to_display_amount(result));
+                peer_estimate_to = result;
+                if (quote_estimate_to)
+                    set_assets_estimated_to();
             });
         });
     }
