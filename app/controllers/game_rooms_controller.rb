@@ -36,8 +36,8 @@ class GameRoomsController < BaseUserController
               UserRoom.create(user_id: cur_user.id, game_room_id: game_room.id, joined: true)
               success(
                 id: game_room.id,
-                usdt_amount: game.usdt_amount,
-                player_amount: game.player_amount,
+                usdt_amount: game_room.usdt_amount,
+                player_amount: game_room.player_amount,
                 loser_amount: game_room.loser_amount,
                 min_usdt_amount: game_room.min_usdt_amount
               )
