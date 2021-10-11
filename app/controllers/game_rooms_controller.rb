@@ -78,7 +78,7 @@ class GameRoomsController < BaseUserController
 
   # ID和密码查找
   def search
-    if not (game_room = GameRoom.playing.find_by(id: params[:id], password: params[:password]))
+    if not (game_room = GameRoom.playing.find_by(id: params[:id].to_i - 1000, password: params[:password]))
       error(t('.room_not_exist'))
     elsif cur_user.packet_usdt_available < game_room.min_usdt_amount
       error(t('.join.usdt_available_insufficient'))
