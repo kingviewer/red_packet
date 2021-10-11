@@ -266,15 +266,15 @@
                         '<br><span class="font-13 text-warning state"><%= t('dashboard.index.finished') %></span>' +
                         '<br>' +
                         '<span class="font-13">' + data.created_at + '</span>' +
-                        '<a class="float-right text-gray font-12" href="/game_rounds/show?id=' + data.game_round_id + '"><%= t('dashboard.index.open_red_packet') %> ></a>' +
+                        '<a class="float-right font-13" href="/game_rounds/show?id=' + data.game_round_id + '"><%= t('dashboard.index.open_red_packet') %> ></a>' +
                         '</div>');
                 else {
                     $('#joined_list').prepend('<div id="joined_item_' + data.id + '" class="mb-2 border-bottom border-light pb-2">' +
                         '<span class="text-primary font-15">' + data.desc + '</span>' +
-                        '<br><span class="font-13 text-warning state"><%= t('dashboard.index.finished') %></span>' +
+                        '<br><span class="font-13 text-warning state"><%= t('dashboard.index.processing') %></span>' +
                         '<br>' +
                         '<span class="font-13">' + data.created_at + '</span>' +
-                        '<a class="float-right text-gray font-12" href="/games/show?id=' + data.id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
+                        '<a class="float-right font-13" href="/games/show?id=' + data.id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
                         '</div>');
                     subscribe_game(game_id);
                 }
@@ -299,7 +299,7 @@
                         let div = $('#joined_item_' + msg.id);
                         if (div.length && div.length > 0) {
                             div.find('.state').text('<%= t('dashboard.index.finished') %>');
-                            div.find('a').attr('href', '/game_rounds/show?id=' + msg.game_round_id).text('<%= t('dashboard.index.open_red_packet') %>');
+                            div.find('a').attr('href', '/game_rounds/show?id=' + msg.game_round_id).text('<%= t('dashboard.index.open_red_packet') %> >');
                             div.attr('id', 'joined_item_' + msg.id + '_win');
                         }
                     }
@@ -320,7 +320,7 @@
                             '<br><span class="font-13 text-warning state"><%= t('dashboard.index.processing') %></span>' +
                             '<br>' +
                             '<span class="font-13">' + item.created_at + '</span>' +
-                            '<a class="float-right text-gray font-12" href="/games/show?id=' + item.id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
+                            '<a class="float-right font-13" href="/games/show?id=' + item.id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
                             '</div>';
                     }
                     $('#joined_list').prepend(html);
