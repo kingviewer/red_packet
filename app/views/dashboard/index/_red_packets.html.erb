@@ -179,6 +179,8 @@
 </div>
 
 <script>
+    let has_joined_history = false;
+
     function get_red_packets() {
         if (red_packets)
             return;
@@ -266,6 +268,7 @@
                         '</div>');
                     subscribe_game(game_id);
                 }
+                $('#div_no_pending_game').hide();
             }, function (data) {
                 l.ladda('stop');
                 swal('<%= t('errors.error') %>', data.msg, 'error');
@@ -303,7 +306,6 @@
     }
 
     function get_joined_games() {
-        $('#joined_list').empty();
         Business.get('/games/list_my_pending', {},
             function (data) {
                 if (data.length > 0) {
@@ -317,15 +319,43 @@
                             '<a class="float-right text-gray font-12" href="/games/show?id=' + item.id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
                             '</div>';
                     }
-                    $('#joined_list').html(html);
+                    $('#joined_list').prepend(html);
                     for (let i = 0; i < data.length; i++) {
                         subscribe_game(data[i].id);
                     }
-                } else {
-                    $('#joined_list').html('<div class="text-center" id="div_no_record">' +
+                } else if (!has_joined_history) {
+                    $('#joined_list').html('<div class="text-center" id="div_no_pending_game">' +
                         '<span class="text-center text-muted font-12"><i class="las la-exclamation-circle"></i> <%= t('common.no_record') %></span>' +
                         '</div>');
                 }
+            }
+        );
+    }
+
+    function get_game_rounds() {
+        $('#joined_list').empty();
+        Business.get(
+            '/user_game_rounds/list_my', {page: 0, limit: 18, only_normal: true},
+            function (data) {
+                let html = '';
+                for (let i = 0; i < data.length; i++) {
+                    let item = data[i];
+                    html += '<div class="mb-2 border-bottom border-light pb-2">' +
+                        '<span class="text-primary font-15">' + item.desc + '</span>' +
+                        '<span class="text-danger float-right">' + item.packet_type + '</span>' +
+                        '<br>';
+                    if (item.loser)
+                        html += '<span class="font-13"><%= t('.lose') %></span>';
+                    else
+                        html += '<span class="text-danger font-13"><%= t('.win_amount') %>: ' + item.usdt_won + ' USDT</span>';
+                    html += '<br>' +
+                        '<span class="font-13">' + item.created_at + '</span>' +
+                        '<span class="font-13 float-right" onclick="location.href=\'/game_rounds/show?id=' + item.game_round_id + '\'"><%= t('dashboard.index.view_detail') %> ></span>' +
+                        '</div>';
+                }
+                $('#joined_list').html(html);
+                has_joined_history = (data.length > 0);
+                get_joined_games();
             }
         );
     }
@@ -338,7 +368,7 @@
 
         get_last_notice();
         get_red_packets();
-        get_joined_games();
+        get_game_rounds();
 
         $('#form_create_room').submit(function () {
             let l = $('#form_create_room button[type="submit"]').ladda();
