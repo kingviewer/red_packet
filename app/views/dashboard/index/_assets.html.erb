@@ -82,14 +82,14 @@
             $('#assets_packet_cic').text(data.candy_display);
 
             contract_game.methods.quoteBalanceOf(address).call().then(function (result) {
-                $('#assets_wallet_usdt').text(Contracts.usdt.to_display_amount(result));
-                quote_estimate_to = result;
+                quote_estimate_to = Contracts.usdt.to_display_amount(result);
+                $('#assets_wallet_usdt').text(quote_estimate_to);
                 if (peer_estimate_to)
                     set_assets_estimated_to();
             });
             contract_game.methods.peerBalanceOf(address).call().then(function (result) {
-                $('#assets_wallet_cic').text(Contracts.cic.to_display_amount(result));
-                peer_estimate_to = result;
+                peer_estimate_to = Contracts.cic.to_display_amount(result);
+                $('#assets_wallet_cic').text(peer_estimate_to);
                 if (quote_estimate_to)
                     set_assets_estimated_to();
             });
