@@ -68,7 +68,7 @@
             function (data) {
                 has_joined = data.joined;
                 $('#span_usdt_amount').text(data.usdt_amount);
-                $('#span_room_id').text(data.id);
+                $('#span_room_id').text(data.number);
                 $('#progress').css('width', data.progress + '%');
                 $('#span_person').text(data.player_amount_display);
                 if (has_joined)
