@@ -46,3 +46,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'ethereum.rb', '~> 2.4'
 gem 'clockwork', '~> 2.0', '>= 2.0.4'
 gem 'sidekiq', '~> 6.2', '>= 6.2.1'
+gem 'mongoid', '~> 7.2', '>= 7.2.1'
+gem 'aws-sdk-core', '~> 3.113'
+gem 'aws-sdk-s3', '~> 1.92'

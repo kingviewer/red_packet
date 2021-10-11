@@ -126,6 +126,18 @@
             <span>游戏管理</span>
           </a>
         </li>
+        <li class="has-sub <%= 'active' if params[:controller] == 'admin/users' %>">
+          <a href="javascript:;">
+            <b class="caret"></b>
+            <i class="fa fa-cogs"></i>
+            <span>系统设置</span>
+          </a>
+          <ul class="sub-menu">
+            <li class="<%= 'active' if params[:controller] == 'admin/articles' and params[:action] == 'index' %>">
+              <a href="/admin/articles/index">帮助文章</a>
+            </li>
+          </ul>
+        </li>
         <!-- begin sidebar minify button -->
         <li>
           <a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a>

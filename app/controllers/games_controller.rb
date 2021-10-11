@@ -16,7 +16,7 @@ class GamesController < BaseUserController
         id: game.id,
         usdt_amount: game.usdt_amount.to_i,
         player_amount: game.player_amount,
-        player_amount_display: t('dashboard.index.person', number: game.player_amount),
+        player_amount_display: t('dashboard.index.person_losers', number: game.player_amount, bomb: game.loser_amount),
         waiter_amount: game.waiter_amount
       }
     end

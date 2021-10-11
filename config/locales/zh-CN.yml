@@ -49,6 +49,14 @@ zh-CN:
         user: 新兵
         vip: 教官
         agent: 总教官
+    article:
+      article_types:
+        guide: 操作指南
+        reward_rule: 奖励规则
+      langs:
+        en: 英文
+        zh-CN: 简体中文
+        ko: 韩文
   users:
     new:
       sign_up_tip: 请输入您的邀请人ID进行注册
@@ -124,6 +132,7 @@ zh-CN:
       transfer: 划转
       encrypted_packet: 密码炸弹
       person: "%{number}人"
+      person_losers: "%{number}人, %{bomb}炸弹"
       join_game: 参与拆弹
       full_players: 满员人数
       confirm_joining: 确认参与

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title><%= t('common.plat_name') %></title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+  <meta content="" name="author"/>
+  <!--  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+
+  <link rel="stylesheet" media="all" href="/color-admin/css/default/app.min.css" data-turbolinks-track="reload"/>
+  <link rel="stylesheet" href="/color-admin/plugins/ladda/ladda-themeless.min.css"/>
+  <link rel="stylesheet" href="/color-admin/plugins/ionicons/css/ionicons.min.css"/>
+  <link rel="stylesheet" href="/color-admin/plugins/gritter/css/jquery.gritter.css"/>
+  <link rel="stylesheet" href="/color-admin/plugins/bootstrap-table/bootstrap-table.min.css"/>
+  <link href="/color-admin/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+  <link href="/color-admin/plugins/select2/dist/css/select2.min.css" rel="stylesheet"/>
+
+  <%#= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <script src="/color-admin/js/app.min.js"></script>
+  <script src="/color-admin/js/business.js"></script>
+  <script src="/color-admin/plugins/jquery.cookie.js"></script>
+  <script src="/color-admin/js/theme/default.min.js"></script>
+  <script src="/color-admin/plugins/ladda/spin.min.js"></script>
+  <script src="/color-admin/plugins/ladda/ladda.min.js"></script>
+  <script src="/color-admin/plugins/ladda/ladda.jquery.min.js"></script>
+  <script src="/color-admin/plugins/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="/color-admin/plugins/gritter/js/jquery.gritter.min.js"></script>
+  <script src="/color-admin/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+  <script src="/color-admin/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <script src="/color-admin/plugins/select2/dist/js/select2.full.min.js"></script>
+
+  <style>
+      #content {
+          display: flex;
+          flex-direction: column;
+      }
+
+      .modal-backdrop {
+          z-index: 1000;
+      }
+  </style>
+</head>
+
+<body class="pace-top">
+<!-- begin #page-loader -->
+<div id="page-loader" class="fade show">
+  <span class="spinner"></span>
+</div>
+<!-- end #page-loader -->
+
+<!-- begin #page-container -->
+<div id="page-container" class="fade">
+  <div class="d-flex m-t-10 justify-content-end" id="top_right_actions">
+    <button class="btn btn-primary" onclick="add_img();">上传图片 <i class="fa fa-plus"></i></button>
+  </div>
+  <div class="row" id="div_imgs">
+  </div>
+</div>
+
+<!--新增图片弹出框-->
+<div class="modal fade" id="modal_add_img" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">新增图片</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <form id="form_add_img">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="hidden" name="from_browser" value="true">
+        <div class="modal-body">
+          <div class="form-group row">
+            <label class="col-lg-4 col-form-label">选择图片<span class="text-danger">*</span></label>
+            <div class="col-lg-8">
+              <input id="input_img" name="image" type="file" accept="image/png, image/jpeg" class="form-control" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+          <button id="btn_add_img_submit" class="ladda-button btn btn-primary"
+                  data-style="zoom-in">确定
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--end 新增图片弹出框-->
+</div>
+<!-- end page container -->
+<script>
+    function load_imgs() {
+        Business.get(
+            '/admin/images/list', {}, function (data) {
+                for (let i = 0; i < data.length; i++) {
+                    let item = data[i];
+                    $('#div_imgs').append(
+                        '<div id="div_img_' + item.id + '" class="col-2 p-10">\n' +
+                        '  <img src="' + item.image + '" style="width: 100%">\n' +
+                        '  <h5>' + item.file_name + '</h5>\n' +
+                        '  <button class="btn btn-sm btn-primary" onclick="select_img(\'' + item.image + '\')"><i class="fa fa-check"></i> 选择</button>\n' +
+                        '  <button class="btn btn-sm btn-danger" onclick="delete_img(' + item.id + ')"><i class="fa fa-trash"></i> 删除</button>\n' +
+                        '</div>'
+                    );
+                }
+            }
+        );
+    }
+
+    function add_img() {
+        $('#input_img').val('');
+        $('#modal_add_img').modal();
+        $('#form_add_img').unbind('submit').submit(function () {
+            let l = $('#btn_add_img_submit').ladda();
+            l.ladda('start');
+            Business.upload_files(
+                '/admin/images/create', 'form_add_img',
+                function (data) {
+                    l.ladda('stop');
+                    $('#div_imgs').append(
+                        '<div id="div_img_' + data.id + '" class="col-2 p-10">\n' +
+                        '  <img src="' + data.image + '" style="width: 100%">\n' +
+                        '  <h5>' + data.file_name + '</h5>\n' +
+                        '  <button class="btn btn-sm btn-primary" onclick="select_img(\'' + data.image + '\')"><i class="fa fa-check"></i> 选择</button>\n' +
+                        '  <button class="btn btn-sm btn-danger" onclick="delete_img(' + data.id + ')"><i class="fa fa-trash"></i> 删除</button>\n' +
+                        '</div>'
+                    );
+                    $('#modal_add_img').modal('hide');
+                }, function (data) {
+                    l.ladda('stop');
+                    swal('错误', data.msg, 'error');
+                }
+            );
+            return false;
+        });
+    }
+
+    function delete_img(id) {
+        swal({
+            title: '确认操作',
+            text: '确认删除该图片？',
+            icon: 'info',
+            buttons: {
+                cancel: {
+                    text: '取消',
+                    value: null,
+                    visible: true,
+                    className: 'btn btn-default',
+                    closeModal: true,
+                },
+                confirm: {
+                    text: '确认',
+                    value: true,
+                    visible: true,
+                    className: 'btn btn-primary',
+                    closeModal: true
+                }
+            }
+        }).then((confirmed) => {
+            if (confirmed) {
+                Business.post(
+                    '/admin/images/destroy', {id: id, authenticity_token: '<%= form_authenticity_token %>'},
+                    function () {
+                        $('#div_img_' + id).hide();
+                        swal('提示', '删除图片成功', 'success');
+                    }
+                );
+            }
+        });
+    }
+
+    function select_img(src) {
+        window.opener.CKEDITOR.tools.callFunction(<%= @func_num %>, src);
+        window.close();
+    }
+
+    $(function () {
+        load_imgs();
+    });
+</script>
+</body>
+</html>

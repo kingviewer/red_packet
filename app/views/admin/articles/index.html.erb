@@ -1,0 +1,233 @@
+<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/ckeditor/config.js"></script>
+<div class="flex justify-between m-b-15">
+  <ol class="breadcrumb float-xl-left">
+    <li id="li_nav_level_1" class="breadcrumb-item"><a href="javascript:;" class="">首页</a></li>
+    <li id="li_nav_level_2" class="breadcrumb-item"><a href="javascript:;">设置</a></li>
+    <li id="li_nav_level_3" class="breadcrumb-item"><a href="javascript:;">帮助中心</a></li>
+  </ol>
+</div>
+
+<div class="panel panel-inverse">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-12">
+        <button class="btn btn-blue pull-right" onclick="new_article()">新增</button>
+      </div>
+    </div>
+
+    <div class="row m-t-15">
+      <div class="col-12">
+        <table id="table_articles"></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_new" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title">新增帮助文章</h4>
+      </div>
+      <form id="form_new">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="hidden" name="article[content]">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>类型 <span class="text-danger">*</span></label>
+            <select name="article[article_type]" class="form-control">
+              <option value="guide">操作指南</option>
+              <option value="reward_rule">奖励规则</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>语言 <span class="text-danger">*</span></label>
+            <select name="article[lang]" class="form-control">
+              <option value="en">英文</option>
+              <option value="zh-CN">简体中文</option>
+              <option value="ko">韩文</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>内容 <span class="text-danger">*</span></label>
+          </div>
+          <div id="div_content_new"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="submit" class="ladda-button btn btn-success" data-style="zoom-in">确定</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title">编辑帮助文章</h4>
+      </div>
+      <form id="form_edit">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="hidden" name="article[id]">
+        <input type="hidden" name="article[content]">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>类型 <span class="text-danger">*</span></label>
+            <select name="article[article_type]" class="form-control">
+              <option value="guide">操作指南</option>
+              <option value="reward_rule">奖励规则</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>语言 <span class="text-danger">*</span></label>
+            <select name="article[lang]" class="form-control">
+              <option value="en">英文</option>
+              <option value="zh-CN">简体中文</option>
+              <option value="ko">韩文</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>内容 <span class="text-danger">*</span></label>
+          </div>
+          <div id="div_content_edit"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="submit" class="ladda-button btn btn-success" data-style="zoom-in">确定</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    let table, editor_new, editor_edit;
+
+    function init_table() {
+        table = $('#table_articles').bootstrapTable({
+            locale: 'zh-CN',
+            url: '/admin/articles/list',
+            method: 'get',
+            striped: true,
+            cache: false,
+            pagination: true,
+            contentType: "application/x-www-form-urlencoded",
+            sidePagination: "server",
+            pageNumber: 1,
+            queryParamsType: "pageNumber",
+            pageSize: 100,
+            strictSearch: true,
+            clickToSelect: true,
+            uniqueId: "id",
+            columns: [
+                {field: 'id', title: 'ID'},
+                {field: 'article_type_name', title: '文章类型'},
+                {field: 'lang_name', title: '语言'},
+                {field: 'created_at', title: '创建时间'},
+                {
+                    field: 'id', title: '操作', formatter: function (id) {
+                        let actions = [
+                            '<a href="javascript:edit_article(' + id + ')" title="编辑">编辑</a>'
+                        ];
+                        return actions.join(' ');
+                    }
+                }
+            ]
+        });
+    }
+
+    function new_article() {
+        editor_new.setData('');
+        $('#form_new')[0].reset();
+        $('#modal_new').modal();
+    }
+
+    function edit_article(id) {
+        $('#form_edit')[0].reset();
+        $('#form_edit input[name="article[id]"]').val('article_id', id);
+        $('#form_edit').modal();
+        let l = $('#form_edit button[type="submit"]').ladda();
+        l.ladda('start');
+        Business.get('/admin/articles/get', {id: id},
+            function (data) {
+                l.ladda('stop');
+                $('#form_edit select[name="article[article_type]"]').val(data.article_type);
+                $('#form_edit select[name="article[lang]"]').val(data.lang);
+                editor_edit.setData(data.html);
+            }, function (data) {
+                l.ladda('stop');
+                swal('错误', data.msg, 'error');
+            }
+        );
+    }
+
+    $(function () {
+        init_table();
+
+        editor_new = CKEDITOR.replace('div_content_new', {
+            height: 270,
+            baseFloatZIndex: 99999,
+            extraPlugins: 'uploadimage',
+            imageUploadUrl: '/admin/images/upload',
+            filebrowserBrowseUrl: '/admin/images/index'
+        });
+
+        editor_edit = CKEDITOR.replace('div_content_edit', {
+            height: 270,
+            baseFloatZIndex: 99999,
+            extraPlugins: 'uploadimage',
+            imageUploadUrl: '/admin/images/upload',
+            filebrowserBrowseUrl: '/admin/images/index'
+        });
+
+        $('#form_new').submit(function () {
+            let content = editor_new.getData().trim();
+            if (content.length === 0) {
+                swal('提示', '请输入内容', 'error');
+                return false;
+            }
+            $('#form_new input[name="article[content]"]').val(content);
+            let l = $('#form_new button[type="submit"]').ladda();
+            l.ladda('start');
+            Business.submit_form('/admin/articles/create', 'form_new',
+                function () {
+                    l.ladda('stop');
+                    table.bootstrapTable('refresh');
+                    $('#modal_new').modal('hide');
+                }, function (data) {
+                    l.ladda('stop');
+                    swal('错误', data.msg, 'error');
+                }
+            );
+
+            return false;
+        });
+
+        $('#form_edit').submit(function () {
+            let l = $('#form_edit button[type="submit"]').ladda();
+            let html = editor_edit.getData().trim();
+            if (html.length === 0) {
+                swal('提示', '请输入内容', 'error');
+                return false;
+            }
+            l.ladda('start');
+            $('#form_edit input[name="article[content]"]').val(html);
+            Business.submit_form(
+                '/admin/articles/update', 'form_edit',
+                function () {
+                    l.ladda('stop');
+                    table.bootstrapTable('refresh');
+                    $('#modal_edit').modal('hide');
+                }, function (data) {
+                    l.ladda('stop');
+                    swal('错误', data.msg, 'error');
+                }
+            );
+
+            return false;
+        });
+    });
+</script>
