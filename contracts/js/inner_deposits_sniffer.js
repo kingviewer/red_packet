@@ -2579,7 +2579,7 @@ function sniffer() {
                         items.push({
                             tx_hash: event.transactionHash,
                             from: event.returnValues.user,
-                            amount: Contracts.usdt.to_display_amount(event.returnValues.amount),
+                            amount: (token === Contracts.usdt.address ? Contracts.usdt.to_display_amount(event.returnValues.amount) : Contracts.cic.to_display_amount(event.returnValues.amount)),
                             asset_type: (token === Contracts.usdt.address ? 'usdt' : 'cigar')
                         });
                     }
