@@ -149,8 +149,12 @@
         <div class="modal-body">
           <div class="form-group">
             <label><%= t('dashboard.index.packet_usdt') %></label>
-            <select name="game_room[game_id]" class="form-control" required>
-            </select>
+            <div class="input-group">
+              <input name="game_room[usdt_amount]" type="number" class="form-control" min="5" required>
+              <div class="input-group-append">
+                <span class="input-group-text">USDT</span>
+              </div>
+            </div>
           </div>
           <div class="form-group">
             <label><%= t('dashboard.index.min_balance_required') %></label>
@@ -160,6 +164,10 @@
                 <span class="input-group-text">USDT</span>
               </div>
             </div>
+          </div>
+          <div class="form-group">
+            <label><%= t('dashboard.index.full_players') %></label>
+            <input name="game_room[player_amount]" type="number" min="2" class="form-control" required>
           </div>
           <div class="form-group">
             <label><%= t('dashboard.index.loser_amount') %></label>

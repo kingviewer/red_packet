@@ -10,12 +10,12 @@ class GameRoomsController < BaseUserController
 
   # 创建
   def create
-    game_room = GameRoom.new(params.require(:game_room).permit(:game_id, :min_usdt_amount, :password, :loser_amount))
-    if not (game = Game.find_by(id: game_room.game_id))
-      error(t('.game_not_exist'))
-    elsif game_room.min_usdt_amount < game.usdt_amount
+    game_room = GameRoom.new(params.require(:game_room).permit(:usdt_amount, :player_amount, :min_usdt_amount, :password, :loser_amount))
+    if game_room.usdt_amount <= 0 || game_room.player_amount <= 0 || game_room.loser_amount <= 0
+      invalid_params
+    elsif game_room.min_usdt_amount < game_room.usdt_amount
       error(t('.min_usdt_amount_less_than_game_required'))
-    elsif game_room.loser_amount >= game.player_amount || game_room.loser_amount < 1
+    elsif game_room.loser_amount >= game_room.player_amount || game_room.loser_amount < 1
       error(t('.loser_amount_lager_than_player_amount'))
     else
       begin
@@ -25,7 +25,7 @@ class GameRoomsController < BaseUserController
           else
             User.where(id: cur_user.id).update_all(
               ['packet_usdt_available = packet_usdt_available - ?, packet_usdt_frozen = packet_usdt_frozen + ?',
-               game_room.game.usdt_amount, game_room.game.usdt_amount]
+               game_room.usdt_amount, game_room.usdt_amount]
             )
             cur_user.reload
             if cur_user.packet_usdt_available < game_room.min_usdt_amount
@@ -58,14 +58,14 @@ class GameRoomsController < BaseUserController
       joiner_amount = UserRoom.where(game_room_id: game_room.id, joined: true).count
       success(
         id: game_room.id,
-        usdt_amount: game_room.game.usdt_amount.to_i,
-        player_amount: game_room.game.player_amount,
+        usdt_amount: game_room.usdt_amount.to_i,
+        player_amount: game_room.player_amount,
         loser_amount: game_room.loser_amount,
         min_usdt_amount: game_room.min_usdt_amount,
         user_amount: user_amount,
         joiner_amount: joiner_amount,
-        progress: (joiner_amount * 100 / game_room.game.player_amount).to_i,
-        player_amount_display: t('user_game_rounds.index.person_number', number: "#{joiner_amount}/#{game_room.game.player_amount}"),
+        progress: (joiner_amount * 100 / game_room.player_amount).to_i,
+        player_amount_display: t('user_game_rounds.index.person_number', number: "#{joiner_amount}/#{game_room.player_amount}"),
         entered: !ur.nil?,
         joined: !ur.nil? && ur.joined
       )
@@ -118,7 +118,7 @@ class GameRoomsController < BaseUserController
         else
           User.where(id: cur_user.id).update_all(
             ['packet_usdt_available = packet_usdt_available - ?, packet_usdt_frozen = packet_usdt_frozen + ?',
-             game_room.game.usdt_amount, game_room.game.usdt_amount]
+             game_room.usdt_amount, game_room.usdt_amount]
           )
           cur_user.reload
           raise t('.usdt_available_insufficient') if cur_user.packet_usdt_available < 0
@@ -145,7 +145,7 @@ class GameRoomsController < BaseUserController
         else
           User.where(id: cur_user.id).update_all(
             ['packet_usdt_available = packet_usdt_available + ?, packet_usdt_frozen = packet_usdt_frozen - ?',
-             game_room.game.usdt_amount, game_room.game.usdt_amount]
+             game_room.usdt_amount, game_room.usdt_amount]
           ) if user_room.joined
           user_room.destroy
           if UserRoom.where(game_room_id: game_room.id).count == 0
