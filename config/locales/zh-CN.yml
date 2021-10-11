@@ -129,7 +129,7 @@ zh-CN:
       confirm_joining: 确认参与
       amount: 金额
       current_balance: 当前余额
-      entrust_successfully: 托管成功
+      entrust_successfully: 托管成功，请等待区块确认
       choose_asset: 选择币种
       withdraw_available: 可提金额
       withdraw_successfully: 提取成功
