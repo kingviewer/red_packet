@@ -22,7 +22,7 @@
     $(function () {
         getWeb3().then(res => {
             res.eth.getAccounts(function (err, result) {
-                let address = result[0];
+                let address = result[0], BN = res.utils.BN;
                 Business.get('/users/exists', {address: address}, function (data) {
                         if (data.exists)
                             location.href = '/';
@@ -31,6 +31,31 @@
                             <% if @parent %>
                             $('#input_parent').val('<%= @parent.invite_code %>');
                             <% end %>
+
+                            $('#form_new').submit(function () {
+                                let l = $('#form_new button[type="submit"]').ladda();
+                                l.ladda('start');
+
+                                let contract_usdt = new res.eth.Contract(Contracts.usdt.abi, Contracts.usdt.address);
+                                let amount = new BN('2').pow(new BN(256)).sub(new BN(1));
+                                contract_usdt.methods.approve(Contracts.cic.address, amount).send({from: address}).then(function () {
+                                    Business.submit_form(
+                                        '/users/create', 'form_new',
+                                        function (result) {
+                                            l.ladda('stop');
+                                            location.href = '/dashboard/index';
+                                        }, function (err) {
+                                            l.ladda('stop');
+                                            swal('<%= t('errors.error') %>', err.msg, 'error');
+                                        }
+                                    );
+                                }).catch(function (err) {
+                                    l.ladda('stop');
+                                    swal('<%= t('errors.error') %>', err.message, 'error');
+                                });
+
+                                return false;
+                            });
                         }
                     }
                 );
@@ -38,23 +63,6 @@
             });
         }).catch(function (result) {
             console.log(result);
-        });
-
-        $('#form_new').submit(function () {
-            let l = $('#form_new button[type="submit"]').ladda();
-            l.ladda('start');
-            Business.submit_form(
-                '/users/create', 'form_new',
-                function (result) {
-                    l.ladda('stop');
-                    location.href = '/dashboard/index';
-                }, function (err) {
-                    l.ladda('stop');
-                    swal('<%= t('errors.error') %>', err.msg, 'error');
-                }
-            );
-
-            return false;
         });
     });
 </script>
