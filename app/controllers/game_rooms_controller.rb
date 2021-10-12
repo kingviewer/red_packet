@@ -35,8 +35,7 @@ class GameRoomsController < BaseUserController
               game_room.save!
               UserRoom.create(user_id: cur_user.id, game_room_id: game_room.id, joined: true)
               success(
-                id: game_room.id,
-                number: game_room.id + 1000,
+                id: game_room.id + 1000,
                 usdt_amount: game_room.usdt_amount,
                 player_amount: game_room.player_amount,
                 loser_amount: game_room.loser_amount,
@@ -180,7 +179,7 @@ class GameRoomsController < BaseUserController
     ur = UserRoom.find_by(user_id: cur_user.id)
     success(
       entered: !ur.nil?,
-      game_room_id: ur&.game_room_id
+      game_room_id: (ur&.game_room_id || 0) + 1000
     )
   end
 end
