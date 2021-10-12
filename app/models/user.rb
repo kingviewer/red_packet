@@ -61,6 +61,7 @@ class User < ApplicationRecord
     prev_reward_amount = 0
     dst_user = parent
     field_name = 'packet_usdt_available'
+    total_reward = 0
     loop do
       if dst_user.agent?
         rate = dst_user.agent_commission_rate
@@ -75,6 +76,7 @@ class User < ApplicationRecord
             flow_type: :agent_reward,
             amount: reward_amount
           )
+          total_reward += reward_amount
           prev_rate = rate
           prev_reward_amount = reward_amount
         elsif rate == prev_rate && !same_rewarded
@@ -87,17 +89,20 @@ class User < ApplicationRecord
             flow_type: :agent_reward,
             amount: reward_amount
           )
+          total_reward += reward_amount
           break if rate == MAX_COMMISSION_RATE
           same_rewarded = true
         end
       end
       break unless (dst_user = dst_user.parent)
     end if dst_user
+    total_reward
   end
 
   def reward_new_buy(vip_usdt, agent_usdt, asset_type, flow_type)
     dst_user = parent
     vip_reward = agent_reward = 0
+    total_reward = 0
     field_name =
       if asset_type == :usdt
         'packet_usdt_available'
@@ -121,6 +126,7 @@ class User < ApplicationRecord
           flow_type: flow_type,
           amount: vip_reward
         )
+        total_reward += vip_reward
       elsif dst_user.agent?
         User.where(id: dst_user.id).update_all(["#{field_name} = #{field_name} + ?", agent_reward])
         AssetFlow.create(
@@ -130,9 +136,11 @@ class User < ApplicationRecord
           flow_type: flow_type,
           amount: agent_reward
         )
+        total_reward += agent_reward
       end
       break unless (dst_user = dst_user.parent)
     end if dst_user
+    total_reward
   end
 
   private

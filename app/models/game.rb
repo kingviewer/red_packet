@@ -63,6 +63,7 @@ class Game < ApplicationRecord
       end
 
       # 赢家给USDT
+      total_fee_left = 0
       winners.each do |winner|
         User.where(id: winner[:user].id).update_all(
           ['packet_usdt_available = packet_usdt_available + ?, packet_usdt_frozen = packet_usdt_frozen - ?',
@@ -75,7 +76,9 @@ class Game < ApplicationRecord
           flow_type: :win,
           amount: winner[:win]
         )
-        winner[:user].reward_flow(winner[:win])
+
+        # 代理返佣
+        fee -= winner[:user].reward_flow(winner[:win])
 
         # 直推
         if (parent = winner[:user].parent)
@@ -90,6 +93,7 @@ class Game < ApplicationRecord
                 flow_type: :parent_reward,
                 amount: reward_amount
               )
+              fee -= reward_amount
             end
           end
 
@@ -106,11 +110,37 @@ class Game < ApplicationRecord
                   flow_type: :grand_reward,
                   amount: reward_amount
                 )
+                fee -= reward_amount
               end
             end
           end
         end
+
+        total_fee_left += fee
       end
+
+      # 系统账户增加金额
+      back_fund = (total_fee_left * 0.1).floor(8)
+      SysAccount.back_fund.update_all(['balance = balance + ?, total = total + ?', back_fund, back_fund])
+      SysFlow.create(
+        sys_account_id: SysAccount.back_fund.first.id,
+        flow_type: :new_round,
+        amount: back_fund
+      )
+      token_fund = back_fund
+      SysAccount.token_fund.update_all(['balance = balance + ?, total = total + ?', token_fund, token_fund])
+      SysFlow.create(
+        sys_account_id: SysAccount.token_fund.first.id,
+        flow_type: :new_round,
+        amount: token_fund
+      )
+      sys_benefit = total_fee_left - back_fund - token_fund
+      SysAccount.income.update_all(['balance = balance + ?, total = total + ?', sys_benefit, sys_benefit])
+      SysFlow.create(
+        sys_account_id: SysAccount.income.first.id,
+        flow_type: :new_round,
+        amount: sys_benefit
+      )
 
       # 加流水
       winners.each do |winner|

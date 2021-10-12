@@ -1,209 +1,209 @@
 en:
   common:
-    plat_name: 拆弹专家
-    language: 简体中文
-    no_record: 没有记录
-    coming_soon: 马上开放
-    load_more: 加载更多
+    plat_name: bomb disposal expert
+    language: English
+    no_record: No record
+    coming_soon: open soon
+    load_more: load more
   errors:
-    error: 错误
-    permission_denied: 无权操作
-    system_busy: 网络拥堵，请稍后再试
-    invalid_request: 非法请求
-    login_to_operate: 未登录或会话已过期，请登录后再操作
-    invalid_params: 参数无效或错误
-    user_not_exist: 该地址未注册
+    error: error
+    permission_denied: permission_denied
+    system_busy: Network congestion, please try again later
+    invalid_request: Illegal request
+    login_to_operate: You have not logged in or the session has expired. Please log in and try again
+    invalid_params: Invalid or incorrect parameter
+    user_not_exist: The address is not registered
   tips:
-    success: 成功
-    operation_success: 操作成功
-    failed: 失败
-    confirm: 确定
-    confirm_operation: 确认操作
-    cancel: 取消
-    submit: 提交
-    close: 关闭
+    success: success
+    operation_success: Operation successful
+    failed: failed
+    confirm: confirm
+    confirm_operation: Confirm operation
+    cancel: cancel
+    submit: submit
+    close: close
   utils:
     accounts:
-      packet: 拆弹账户
-      wallet: 钱包账户
+      packet: Bomb account
+      wallet: wallet account
   models:
     asset_flow:
       flow_types:
-        deposit: 托管
-        withdraw: 提现
-        transfer: 划转
-        win: 拆弹成功
-        lose: 拆弹失败
-        lose_reward: 拆弹福利
-        parent_reward: 直推奖励
-        grand_reward: 间推奖励
-        agent_reward: 训练津贴
-        buy_agent: 升级总教官
-        buy_vip: 升级教官
-        team_new_agent: 培训津贴
-        team_new_vip: 培训津贴
-        vip_init_reward: 教官补贴
-        agent_init_reward: 总教官补贴
+        deposit: deposi
+        withdraw: withdraw
+        transfer: transfer
+        win: win
+        lose: lose
+        lose_reward: Bomb disposal benefit
+        parent_reward: Direct referral rewards
+        grand_reward: Indirect referral reward
+        agent_reward: Training allowance
+        buy_agent: Upgrade the chief instructor
+        buy_vip: Upgrade instructor
+        team_new_agent: Training allowance
+        team_new_vip: Training allowance
+        vip_init_reward: Instructor subsidies
+        agent_init_reward: Chief instructor allowance
     user:
       roles:
-        user: 新兵
-        vip: 教官
-        agent: 总教官
+        user: new recruits
+        vip: new recruits
+        agent: Chief instructor
     article:
       article_types:
-        guide: 操作指南
-        reward_rule: 奖励规则
+        guide: guide
+        reward_rule: reward rule
       langs:
-        en: 英文
+        en: English
         zh-CN: 简体中文
-        ko: 韩文
+        ko: Korean
   users:
     new:
-      sign_up_tip: 请输入您的邀请人ID进行注册
-      your_address: 您的地址
-      parent_id: 邀请人ID
-      sign_up: 注册
+      sign_up_tip: Please enter your inviter ID to register
+      your_address: Your address
+      parent_id: Inviter's ID
+      sign_up: registere
     create:
-      parent_not_exist: 邀请人不存在
-      address_already_exists: 该地址已经注册
+      parent_not_exist: Inviter does not exist
+      address_already_exists: The address is registered
     apply_agent:
-      agent_price: 费用
-      price_desc: "%{price} USDT 或 (50%价值的CIC)"
-      pay_type: 支付类型
-      agent_rules: 总教官规则
+      agent_price: cost
+      price_desc: "%{price} USDT or (50% value CIC)"
+      pay_type: Payment type
+      agent_rules: Chief instructor rules
       rules_content: 总教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则
-      apply_agent_success: 升级总教官成功
+      apply_agent_success: General Instructor upgrade succeeded
     apply_vip:
-      vip_price: 费用
-      price_desc: "%{price} USDT 或 (50%价值的CIC)"
-      pay_type: 支付类型
-      vip_rules: 教官规则
+      vip_price: cost
+      price_desc: "%{price} USDT or (50%valueCIC)"
+      pay_type: Payment type
+      vip_rules: Chief instructor rules
       rules_content: 教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则
-      apply_vip_success: 升级教官成功
+      apply_vip_success: General Instructor upgrade succeeded
     become_agent:
-      already_agent: 您已经是总教官，无需再次升级
+      already_agent: You are already the chief instructor. There is no need to
     become_vip:
-      already_vip: 您已经是教官，请勿重复升级
-      already_agent: 您是总教官，无需升级教官
+      already_vip: You are already an instructor. Do not repeat the upgrade
+      already_agent: You are the chief instructor. There is no need to upgrade
   user_sessions:
     new:
-      connecting_wallet: 正在连接钱包...
+      connecting_wallet: The wallet is linking
   game_rooms:
     show:
-      game_room_id: 房间号
-      join_now: 立即参与
-      joined: 已参与
-      joined_leave_tip: 您已参与本次拆弹，退出房间则会取消您的参与。确认退出吗？
-      win_records: 拆弹记录
-      not_joined: 未参与
+      game_room_id: room ID
+      join_now: Immediately to participate in
+      joined: Has been involved in
+      joined_leave_tip: You have participated in the defusing of the bomb, exit the room will cancel your participation. Are you sure to quit?
+      win_records: Bomb defusing log
+      not_joined: Was not involved in
     create:
-      game_not_exist: 该拆弹金额不存在
-      min_usdt_amount_less_than_game_required: 最低保证金不应低于拆弹金额
-      in_room_not_to_create: 您当前正在参与一个密码房间，不可再次创建密码房间
-      usdt_available_less_than_min: 您的USDT可用余额小于要创建的密码房的最低保证金
-      loser_amount_lager_than_player_amount: 输家数量应小于玩家数量且大于等于1
+      game_not_exist: The amount for defusing the bomb does not exist
+      min_usdt_amount_less_than_game_required: The minimum deposit should not be less than the amount of bomb disposal
+      in_room_not_to_create: You are currently participating in a password room and cannot create a password room again
+      usdt_available_less_than_min: Your USDT available balance is less than the minimum margin to create a password room
+      loser_amount_lager_than_player_amount: The number of losers should be smaller than the number of players and greater than or equal to 1
     query:
-      room_not_exist: 该密码房间不存在或已结束
+      room_not_exist: The password room does not exist or has ended
     search:
-      room_not_exist: 该密码房间不存在
+      room_not_exist: The password room does not exist
     enter:
-      have_joined_a_room: 您已经参与了一个密码拆弹，不可以再次参与其他密码拆弹
+      have_joined_a_room: You have participated in one password room bomb defusing, can not participate in another password bomb defusing
     join:
-      have_joined_the_room: 您已经参与了该密码拆弹，请勿重复参与
-      room_stopped: 该密码拆弹已经结束
-      usdt_available_insufficient: USDT可用余额不足
+      have_joined_the_room: You have participated in the password room to defuse the bomb, do not participate again
+      room_stopped: The password room has been defused
+      usdt_available_insufficient: Insufficient USDT available balance
   games:
     show:
-      title: 拆弹详情
+      title: Details of bomb disposal
     join:
-      game_not_exist: 该炸弹不存在
-      already_joined: 您已经参与了本次拆弹，不可重复参与
+      game_not_exist: The bomb does not exist
+      already_joined: You have participated in this bomb disposal, can not participate again
   dashboard:
     titles:
-      red_packets: 战场
-      friends: 战友
-      assets: 资产
-      settings: 设置
+      red_packets: battlefield
+      friends: Comrades in arms
+      assets: assets
+      settings: settings
     index:
-      my_id: 我的ID
-      entrusted: 托管中
-      entrust: 托管
-      withdraw: 提取
-      transfer: 划转
-      encrypted_packet: 密码炸弹
-      person: "%{number}人"
-      person_losers: "%{number}人, %{bomb}炸弹"
-      join_game: 参与拆弹
-      full_players: 满员人数
-      confirm_joining: 确认参与
-      amount: 金额
-      current_balance: 当前余额
-      entrust_successfully: 托管成功
-      choose_asset: 选择币种
-      withdraw_available: 可提金额
-      withdraw_successfully: 提取成功
-      transfer_from: 转出账户
-      transfer_to: 转入账户
-      balance_of_transfer_from: 转出账户余额
-      transfer_successfully: 划转成功
-      balance_insufficient: 可用余额不足
-      i_joined: 我参与的
-      processing: 进行中
-      view_detail: 查看详情
-      joins_game: "进入匹配队列"
-      game_round_finished: 拆弹匹配完成，点击"拆弹"查看拆弹结果。
-      open_red_packet: 拆弹
-      players: 玩家列表
-      finished: 已拆弹
-      total_assets_estimated: 总资产折合
-      account: 账户
-      asset: 资产
-      balance: 余额
-      my_info: 我的信息
-      total_flow: 累计流水
-      invitation_url: 邀请链接
-      friend_list: 战友列表
-      friends_amount: 战友数
-      exchange: 切换
-      address: 地址
-      role: 角色
-      language: 语言
-      system_helps: 操作指南
-      playing_rules: 奖励规则
-      playing_records: 参与记录
-      apply_agent: 升级总教官
-      apply_vip: 升级教官
-      join_encrypted_packet: 参与密码拆弹
-      create_encrypted_packet: 创建密码拆弹房间
-      packet_usdt: 拆弹金额
-      min_balance_required: 最低拆弹账户余额
-      loser_amount: 失败人数
-      loser_amount_tip: 最小为1，最大为拆弹参与人数减1
-      packet_password: 拆弹密码
-      encrypted_packet_room_id: 密码拆弹房间号
-      packet_finished: 拆弹完成
-      game_pserson_usdt: "%{usdt_amount} USDT, %{player_amount}人"
+      my_id: My ID
+      entrusted:  entrusted
+      entrust: entrust
+      withdraw: extract
+      transfer: transfer
+      encrypted_packet: Password bomb
+      person: "%{number}Player"
+      person_losers: "%{number}Player, %{bomb}bomb"
+      join_game: Help defuse the bomb
+      full_players: The number of full
+      confirm_joining: Confirm to participate in
+      amount: amount
+      current_balance: current balance
+      entrust_successfully: entrust successfully,waiting for block confirmation
+      choose_asset: choose asset
+      withdraw_available: Can mention amount
+      withdraw_successfully: Can mention amount
+      transfer_from: Out of the account
+      transfer_to: Into the account
+      balance_of_transfer_from: Transfer Account Balance
+      transfer_successfully: Transfer success
+      balance_insufficient: balance insufficient
+      i_joined:  i joined
+      processing: ongoing
+      view_detail: view details
+      joins_game: "joins game"
+      game_round_finished: After bomb removal is complete, click "Bomb removal" to view the result of bomb removal
+      open_red_packet: Disarm bombs
+      players: players
+      finished: Defused bomb
+      total_assets_estimated: total assets estimated
+      account: account
+      asset: asset
+      balance: balance
+      my_info: my info
+      total_flow: total flow
+      invitation_url: invitation url
+      friend_list: friend list
+      friends_amount: friends amount
+      exchange: exchange
+      address: address
+      role: role
+      language: language
+      system_helps: system helps
+      playing_rules: playing rules
+      playing_records: playing records
+      apply_agent: Upgrade the chief instructor
+      apply_vip: Upgrade instructor
+      join_encrypted_packet: Participate in the code to defuse the bomb
+      create_encrypted_packet: Create a password to defuse the bomb room
+      packet_usdt: Amount of bomb defused
+      min_balance_required: Minimum bomb disposal account balance
+      loser_amount: loser amount
+      loser_amount_tip: The minimum is 1, and the maximum is 1 minus the number of participants in bomb disarming
+      packet_password: Defusing bomb code
+      encrypted_packet_room_id: room ID
+      packet_finished: finished
+      game_pserson_usdt: "%{usdt_amount} USDT, %{player_amount}players"
   deposits:
     create:
-      tx_hash_exists: 该比托管已提交过，请勿重复提交
-      tx_hash_invalid: 错误的 TX Hash
+      tx_hash_exists: This hosting has already been submitted, do not submit it again
+      tx_hash_invalid: Incorrect TX Hash
   asset_flows:
     index:
-      title: 资产明细
-      account_balance: 账户余额
-      available: 可用
-      frozen: 冻结
+      title: Assets report
+      account_balance: account balance
+      available: available
+      frozen: frozen
   user_game_rounds:
     index:
-      title: 参与记录
-      person_number: "%{number}人"
-      password_packet: 密码拆弹
-      normal_packet: 普通拆弹
-      win_amount: 拆弹成功
-      lose: 拆弹失败
+      title: Participation Record
+      person_number: "%{number}players"
+      password_packet: password bomb
+      normal_packet: ordinary bomb
+      win_amount: win
+      lose: lose
   game_rounds:
     show:
-      title: 拆弹结果
-      total_funds: 总奖金
+      title: result
+      total_funds: total bonus
     info:
-      not_exist: 该拆弹记录不存在
+      not_exist: The bomb disposal record does not exist

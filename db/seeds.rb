@@ -1,5 +1,13 @@
 GlobalConfig.create unless GlobalConfig.exists?
 
+SysAccount.create(account_type: :back_fund) unless SysAccount.back_fund.exists?
+SysAccount.create(account_type: :token_fund) unless SysAccount.token_fund.exists?
+SysAccount.create(account_type: :income) unless SysAccount.income.exists?
+SysAccount.create(account_type: :vip_usdt) unless SysAccount.vip_usdt.exists?
+SysAccount.create(account_type: :vip_cic) unless SysAccount.vip_cic.exists?
+SysAccount.create(account_type: :agent_usdt) unless SysAccount.agent_usdt.exists?
+SysAccount.create(account_type: :agent_cic) unless SysAccount.agent_cic.exists?
+
 admin_account = Rails.application.credentials.dig(:default_admin, :account)
 Admin.create(
   account: admin_account,

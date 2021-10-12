@@ -124,7 +124,13 @@ class UsersController < BaseUserController
               flow_type: :agent_init_reward,
               amount: cigar_amount
             )
-            cur_user.reward_new_buy(global_config.vip_price, global_config.agent_price, :usdt, :team_new_agent)
+            sys_income = global_config.agent_price - cur_user.reward_new_buy(global_config.vip_price, global_config.agent_price, :usdt, :team_new_agent)
+            SysAccount.agent_usdt.update_all(['balance = balance + ?, total = total + ?', sys_income, sys_income])
+            SysFlow.create(
+              sys_account_id: SysAccount.agent_usdt.first.id,
+              flow_type: :new_agent,
+              amount: sys_income
+            )
             success
           end
         else
@@ -151,9 +157,15 @@ class UsersController < BaseUserController
             #   flow_type: :agent_init_reward,
             #   amount: cigar_amount
             # )
-            cur_user.reward_new_buy(
+            sys_income = cic_price - cur_user.reward_new_buy(
               (global_config.vip_price * 0.5 / global_config.cigar_usdt_price).ceil(6), cic_price, :cigar,
               :team_new_agent
+            )
+            SysAccount.agent_cic.update_all(['balance = balance + ?, total = total + ?', sys_income, sys_income])
+            SysFlow.create(
+              sys_account_id: SysAccount.agent_cic.first.id,
+              flow_type: :new_agent,
+              amount: sys_income
             )
             success
           end
@@ -193,7 +205,13 @@ class UsersController < BaseUserController
               flow_type: :vip_init_reward,
               amount: cigar_amount
             )
-            cur_user.reward_new_buy(global_config.vip_price, global_config.vip_price, :usdt, :team_new_vip)
+            sys_income = global_config.vip_price - cur_user.reward_new_buy(global_config.vip_price, global_config.vip_price, :usdt, :team_new_vip)
+            SysAccount.vip_usdt.update_all(['balance = balance + ?, total = total + ?', sys_income, sys_income])
+            SysFlow.create(
+              sys_account_id: SysAccount.vip_usdt.first.id,
+              flow_type: :new_vip,
+              amount: sys_income
+            )
             success
           end
         else
@@ -220,7 +238,13 @@ class UsersController < BaseUserController
             #   flow_type: :vip_init_reward,
             #   amount: cigar_amount
             # )
-            cur_user.reward_new_buy(cic_price, cic_price, :cigar, :team_new_vip)
+            sys_income = cic_price - cur_user.reward_new_buy(cic_price, cic_price, :cigar, :team_new_vip)
+            SysAccount.vip_cic.update_all(['balance = balance + ?, total = total + ?', sys_income, sys_income])
+            SysFlow.create(
+              sys_account_id: SysAccount.vip_cic.first.id,
+              flow_type: :new_vip,
+              amount: sys_income
+            )
             success
           end
         end
