@@ -143,7 +143,7 @@ en:
       transfer: transfer
       encrypted_packet: Password bomb
       person: "%{number}Player"
-      person_losers: "%{number}Player, %{bomb}bomb"
+      person_losers: "%{number}Players %{bomb}bomb"
       join_game: Help defuse the bomb
       full_players: The number of full
       confirm_joining: Confirm to participate in

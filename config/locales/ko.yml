@@ -143,7 +143,7 @@ ko:
       transfer: 이체
       encrypted_packet: 비밀폭탄
       person: "%{number}명"
-      person_losers: "%{number}人, %{bomb}炸弹"
+      person_losers: "%{number}人 %{bomb}炸弹"
       join_game: 폭탄제거참여
       full_players: 제한 참여자수
       confirm_joining: 참여확인
