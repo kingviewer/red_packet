@@ -1,0 +1,146 @@
+<div class="flex justify-between m-b-15">
+  <ol class="breadcrumb float-xl-left">
+    <li id="li_nav_level_1" class="breadcrumb-item"><a href="javascript:;" class="">首页</a></li>
+    <li id="li_nav_level_2" class="breadcrumb-item"><a href="javascript:;">用户管理</a></li>
+    <li id="li_nav_level_3" class="breadcrumb-item"><a href="javascript:;">用户列表</a></li>
+  </ol>
+</div>
+
+<div class="panel panel-inverse">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-4">
+        <div class="input-group">
+          <input id="input_keyword" type="text" class="form-control" placeholder="输入关键字(地址、ID)">
+          <div class="input-group-append">
+            <button type="button" class="btn btn-default no-caret" onclick="table.bootstrapTable('refresh')">
+              <i class="fa fa-search"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="input-group">
+          <select id="filter_role" class="form-control" onchange="table.bootstrapTable('refresh')">
+            <option value="-1">全部角色</option>
+            <option value="user">普通用户</option>
+            <option value="vip">教官</option>
+            <option value="agent">总教官</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-t-15">
+      <div class="col-12">
+        <table id="table_users"></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    let table, page_size = 15;
+
+    function init_table() {
+        table = $('#table_users').bootstrapTable({
+            locale: 'zh-CN',
+            url: '/admin/users/list_for_table',
+            method: 'get',
+            striped: true,
+            cache: false,
+            pagination: true,
+            contentType: "application/x-www-form-urlencoded",
+            queryParams: function (params) {
+                params['page'] = params.pageNumber - 1;
+                params['limit'] = params.pageSize;
+                let keyword = $('#input_keyword').val().trim(), role = $('#filter_role').val();
+                if (keyword.length > 0)
+                    params['keyword'] = keyword;
+                if (role !== '-1')
+                    params['role'] = role;
+                return params;
+            },
+            sidePagination: "server",
+            pageNumber: 1,
+            queryParamsType: "pageNumber",
+            pageSize: page_size,
+            strictSearch: true,
+            clickToSelect: true,
+            uniqueId: "id",
+            columns: [
+                {field: 'id', title: 'id序号'},
+                {field: 'invite_code', title: 'ID'},
+                {field: 'address', title: '地址'},
+                {field: 'role_name', title: '角色'},
+                {field: 'state_name', title: '状态'},
+                {field: 'parent', title: '推荐人'},
+                {field: 'packet_usdt', title: '拆弹账户USDT'},
+                {field: 'candy', title: '拆弹账户TOKEN'},
+                {field: 'team_user_count', title: '伞下人数'},
+                {field: 'team_usdt_flow', title: '伞下流水(总教官)'},
+                {field: 'created_at', title: '注册时间'},
+                {
+                    field: 'id', title: '操作',
+                    formatter: function (id, row) {
+                        let actions = [];
+                        if (row.state === 'normal') {
+                            actions.push('<a href="javascript:freeze(' + id + ')" title="锁定">锁定</i></a>');
+                        } else
+                            actions.push('<a href="javascript:unfreeze(' + id + ')" title="解锁">解锁</a>');
+                        return actions.join(' ');
+                    }
+                }
+            ]
+        });
+    }
+
+    function freeze(id) {
+        swal({
+                title: "确认操作",
+                text: "确定要锁定该用户？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false,
+                closeOnCancel: true
+            }
+        ).then((confirmed) => {
+            if (confirmed)
+                Business.post(
+                    '/admin/users/freeze',
+                    {id: id, authenticity_token: '<%= form_authenticity_token %>'},
+                    function () {
+                        table.bootstrapTable('refresh');
+                        swal('成功', '锁定该用户成功', 'success');
+                    }
+                );
+        });
+    }
+
+    function unfreeze(id) {
+        swal({
+                title: "确认操作",
+                text: "确定要解锁该用户?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false,
+                closeOnCancel: true
+            }
+        ).then((confirmed) => {
+            if (confirmed)
+                Business.put(
+                    '/admin/users/unfreeze',
+                    {id: id, authenticity_token: '<%= form_authenticity_token %>'},
+                    function () {
+                        table.bootstrapTable('refresh');
+                        swal('成功', '解锁用户成功', 'success');
+                    }
+                );
+        });
+    }
+</script>
