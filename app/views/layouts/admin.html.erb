@@ -126,6 +126,21 @@
             <span>游戏管理</span>
           </a>
         </li>
+        <li class="has-sub <%= 'active' if %w[admin/sys_accounts admin/sys_flows].include?(params[:controller]) %>">
+          <a href="javascript:;">
+            <b class="caret"></b>
+            <i class="fa fa-money-check"></i>
+            <span>系统资金</span>
+          </a>
+          <ul class="sub-menu">
+            <li class="<%= 'active' if params[:controller] == 'admin/sys_accounts' and params[:action] == 'index' %>">
+              <a href="/admin/sys_accounts/index">系统账户</a>
+            </li>
+            <li class="<%= 'active' if params[:controller] == 'admin/sys_flows' and params[:action] == 'index' %>">
+              <a href="/admin/sys_flows/index">账户流水</a>
+            </li>
+          </ul>
+        </li>
         <li class="has-sub <%= 'active' if params[:controller] == 'admin/articles' %>">
           <a href="javascript:;">
             <b class="caret"></b>

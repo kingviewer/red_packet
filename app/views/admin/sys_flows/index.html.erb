@@ -1,0 +1,135 @@
+<div class="flex justify-between m-b-15">
+  <ol class="breadcrumb float-xl-left">
+    <li id="li_nav_level_1" class="breadcrumb-item"><a href="javascript:;" class="">首页</a></li>
+    <li id="li_nav_level_2" class="breadcrumb-item"><a href="javascript:;">系统资金</a></li>
+    <li id="li_nav_level_3" class="breadcrumb-item"><a href="javascript:;">账户流水</a></li>
+  </ol>
+</div>
+
+<div class="panel panel-inverse">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-2">
+        <div class="form-group">
+          <select id="filter_sys_accounts" class="form-control">
+            <option value="-1">全部账户</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group col-4">
+        <div class="input-group input-daterange">
+          <input id="filter_start_at" type="text" class="form-control" name="start" placeholder="开始时间"/>
+          <span class="input-group-addon border-radius-0">-</span>
+          <input id="filter_end_at" type="text" class="form-control" name="end" placeholder="结束时间"/>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="form-group">
+          <select id="filter_flow_type" class="form-control">
+            <option value="-1">全部类型</option>
+            <option value="new_round">游戏结算</option>
+            <option value="new_vip">升级教官</option>
+            <option value="new_agent">升级总教官</option>
+            <option value="bg_decrease">后台扣除</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-1">
+        <button class="btn btn-success" onclick="table.bootstrapTable('refresh')"><i class="fa fa-search"></i></button>
+      </div>
+      <div class="col-2">
+        <div class="form-group">
+          <span class="form-control" id="total_statistics"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-t-15">
+      <div class="col-12">
+        <table id="table_sys_flows"></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    let table, page_size = 15;
+
+    function load_accounts() {
+        Business.get(
+            '/admin/sys_accounts/list_for_select', {},
+            function (data) {
+                let html = '';
+                for (let i = 0; i < data.length; i++) {
+                    let item = data[i];
+                    html += '<option value="' + item.id + '">' + item.name + '</option>';
+                }
+                $('#filter_sys_accounts').append(html);
+            }
+        );
+    }
+
+    function init_table() {
+        table = $('#table_sys_flows').bootstrapTable({
+            locale: 'zh-CN',
+            url: '/admin/sys_flows/list_for_table',
+            method: 'get',
+            striped: true,
+            cache: false,
+            pagination: true,
+            contentType: "application/x-www-form-urlencoded",
+            queryParams: function (params) {
+                params['page'] = params.pageNumber - 1;
+                params['limit'] = params.pageSize;
+                let start_at = $('#filter_start_at').val().trim(), end_at = $('#filter_end_at').val().trim(),
+                    account_id = $('#filter_sys_accounts').val(), flow_type = $('#filter_flow_type').val();
+                if (start_at.length > 0)
+                    params['start_at'] = start_at;
+                if (end_at.length > 0)
+                    params['end_at'] = end_at;
+                if (flow_type !== '-1')
+                    params['flow_type'] = flow_type;
+                if (account_id !== '-1')
+                    params['sys_account_id'] = account_id;
+                get_statistics(params);
+                return params;
+            },
+            sidePagination: "server",
+            pageNumber: 1,
+            queryParamsType: "pageNumber",
+            pageSize: page_size,
+            strictSearch: true,
+            clickToSelect: true,
+            uniqueId: "id",
+            columns: [
+                {field: 'id', title: 'ID'},
+                {field: 'account_type_name', title: '账户'},
+                {field: 'flow_type_name', title: '类型'},
+                {field: 'asset_symbol', title: '资产'},
+                {field: 'amount', title: '数量'},
+                {field: 'admin', title: '操作人'},
+                {field: 'remark', title: '备注'},
+                {field: 'created_at', title: '时间'}
+            ]
+        });
+    }
+
+    function get_statistics(params) {
+        Business.get(
+            '/admin/sys_flows/statistics', params,
+            function (data) {
+                $('#total_statistics').text('合计:' + data.total);
+            }
+        );
+    }
+
+    $(function () {
+        $('.input-daterange').datepicker({
+            todayHighlight: true,
+            format: 'yyyy-mm-dd'
+        });
+
+        load_accounts();
+        init_table();
+    });
+</script>

@@ -1,0 +1,115 @@
+<div class="flex justify-between m-b-15">
+  <ol class="breadcrumb float-xl-left">
+    <li class="breadcrumb-item"><a href="javascript:;" class="">首页</a></li>
+    <li class="breadcrumb-item"><a href="javascript:;">系统资金</a></li>
+    <li class="breadcrumb-item"><a href="javascript:;">系统账户</a></li>
+  </ol>
+</div>
+
+<div class="panel panel-inverse">
+  <div class="panel-body">
+    <div class="row m-t-15">
+      <div class="col-12">
+        <table id="table_sys_accounts"></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_decrease" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title">新增工作人员</h4>
+      </div>
+      <form id="form_decrease">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="hidden" name="sys_flow[sys_account_id]">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>扣除金额 <span class="text-danger">*</span></label>
+            <input name="sys_flow[amount]" class="form-control" type="number" min="0.000001" required>
+          </div>
+          <div class="form-group">
+            <label>备注 <span class="text-danger">*</span></label>
+            <input name="sys_flow[remark]" class="form-control" type="text" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="submit" class="ladda-button btn btn-success" data-style="zoom-in">确定</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    let table, page_size = 15;
+
+    function init_table() {
+        table = $('#table_sys_accounts').bootstrapTable({
+            locale: 'zh-CN',
+            url: '/admin/sys_accounts/list_for_table',
+            method: 'get',
+            striped: true,
+            cache: false,
+            pagination: true,
+            contentType: "application/x-www-form-urlencoded",
+            queryParams: function (params) {
+                params['page'] = params.pageNumber - 1;
+                params['limit'] = params.pageSize;
+                return params;
+            },
+            sidePagination: "server",
+            pageNumber: 1,
+            queryParamsType: "pageNumber",
+            pageSize: page_size,
+            strictSearch: true,
+            clickToSelect: true,
+            uniqueId: "id",
+            columns: [
+                {field: 'id', title: 'ID'},
+                {field: 'account_type_name', title: '账号类型'},
+                {field: 'asset_symbol', title: '资产类型'},
+                {field: 'balance', title: '余额'},
+                {field: 'total', title: '累计金额'},
+                {
+                    field: 'id', title: '操作', formatter: function (id, row) {
+                        let actions = ['<a href="javascript:decrease(' + id + ')" title="扣除">扣除</a>'];
+                        return actions.join(' ');
+                    }
+                }
+            ]
+        });
+    }
+
+    function decrease(id) {
+        $('#form_decrease')[0].reset();
+        $('#form_decrease input[name="sys_flow[sys_account_id]"]').val(id);
+        $('#modal_decrease').modal('show');
+    }
+
+    $(function () {
+        init_table();
+
+        $('#form_decrease').submit(function () {
+            let l = $('#form_decrease button[type="submit"]').ladda();
+            l.ladda('start');
+
+            Business.submit_form(
+                '/admin/sys_accounts/decrease', 'form_decrease',
+                function () {
+                    l.ladda('stop');
+                    $('#modal_decrease').hide();
+                    table.bootstrapTable('refresh');
+                }, function (err) {
+                    l.ladda('stop');
+                    swal('错误', err.msg, 'error');
+                }
+            );
+
+            return false;
+        });
+    });
+</script>

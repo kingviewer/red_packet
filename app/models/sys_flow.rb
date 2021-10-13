@@ -1,6 +1,9 @@
 class SysFlow < ApplicationRecord
   enum flow_type: [:new_round, :new_vip, :new_agent, :bg_decrease]
 
+  belongs_to :sys_account
+  belongs_to :admin, required: false
+
   def flow_type_name
     if new_round?
       '游戏结算'
