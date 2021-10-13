@@ -13,7 +13,7 @@ class Admin::SysFlowsController < Admin::BaseController
         id: flow.id,
         account_type_name: flow.sys_account.account_type_name,
         flow_type_name: flow.flow_type_name,
-        asset_symbol: flow.asset_symbol,
+        asset_symbol: flow.sys_account.asset_symbol,
         amount: LZUtils.format_coin(flow.amount),
         admin: flow.admin&.account,
         remark: flow.remark,
