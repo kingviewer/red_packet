@@ -303,7 +303,7 @@ contract Ownable is Context {
     }
 }
 
-contract RedPacket is Context, Ownable {
+contract BombGame is Context, Ownable {
     using SafeMath for uint256;
 
     // Users
@@ -312,9 +312,8 @@ contract RedPacket is Context, Ownable {
     mapping(address => uint) private _peerTokenBalances;
 
     // Addresses
-    address private _addrQuoteToken = 0x42F2fBa90ACF3ddfb413EEae4F58bC477D93F55d;
-    //    address private _addrQuoteToken = 0x55d398326f99059fF775485246999027B3197955;
-    address private _addrPeerToken = 0x3890C270F69744e945b23471678F9F4891BAF432;
+    address private _addrQuoteToken = 0x55d398326f99059fF775485246999027B3197955;
+    address private _addrPeerToken = 0x6F70B8f72AdE1fD34D01405C6984cd10336b0A30;
 
     event Deposit(address indexed user, address indexed token, uint amount);
 
