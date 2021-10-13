@@ -44,6 +44,7 @@ zh-CN:
         team_new_vip: 培训津贴
         vip_init_reward: 教官补贴
         agent_init_reward: 总教官补贴
+        exchange_cic: 兑换CIC
     user:
       roles:
         user: 新兵
@@ -85,6 +86,13 @@ zh-CN:
     become_vip:
       already_vip: 您已经是教官，请勿重复升级
       already_agent: 您是总教官，无需升级教官
+    exchange_cic:
+      packet_usdt_available: 拆弹账户可用金额
+      cic_usdt_price: CIC/USDT 价格
+      exchange_amount: 兑换数量
+      cic_amount_you_will_exchange: 您要兑换的CIC数量
+      cost_usdt_amount: 预计花费USDT数量
+      exchange_success: 兑换成功
   user_sessions:
     new:
       connecting_wallet: 正在连接钱包...
@@ -173,6 +181,7 @@ zh-CN:
       playing_records: 参与记录
       apply_agent: 升级总教官
       apply_vip: 升级教官
+      exchange_cic: 兑换CIC
       join_encrypted_packet: 参与密码拆弹
       create_encrypted_packet: 创建密码拆弹房间
       packet_usdt: 拆弹金额

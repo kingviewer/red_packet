@@ -1,0 +1,84 @@
+<div class="widget box box-shadow p-10 m-t-15">
+  <form id="form_exchange_cic">
+    <div class="form-group">
+      <label><%= t('users.exchange_cic.cic_usdt_price') %></label>
+      <input id="cic_usdt_price" class="form-control" readonly>
+    </div>
+    <div class="form-group">
+      <label><%= t('users.exchange_cic.packet_usdt_available') %></label>
+      <div class="input-group">
+        <input id="packet_usdt_available" class="form-control" readonly>
+        <div class="input-group-append">
+          <span class="input-group-text" style="width: 58px;">USDT</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label><%= t('users.exchange_cic.exchange_amount') %></label>
+      <div class="input-group">
+        <input id="cic_amount" class="form-control" type="number" min="1" step="0.000001" placeholder="<%= t('.cic_amount_you_will_exchange') %>" required>
+        <div class="input-group-append">
+          <span class="input-group-text" style="width: 58px;">CIC</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label><%= t('users.exchange_cic.cost_usdt_amount') %></label>
+      <div class="input-group">
+        <input id="cost_usdt" class="form-control" value="0" readonly>
+        <div class="input-group-append">
+          <span class="input-group-text" style="width: 58px;">USDT</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group m-t-40">
+      <button type="submit" class="btn btn-rounded btn-primary btn-block ladda-button" data-style="zoom-in">确认兑换</button>
+    </div>
+  </form>
+</div>
+
+<script>
+    function get_exchange_info() {
+        Business.get('/users/exchange_info', {}, function (data) {
+            $('#cic_usdt_price').val('1 CIC = ' + data.formatted_cic_usdt_price + ' USDT');
+            $('#packet_usdt_available').val(data.packet_usdt_available);
+
+            $('#cic_amount').bind("input propertychange", function () {
+                let cic_amount = $('#cic_amount').val().trim(),
+                    field_cost = $('#cost_usdt');
+                if (cic_amount.length === 0) {
+                    field_cost.val('0');
+                } else {
+                    cic_amount = parseFloat(cic_amount);
+                    let cost = (cic_amount * data.cic_usdt_price).toFixed(6);
+                    field_cost.val(cost);
+                }
+            });
+        });
+    }
+
+    $(function () {
+        get_exchange_info();
+
+        $('#form_exchange_cic').submit(function () {
+            let l = $('#form_exchange_cic button[type="submit"]').ladda();
+            l.ladda('start');
+
+            Business.post(
+                '/users/exchange', {
+                    cic_amount: $('#cic_amount').val().trim(),
+                    authenticity_token: '<%= form_authenticity_token %>'
+                }, function (data) {
+                    l.ladda('stop');
+                    $('#packet_usdt_available').val(data.packet_usdt_available);
+                    swal('<%= t('tips.success') %>', '<%= t('.exchange_success') %>', 'success');
+                }, function (data) {
+                    l.ladda('stop');
+                    swal('<%= t('errors.error') %>', data.msg, 'error');
+                }
+            );
+
+            return false;
+        });
+    });
+</script>

@@ -44,6 +44,7 @@ ko:
         team_new_vip: 교육수당
         vip_init_reward: 교관 리워드
         agent_init_reward: 장관 리워드
+        exchange_cic: 兑换CIC
     user:
       roles:
         user: 사병
@@ -85,6 +86,13 @@ ko:
     become_vip:
       already_vip: 유저님은 이미 교관입니다, 중복 승격 하지마십시오
       already_agent: 유저님은 이미 장관입니다, 교관 승격이 필요없습니다
+    exchange_cic:
+      packet_usdt_available: 拆弹账户可用金额
+      cic_usdt_price: CIC/USDT 价格
+      exchange_amount: 兑换数量
+      cic_amount_you_will_exchange: 您要兑换的CIC数量
+      cost_usdt_amount: 预计花费USDT数量
+      exchange_success: 兑换成功
   user_sessions:
     new:
       connecting_wallet: 지갑연결중...
@@ -173,6 +181,7 @@ ko:
       playing_records: 참여기록
       apply_agent: 장관승격
       apply_vip: 교관승격
+      exchange_cic: 兑换CIC
       join_encrypted_packet: 모임방 들어가기
       create_encrypted_packet: 모임방 만들기
       packet_usdt: 폭탄제거금액

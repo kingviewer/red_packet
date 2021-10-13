@@ -1,6 +1,6 @@
 class UsersController < BaseUserController
-  before_action :auth_user, only: [:apply_agent, :apply_vip]
-  before_action :ajax_auth_user, only: [:my_info, :my_friends, :become_agent, :become_vip]
+  before_action :auth_user, only: [:apply_agent, :apply_vip, :exchange_cic]
+  before_action :ajax_auth_user, only: [:my_info, :my_friends, :become_agent, :become_vip, :exchange_info, :exchange]
 
   def new
     @parent = User.find_by_invite_code(params[:pid]) unless params[:pid].blank?
@@ -24,7 +24,12 @@ class UsersController < BaseUserController
   end
 
   def choose_lang
-    @title = '语言'
+    @title = t('dashboard.index.language')
+    render layout: 'user'
+  end
+
+  def exchange_cic
+    @title = t('dashboard.index.exchange_cic')
     render layout: 'user'
   end
 
@@ -251,4 +256,52 @@ class UsersController < BaseUserController
       end
     end
   end
+
+  def exchange_info
+    global_config = GlobalConfig.first
+    success(
+      cic_usdt_price: global_config.cigar_usdt_price,
+      formatted_cic_usdt_price: LZUtils.format_coin(global_config.cigar_usdt_price),
+      packet_usdt_available: LZUtils.format_coin(cur_user.packet_usdt_available)
+    )
+  end
+
+  def exchange
+    amount = BigDecimal(params[:cic_amount])
+    if amount <= 0
+      invalid_params
+    else
+      global_config = GlobalConfig.first
+      cost_usdt = (amount * global_config.cigar_usdt_price).ceil(8)
+      User.where(id: cur_user.id).update(
+        ['packet_usdt_available = packet_usdt_available - ?, candy_available = candy_available + ?',
+         cost_usdt, amount]
+      )
+      cur_user.reload
+      if cur_user.packet_usdt_available < 0
+        User.where(id: cur_user.id).update(
+          ['packet_usdt_available = packet_usdt_available + ?, candy_available = candy_available - ?',
+           cost_usdt, amount]
+        )
+        error(t('game_rooms.join.usdt_available_insufficient'))
+      else
+        AssetFlow.create(
+          user_id: cur_user.id,
+          account_type: :packet,
+          asset_type: :usdt,
+          flow_type: :exchange_cic,
+          amount: -cost_usdt
+        )
+        AssetFlow.create(
+          user_id: cur_user.id,
+          account_type: :packet,
+          asset_type: :cigar,
+          flow_type: :exchange_cic,
+          amount: amount
+        )
+        success(packet_usdt_available: LZUtils.format_coin(cur_user.packet_usdt_available))
+      end
+    end
+  end
+
 end

@@ -77,6 +77,10 @@
     }
 
     load_data = function () {
+        set_top_btn('<span class="font-13">兑换</span>', function () {
+
+        });
+
         if (account_type === 'packet' && asset_type === 'usdt')
             $('#div_available_frozen').show();
         else
