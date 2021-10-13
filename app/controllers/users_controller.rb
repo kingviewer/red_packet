@@ -273,13 +273,13 @@ class UsersController < BaseUserController
     else
       global_config = GlobalConfig.first
       cost_usdt = (amount * global_config.cigar_usdt_price).ceil(8)
-      User.where(id: cur_user.id).update(
+      User.where(id: cur_user.id).update_all(
         ['packet_usdt_available = packet_usdt_available - ?, candy_available = candy_available + ?',
          cost_usdt, amount]
       )
       cur_user.reload
       if cur_user.packet_usdt_available < 0
-        User.where(id: cur_user.id).update(
+        User.where(id: cur_user.id).update_all(
           ['packet_usdt_available = packet_usdt_available + ?, candy_available = candy_available - ?',
            cost_usdt, amount]
         )
