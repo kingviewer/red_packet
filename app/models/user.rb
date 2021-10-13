@@ -31,6 +31,10 @@ class User < ApplicationRecord
     I18n.t("models.user.roles.#{role}")
   end
 
+  def state_name
+    I18n.t("models.user.states.#{state}")
+  end
+
   def gen_invite_code
     self.invite_code = LZUtils.gen_rand_str(6).upcase
   end
@@ -110,13 +114,13 @@ class User < ApplicationRecord
         'candy_available'
       end
     8.times do |i|
-        if i == 0
-          vip_reward = (vip_usdt * 0.3).floor(6)
-          agent_reward = (agent_usdt * 0.3).floor(6)
-        else
-          vip_reward = (vip_reward * 0.5).floor(6)
-          agent_reward = (agent_reward * 0.5).floor(6)
-        end
+      if i == 0
+        vip_reward = (vip_usdt * 0.3).floor(6)
+        agent_reward = (agent_usdt * 0.3).floor(6)
+      else
+        vip_reward = (vip_reward * 0.5).floor(6)
+        agent_reward = (agent_reward * 0.5).floor(6)
+      end
       if dst_user.vip?
         User.where(id: dst_user.id).update_all(["#{field_name} = #{field_name} + ?", vip_reward])
         AssetFlow.create(

@@ -1,0 +1,54 @@
+<link href="/color-admin/plugins/zTree/metroStyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/color-admin/plugins/zTree/jquery.ztree.all.min.js"></script>
+
+<div class="flex justify-between m-b-15">
+  <ol class="breadcrumb float-xl-left">
+    <li id="li_nav_level_1" class="breadcrumb-item"><a href="javascript:;" class="">首页</a></li>
+    <li id="li_nav_level_2" class="breadcrumb-item"><a href="javascript:;">用户管理</a></li>
+    <li id="li_nav_level_3" class="breadcrumb-item"><a href="javascript:;">用户树</a></li>
+  </ol>
+</div>
+
+<div class="panel panel-inverse">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-4">
+        <div class="input-group">
+          <input id="input_keyword" type="text" class="form-control" placeholder="输入关键字(地址、ID)">
+          <div class="input-group-append">
+            <button type="button" class="btn btn-default no-caret" onclick="init_tree()">
+              <i class="fa fa-search"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-t-15">
+      <div class="col-12">
+        <ul id="tree_users" class="ztree" style="background-color: snow"></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    function init_tree() {
+        let keyword = $('#input_keyword').val().trim(),
+            setting = {
+                view: {
+                    selectedMulti: false
+                },
+                async: {
+                    type: 'get',
+                    enable: true,
+                    url: "/admin/users/list_tree" + (keyword.length > 0 ? '?keyword=' + keyword : ''),
+                    autoParam: ["id"]
+                }
+            };
+        $.fn.zTree.init($("#tree_users"), setting);
+    }
+
+    $(function () {
+        init_tree();
+    });
+</script>

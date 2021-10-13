@@ -9,7 +9,7 @@
 <div class="panel panel-inverse">
   <div class="panel-body">
     <div class="row">
-      <div class="col-4">
+      <div class="col-3">
         <div class="input-group">
           <input id="input_keyword" type="text" class="form-control" placeholder="输入关键字(地址、ID)">
           <div class="input-group-append">
@@ -18,7 +18,7 @@
           </div>
         </div>
       </div>
-      <div class="col-4">
+      <div class="col-2">
         <div class="input-group">
           <select id="filter_role" class="form-control" onchange="table.bootstrapTable('refresh')">
             <option value="-1">全部角色</option>
@@ -76,7 +76,6 @@
                 {field: 'parent', title: '推荐人'},
                 {field: 'packet_usdt', title: '拆弹账户USDT'},
                 {field: 'candy', title: '拆弹账户TOKEN'},
-                {field: 'team_user_count', title: '伞下人数'},
                 {field: 'team_usdt_flow', title: '伞下流水(总教官)'},
                 {field: 'created_at', title: '注册时间'},
                 {
@@ -109,7 +108,7 @@
         ).then((confirmed) => {
             if (confirmed)
                 Business.post(
-                    '/admin/users/freeze',
+                    '/admin/users/lock',
                     {id: id, authenticity_token: '<%= form_authenticity_token %>'},
                     function () {
                         table.bootstrapTable('refresh');
@@ -134,7 +133,7 @@
         ).then((confirmed) => {
             if (confirmed)
                 Business.put(
-                    '/admin/users/unfreeze',
+                    '/admin/users/unlock',
                     {id: id, authenticity_token: '<%= form_authenticity_token %>'},
                     function () {
                         table.bootstrapTable('refresh');
@@ -143,4 +142,8 @@
                 );
         });
     }
+
+    $(function () {
+        init_table();
+    });
 </script>

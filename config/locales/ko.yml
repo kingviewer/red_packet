@@ -50,6 +50,9 @@ ko:
         user: 사병
         vip: 교관
         agent: 장관
+      states:
+        normal: 正常
+        locked: 已锁定
     article:
       article_types:
         guide: 操作指南
