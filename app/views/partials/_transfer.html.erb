@@ -299,8 +299,9 @@
                     function () {
                         l.ladda('stop');
                         $('#modal_transfer').modal('hide');
-                        swal('<%= t('tips.success') %>', '<%= t('dashboard.index.transfer_successfully') %>', 'success');
-                        location.reload();
+                        swal('<%= t('tips.success') %>', '<%= t('dashboard.index.transfer_successfully') %>', 'success').then(function () {
+                            location.reload();
+                        });
                     }, function (err) {
                         l.ladda('stop');
                         swal('<%= t('errors.error') %>', err.msg, 'error');
