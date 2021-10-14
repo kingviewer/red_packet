@@ -1153,14 +1153,4 @@ const transferSchedual = () => {
     });
 };
 
-// transferSchedual();
-batchTransfer();
-
-// let users = ['0xe8e815f3f3f4b01280353d6aaac6d4d2a73f02e1', '0x7d55e2bc524f040d6da146244475ea3b4d6bf177']
-// let amounts = ['10000000000000000000', '10000000000000000000'];
-// contract_game.methods.owner().call({from: owner}).then(function (result) {
-//     console.log(result);
-// }).catch(function (err) {
-//     console.log('call addQuoteForUsers failed');
-//     console.log(err);
-// });
+transferSchedual();
