@@ -42,6 +42,6 @@ module RedPacket
     config.generators.orm :active_record
     # config.generators.orm :mongoid
 
-    config.hosts << "www.bombgame.org"
+    config.hosts << "www.bombgame.org" << 'localhost'
   end
 end
