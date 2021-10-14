@@ -22,6 +22,7 @@ en:
     cancel: cancel
     submit: submit
     close: close
+    copied: 已复制
   utils:
     accounts:
       packet: Bomb account

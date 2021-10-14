@@ -22,6 +22,7 @@ ko:
     cancel: 취소
     submit: 제출
     close: 닫기
+    copied: 已复制
   utils:
     accounts:
       packet: 폭탄제거계정

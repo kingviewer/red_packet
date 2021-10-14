@@ -11,7 +11,11 @@
     <div class="row">
       <div class="col-12 text-white">
         <%= t('dashboard.index.my_id') %>
-        <span class="float-right"><span id="friends_span_my_id">-</span> <i class="la la-copy"></i></span>
+        <span class="float-right">
+          <span id="friends_span_my_id">-</span>
+          <i id="copy_my_id" class="la la-copy" data-clipboard-action="copy" data-clipboard-target="#friends_span_my_id"
+             onclick="copy_data('copy_my_id')"></i>
+        </span>
       </div>
     </div>
     <div class="row">
@@ -24,7 +28,10 @@
         <%= t('dashboard.index.invitation_url') %>
       </div>
       <div class="col-12 text-white">
-        <span class="float-right"><span id="span_my_url">http://oi1oi2ioi12io3io1u2i3iu1io23ui123</span> <i class="la la-copy"></i></span>
+        <span class="float-right"><span id="span_my_url">-</span>
+          <i id="copy_my_url" class="la la-copy" data-clipboard-action="copy" data-clipboard-target="#span_my_url"
+             onclick="copy_data('copy_my_url')"></i>
+        </span>
       </div>
     </div>
   </div>
@@ -55,6 +62,12 @@
 
 <script>
     let friends_limit = 10, friends_page = 0;
+
+    function copy_data(obj) {
+        new Clipboard('#' + obj).on('success', function (e) {
+            swal('<%= t('tips.success') %>', '<%= t('tips.copied') %>', 'success');
+        });
+    }
 
     function get_my_friends() {
         $('#div_load_more_friends').hide();
