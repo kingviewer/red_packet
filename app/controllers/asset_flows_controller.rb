@@ -8,7 +8,7 @@ class AssetFlowsController < BaseUserController
     @account_type = params[:account_type] || 'packet'
     @asset_type = params[:asset_type] || 'usdt'
     @title = "#{t('.title')}-#{t(@account_type == 'packet' ? 'utils.accounts.packet' : 'utils.accounts.wallet')}"
-    @symbol = (@asset_type == 'usdt' ? 'USDT' : 'CIC')
+    @symbol = (@asset_type == 'usdt' ? 'USDT' : 'BOMB')
   end
 
   def list_my

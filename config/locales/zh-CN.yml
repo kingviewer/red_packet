@@ -45,7 +45,7 @@ zh-CN:
         team_new_vip: 培训津贴
         vip_init_reward: 教官补贴
         agent_init_reward: 总教官补贴
-        exchange_cic: 兑换CIC
+        exchange_cic: 兑换BOMB
     user:
       roles:
         user: 新兵
@@ -73,14 +73,14 @@ zh-CN:
       address_already_exists: 该地址已经注册
     apply_agent:
       agent_price: 费用
-      price_desc: "%{price} USDT 或 (50%价值的CIC)"
+      price_desc: "%{price} USDT 或 (50%价值的BOMB)"
       pay_type: 支付类型
       agent_rules: 总教官规则
       rules_content: 总教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则
       apply_agent_success: 升级总教官成功
     apply_vip:
       vip_price: 费用
-      price_desc: "%{price} USDT 或 (50%价值的CIC)"
+      price_desc: "%{price} USDT 或 (50%价值的BOMB)"
       pay_type: 支付类型
       vip_rules: 教官规则
       rules_content: 教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则
@@ -92,9 +92,9 @@ zh-CN:
       already_agent: 您是总教官，无需升级教官
     exchange_cic:
       packet_usdt_available: 拆弹账户可用金额
-      cic_usdt_price: CIC/USDT 价格
+      cic_usdt_price: BOMB/USDT 价格
       exchange_amount: 兑换数量
-      cic_amount_you_will_exchange: 您要兑换的CIC数量
+      cic_amount_you_will_exchange: 您要兑换的BOMB数量
       cost_usdt_amount: 预计花费USDT数量
       exchange_success: 兑换成功
   user_sessions:
@@ -186,7 +186,7 @@ zh-CN:
       playing_records: 参与记录
       apply_agent: 升级总教官
       apply_vip: 升级教官
-      exchange_cic: 兑换CIC
+      exchange_cic: 兑换BOMB
       join_encrypted_packet: 参与密码拆弹
       create_encrypted_packet: 创建密码拆弹房间
       packet_usdt: 拆弹金额

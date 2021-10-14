@@ -13,7 +13,7 @@
             <label><%= t('dashboard.index.choose_asset') %></label>
             <select id="modal_deposit_asset_type" class="form-control" onchange="on_deposit_asset_change()">
               <option value="usdt">USDT</option>
-              <option value="cigar">CIC</option>
+              <option value="cigar">BOMB</option>
             </select>
           </div>
           <div class="form-group">
@@ -46,7 +46,7 @@
             <label><%= t('dashboard.index.choose_asset') %></label>
             <select id="modal_withdraw_asset" class="form-control" required onchange="on_withdraw_asset_change()">
               <option value="usdt">USDT</option>
-              <option value="cigar">CIC</option>
+              <option value="cigar">BOMB</option>
             </select>
           </div>
           <div class="form-group">
@@ -86,7 +86,7 @@
             <label><%= t('dashboard.index.choose_asset') %></label>
             <select name="transfer[asset_type]" class="form-control" required onchange="on_transfer_asset_change()">
               <option value="usdt">USDT</option>
-              <option value="cigar">CIC</option>
+              <option value="cigar">BOMB</option>
             </select>
           </div>
           <div class="form-group">
@@ -149,7 +149,7 @@
             });
         } else {
             contract_cic.methods.balanceOf(address).call().then(function (result) {
-                $('#modal_deposit_balance').text(Contracts.cic.to_display_amount(result) + ' CIC');
+                $('#modal_deposit_balance').text(Contracts.cic.to_display_amount(result) + ' BOMB');
             }).catch(function (err) {
                 console.log(err);
                 swal('<%= t('errors.error') %>', err, 'error');
@@ -168,11 +168,11 @@
                 $('#modal_withdraw_amount').attr('max', display_amount);
             });
         } else {
-            $('#modal_withdraw_symbol').text('CIC');
-            $('#modal_withdraw_balance').text('- CIC');
+            $('#modal_withdraw_symbol').text('BOMB');
+            $('#modal_withdraw_balance').text('- BOMB');
             contract_game.methods.peerBalanceOf(address).call().then(function (result) {
                 let display_amount = Contracts.cic.to_display_amount(result)
-                $('#modal_withdraw_balance').text(display_amount + ' CIC');
+                $('#modal_withdraw_balance').text(display_amount + ' BOMB');
                 $('#modal_withdraw_amount').attr('max', display_amount);
             });
         }
@@ -193,8 +193,8 @@
                 $('#modal_transfer_symbol').text('USDT');
             } else {
                 $('#form_transfer input[name="transfer[amount]"]').attr('max', my_info.candy_available);
-                $('#modal_transfer_balance').text(my_info.candy_available + ' CIC');
-                $('#modal_transfer_symbol').text('CIC');
+                $('#modal_transfer_balance').text(my_info.candy_available + ' BOMB');
+                $('#modal_transfer_symbol').text('BOMB');
             }
         } else {
             $('#form_transfer input[name="transfer[to]"]').val('<%= t('utils.accounts.packet') %>');
@@ -209,8 +209,8 @@
                 contract_game.methods.peerBalanceOf(address).call().then(function (result) {
                     let amount = Contracts.cic.to_display_amount(result);
                     $('#form_transfer input[name="transfer[amount]"]').attr('max', amount);
-                    $('#modal_transfer_balance').text(amount + ' CIC');
-                    $('#modal_transfer_symbol').text('CIC');
+                    $('#modal_transfer_balance').text(amount + ' BOMB');
+                    $('#modal_transfer_symbol').text('BOMB');
                 });
             }
         }

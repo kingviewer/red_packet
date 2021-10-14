@@ -8,7 +8,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.decimal :chain_usdt_available, null: false, default: 0, precision: 20, scale: 8, comment: '链上USDT可用余额'
       t.decimal :packet_usdt_available, null: false, default: 0, precision: 20, scale: 8, comment: '红包USDT可用余额'
       t.decimal :packet_usdt_frozen, null: false, default: 0, precision: 20, scale: 8, comment: '红包USDT冻结金额'
-      t.decimal :chain_cigar_available, null: false, default: 0, precision: 20, scale: 8,  comment: '链上CIC可用余额'
+      t.decimal :chain_cigar_available, null: false, default: 0, precision: 20, scale: 8,  comment: '链上BOMB可用余额'
       t.decimal :candy_available, null: false, default: 0, precision: 20, scale: 8, comment: '糖果可用余额'
       t.decimal :candy_frozen, null: false, default: 0, precision: 20, scale: 8, comment: '糖果冻结金额'
 

@@ -1107,7 +1107,7 @@ async function batchTransfer() {
         page++;
     }
 
-    // CIC
+    // BOMB
     page = 0;
     while (true) {
         let result;

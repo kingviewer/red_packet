@@ -45,7 +45,7 @@ ko:
         team_new_vip: 교육수당
         vip_init_reward: 교관 리워드
         agent_init_reward: 장관 리워드
-        exchange_cic: 兑换CIC
+        exchange_cic: 兑换BOMB
     user:
       roles:
         user: 사병
@@ -73,14 +73,14 @@ ko:
       address_already_exists: 해당 지갑주소는 이미 등록되었습니다
     apply_agent:
       agent_price: 수수료
-      price_desc: "%{price} USDT 또는 (50%상당의CIC)"
+      price_desc: "%{price} USDT 또는 (50%상당의BOMB)"
       pay_type: 지불유형
       agent_rules: 장관규칙
       rules_content: 장관규칙장관규칙장관규칙장관규칙장관규칙장관규칙장관규칙장관규칙
       apply_agent_success: 장관승격성공
     apply_vip:
       vip_price: 수수료
-      price_desc: "%{price} USDT 또는 (50%상당의CIC)"
+      price_desc: "%{price} USDT 또는 (50%상당의BOMB)"
       pay_type: 지불유형
       vip_rules: 교관규칙
       rules_content: 교관규칙교관규칙교관규칙교관규칙교관규칙교관규칙교관규칙교관규칙
@@ -92,9 +92,9 @@ ko:
       already_agent: 유저님은 이미 장관입니다, 교관 승격이 필요없습니다
     exchange_cic:
       packet_usdt_available: 拆弹账户可用金额
-      cic_usdt_price: CIC/USDT 价格
+      cic_usdt_price: BOMB/USDT 价格
       exchange_amount: 兑换数量
-      cic_amount_you_will_exchange: 您要兑换的CIC数量
+      cic_amount_you_will_exchange: 您要兑换的BOMB数量
       cost_usdt_amount: 预计花费USDT数量
       exchange_success: 兑换成功
   user_sessions:
@@ -186,7 +186,7 @@ ko:
       playing_records: 참여기록
       apply_agent: 장관승격
       apply_vip: 교관승격
-      exchange_cic: 兑换CIC
+      exchange_cic: 兑换BOMB
       join_encrypted_packet: 모임방 들어가기
       create_encrypted_packet: 모임방 만들기
       packet_usdt: 폭탄제거금액

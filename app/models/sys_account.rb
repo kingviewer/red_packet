@@ -11,11 +11,11 @@ class SysAccount < ApplicationRecord
     elsif vip_usdt?
       '教官收入(USDT)'
     elsif vip_cic?
-      '教官收入(CIC)'
+      '教官收入(BOMB)'
     elsif agent_usdt?
       '总教官收入(USDT)'
     elsif agent_cic?
-      '总教官收入(CIC)'
+      '总教官收入(BOMB)'
     else
       '-'
     end
@@ -25,7 +25,7 @@ class SysAccount < ApplicationRecord
     if back_fund? || token_fund? || income? || vip_usdt? || agent_usdt?
       'USDT'
     elsif vip_cic? || agent_cic?
-      'CIC'
+      'BOMB'
     else
       '-'
     end

@@ -18,7 +18,7 @@
       <div class="input-group">
         <input id="cic_amount" class="form-control" type="number" min="1" step="0.000001" placeholder="<%= t('.cic_amount_you_will_exchange') %>" required>
         <div class="input-group-append">
-          <span class="input-group-text" style="width: 58px;">CIC</span>
+          <span class="input-group-text" style="width: 58px;">BOMB</span>
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@
 <script>
     function get_exchange_info() {
         Business.get('/users/exchange_info', {}, function (data) {
-            $('#cic_usdt_price').val('1 CIC = ' + data.formatted_cic_usdt_price + ' USDT');
+            $('#cic_usdt_price').val('1 BOMB = ' + data.formatted_cic_usdt_price + ' USDT');
             $('#packet_usdt_available').val(data.packet_usdt_available);
 
             $('#cic_amount').bind("input propertychange", function () {
