@@ -30,7 +30,7 @@ en:
   models:
     asset_flow:
       flow_types:
-        deposit: deposi
+        deposit: 充值
         withdraw: withdraw
         transfer: transfer
         win: win
@@ -138,8 +138,8 @@ en:
       settings: settings
     index:
       my_id: My ID
-      entrusted:  entrusted
-      entrust: entrust
+      entrusted: 可用拆弹余额
+      entrust: 充值
       withdraw: extract
       transfer: transfer
       encrypted_packet: Password bomb
@@ -151,14 +151,14 @@ en:
       confirm_joining: Confirm to participate in
       amount: amount
       current_balance: current balance
-      entrust_successfully: entrust successfully,waiting for block confirmation
+      entrust_successfully: 充值成功，请等待区块确认
       choose_asset: choose asset
       withdraw_available: Can mention amount
       withdraw_successfully: Can mention amount
       transfer_from: Out of the account
       transfer_to: Into the account
       balance_of_transfer_from: Transfer Account Balance
-      transfer_successfully: Transfer success
+      transfer_successfully: 划转成功，请耐心等待区块确认
       balance_insufficient: balance insufficient
       i_joined:  i joined
       processing: ongoing
@@ -199,7 +199,7 @@ en:
       game_pserson_usdt: "%{usdt_amount} USDT, %{player_amount}players"
   deposits:
     create:
-      tx_hash_exists: This hosting has already been submitted, do not submit it again
+      tx_hash_exists: 该比充值已提交过，请勿重复提交
       tx_hash_invalid: Incorrect TX Hash
   asset_flows:
     index:

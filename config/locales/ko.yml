@@ -30,7 +30,7 @@ ko:
   models:
     asset_flow:
       flow_types:
-        deposit: 위탁
+        deposit: 充值
         withdraw: 출금
         transfer: 이체
         win: 폭탄제거성공
@@ -138,8 +138,8 @@ ko:
       settings: 설정
     index:
       my_id: 나의ID
-      entrusted: 위탁중
-      entrust: 위탁
+      entrusted: 可用拆弹余额
+      entrust: 充值
       withdraw: 출금
       transfer: 이체
       encrypted_packet: 비밀폭탄
@@ -151,14 +151,14 @@ ko:
       confirm_joining: 참여확인
       amount: 금액
       current_balance: 현재잔액
-      entrust_successfully: 위탁성공
+      entrust_successfully: 充值成功，请等待区块确认
       choose_asset: 코인선택
       withdraw_available: 출금가능금액
       withdraw_successfully: 출금성공
       transfer_from: 출금계정
       transfer_to: 입금계정
       balance_of_transfer_from: 출금계정잔액
-      transfer_successfully: 이체성공
+      transfer_successfully: 划转成功，请耐心等待区块确认
       balance_insufficient: 사용가능금액부족
       i_joined: 나의 참여기록
       processing: 진행중
@@ -199,7 +199,7 @@ ko:
       game_pserson_usdt: "%{usdt_amount} USDT, %{player_amount}人"
   deposits:
     create:
-      tx_hash_exists: 해당 위탁은 이미 제출되었습니다 
+      tx_hash_exists: 该比充值已提交过，请勿重复提交
       tx_hash_invalid: 잘못된 TX Hash
   asset_flows:
     index:

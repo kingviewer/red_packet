@@ -30,7 +30,7 @@ zh-CN:
   models:
     asset_flow:
       flow_types:
-        deposit: 托管
+        deposit: 充值
         withdraw: 提现
         transfer: 划转
         win: 拆弹成功
@@ -138,8 +138,8 @@ zh-CN:
       settings: 设置
     index:
       my_id: 我的ID
-      entrusted: 托管中
-      entrust: 托管
+      entrusted: 可用拆弹余额
+      entrust: 充值
       withdraw: 提取
       transfer: 划转
       encrypted_packet: 密码炸弹
@@ -151,14 +151,14 @@ zh-CN:
       confirm_joining: 确认参与
       amount: 金额
       current_balance: 当前余额
-      entrust_successfully: 托管成功，请等待区块确认
+      entrust_successfully: 充值成功，请等待区块确认
       choose_asset: 选择币种
       withdraw_available: 可提金额
       withdraw_successfully: 提取成功
       transfer_from: 转出账户
       transfer_to: 转入账户
       balance_of_transfer_from: 转出账户余额
-      transfer_successfully: 划转成功
+      transfer_successfully: 划转成功，请耐心等待区块确认
       balance_insufficient: 可用余额不足
       i_joined: 我参与的
       processing: 进行中
@@ -199,7 +199,7 @@ zh-CN:
       game_pserson_usdt: "%{usdt_amount} USDT, %{player_amount}人"
   deposits:
     create:
-      tx_hash_exists: 该比托管已提交过，请勿重复提交
+      tx_hash_exists: 该比充值已提交过，请勿重复提交
       tx_hash_invalid: 错误的 TX Hash
   asset_flows:
     index:
