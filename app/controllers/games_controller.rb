@@ -76,7 +76,6 @@ class GamesController < BaseUserController
             game.waiter_amount += 1
             BroadcastJoinGameJob.perform_later(game, cur_user)
             game.reload
-            times = game.times
             game_round_id = game.check_win
             success(
               id: game.id,
@@ -85,7 +84,7 @@ class GamesController < BaseUserController
               created_at: waiter.formatted_created_at,
               win: !game_round_id.nil?,
               game_round_id: game_round_id,
-              times: times
+              times: game.times
             )
           end
         end

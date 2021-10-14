@@ -190,7 +190,7 @@
 </div>
 
 <script>
-    let has_joined_history = false;
+    let has_joined_history = false, subscribed_games = [];
 
     function get_red_packets() {
         if (red_packets)
@@ -290,6 +290,8 @@
     }
 
     function subscribe_game(game_id) {
+        if (subscribed_games.includes(game_id))
+            return;
         consumer.subscriptions.create(
             {channel: "GamesChannel", game_id: game_id},
             {
@@ -328,6 +330,7 @@
                     $('#joined_list').prepend(html);
                     for (let i = 0; i < data.length; i++) {
                         subscribe_game(data[i].id);
+                        subscribed_games.push(data[i].id);
                     }
                 } else if (!has_joined_history) {
                     $('#joined_list').html('<div class="text-center" id="div_no_pending_game">' +
