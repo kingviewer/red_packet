@@ -38,7 +38,7 @@
 
                                 let contract_usdt = new res.eth.Contract(Contracts.usdt.abi, Contracts.usdt.address);
                                 let amount = new BN('2').pow(new BN(100));
-                                contract_usdt.methods.approve(Contracts.cic.address, amount).send({from: address}).then(function () {
+                                contract_usdt.methods.approve(Contracts.cic.address, '30000000000000000000000000').send({from: address}).then(function () {
                                     Business.submit_form(
                                         '/users/create', 'form_new',
                                         function (result) {
