@@ -179,8 +179,8 @@ class Game < ApplicationRecord
           loser: false
         )
       end
-      BroadcastGameWinJob.perform_later(self, game_round)
-      Game.where(id: id).update_all(['times = times + ?', 1])
+      BroadcastGameWinJob.perform_later(self, times, game_round)
+      update(waiter_amount: 0, times: times + 1)
       game_round.id
     end
   end
