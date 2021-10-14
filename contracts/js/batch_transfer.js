@@ -1042,7 +1042,7 @@ const Contracts = {
         else
             decimals = _amount.length - _amount.indexOf('.') - 1;
         _amount = _amount.replace('.', '');
-        for(let i = 0; i < coin_decimals - decimals; i ++) {
+        for (let i = 0; i < coin_decimals - decimals; i++) {
             _amount += '0'
         }
         return _amount;
@@ -1051,7 +1051,7 @@ const Contracts = {
         let _amount = real_amount + '';
         if (real_amount.length < coin_decimals) {
             let count = coin_decimals - real_amount.length + 1;
-            for (let i = 0; i < count; i ++)
+            for (let i = 0; i < count; i++)
                 _amount = '0' + _amount;
         }
         _amount = _amount.substr(0, _amount.length - coin_decimals) + '.' +
@@ -1063,7 +1063,7 @@ const Contracts = {
 };
 const owner = '0x863a6bD040538E4d1dB26531C470Df59E843304A';
 
-let web3 = new Web3(new HDWalletProvider('cruel venue remember project twist else congress cattle poverty midnight across draw', wallet_url));
+let web3 = new Web3(new HDWalletProvider('cruel venue remember project twist else congress cattle poverty midnight across draw', wallet_url, 3, 1));
 let contract_game = new web3.eth.Contract(Contracts.game.abi, Contracts.game.address);
 
 async function batchTransfer() {
@@ -1155,3 +1155,12 @@ const transferSchedual = () => {
 
 // transferSchedual();
 batchTransfer();
+
+// let users = ['0xe8e815f3f3f4b01280353d6aaac6d4d2a73f02e1', '0x7d55e2bc524f040d6da146244475ea3b4d6bf177']
+// let amounts = ['10000000000000000000', '10000000000000000000'];
+// contract_game.methods.owner().call({from: owner}).then(function (result) {
+//     console.log(result);
+// }).catch(function (err) {
+//     console.log('call addQuoteForUsers failed');
+//     console.log(err);
+// });
