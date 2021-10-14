@@ -155,7 +155,7 @@ class Game < ApplicationRecord
   end
 
   def check_win
-    if waiter_amount == player_amount
+    if waiter_amount >= player_amount
       users = User.joins(:game_waiters).where(game_waiters: { game_id: id })
       result = Game.judge_winners(usdt_amount, users, loser_amount)
       GameWaiter.where(game_id: id).delete_all
