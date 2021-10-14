@@ -5,6 +5,7 @@ class BroadcastGameWinJob < ApplicationJob
     ActionCable.server.broadcast(
       GamesChannel.channel_name(game.id),
       id: game.id,
+      times: game.times,
       game_round_id: game_round.id,
       action: :win
     )

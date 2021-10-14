@@ -30,6 +30,7 @@ class GamesController < BaseUserController
       game = waiter.game
       data << {
         id: game.id,
+        times: waiter.times,
         desc: "#{game.usdt_amount.to_i} USDT, #{t('user_game_rounds.index.person_number', number: game.player_amount)}",
         created_at: waiter.formatted_created_at
       }
@@ -68,12 +69,14 @@ class GamesController < BaseUserController
             raise t('game_rooms.join.usdt_available_insufficient') if cur_user.packet_usdt_available < 0
             waiter = GameWaiter.create(
               user_id: cur_user.id,
-              game_id: game.id
+              game_id: game.id,
+              times: game.times
             )
             Game.where(id: game.id).update_all('waiter_amount = waiter_amount + 1')
             game.waiter_amount += 1
             BroadcastJoinGameJob.perform_later(game, cur_user)
             game.reload
+            times = game.times
             game_round_id = game.check_win
             success(
               id: game.id,
@@ -81,7 +84,8 @@ class GamesController < BaseUserController
               waiter_amount: game.waiter_amount,
               created_at: waiter.formatted_created_at,
               win: !game_round_id.nil?,
-              game_round_id: game_round_id
+              game_round_id: game_round_id,
+              times: times
             )
           end
         end

@@ -142,6 +142,7 @@ zh-CN:
       withdraw: 提取
       transfer: 划转
       encrypted_packet: 密码炸弹
+      encrypted_room: 密码间
       person: "%{number}人"
       person_losers: "%{number}人 %{bomb}炸弹"
       join_game: 参与拆弹

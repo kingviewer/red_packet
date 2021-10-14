@@ -38,7 +38,7 @@
           <%= t('dashboard.index.encrypted_packet') %>
         </div>
         <div class="card-body bg-warning text-center">
-          <span class="font-16"><%= t('dashboard.index.person', number: '?') %></span>
+          <span class="font-16"><%= t('dashboard.index.encrypted_room') %></span>
         </div>
       </div>
     </div>
@@ -261,7 +261,7 @@
                 l.ladda('stop');
                 $('#modal_join_game').modal('hide');
                 if (data.win)
-                    $('#joined_list').prepend('<div id="joined_item_' + data.id + '" class="mb-2 border-bottom border-light pb-2">' +
+                    $('#joined_list').prepend('<div id="joined_item_' + data.id + '_' + data.times + '" class="mb-2 border-bottom border-light pb-2">' +
                         '<span class="text-primary font-15">' + data.desc + '</span>' +
                         '<br><span class="font-13 text-warning state"><%= t('dashboard.index.finished') %></span>' +
                         '<br>' +
@@ -269,7 +269,7 @@
                         '<a class="float-right font-13" href="/game_rounds/show?id=' + data.game_round_id + '"><%= t('dashboard.index.open_red_packet') %> ></a>' +
                         '</div>');
                 else {
-                    $('#joined_list').prepend('<div id="joined_item_' + data.id + '" class="mb-2 border-bottom border-light pb-2">' +
+                    $('#joined_list').prepend('<div id="joined_item_' + data.id + '_' + data.times + '" class="mb-2 border-bottom border-light pb-2">' +
                         '<span class="text-primary font-15">' + data.desc + '</span>' +
                         '<br><span class="font-13 text-warning state"><%= t('dashboard.index.processing') %></span>' +
                         '<br>' +
@@ -296,11 +296,10 @@
                 },
                 received: function (msg) {
                     if (msg.action === 'win') {
-                        let div = $('#joined_item_' + msg.id);
+                        let div = $('#joined_item_' + msg.id + '_' + msg.times);
                         if (div.length && div.length > 0) {
                             div.find('.state').text('<%= t('dashboard.index.finished') %>');
                             div.find('a').attr('href', '/game_rounds/show?id=' + msg.game_round_id).text('<%= t('dashboard.index.open_red_packet') %> >');
-                            div.attr('id', 'joined_item_' + msg.id + '_win');
                         }
                     }
                 }
@@ -315,7 +314,7 @@
                     let html = '';
                     for (let i = 0; i < data.length; i++) {
                         let item = data[i];
-                        html += '<div id="joined_item_' + item.id + '" class="mb-2 border-bottom border-light pb-2">' +
+                        html += '<div id="joined_item_' + item.id + '_' + item.times + '" class="mb-2 border-bottom border-light pb-2">' +
                             '<span class="text-primary font-15">' + item.desc + '</span>' +
                             '<br><span class="font-13 text-warning state"><%= t('dashboard.index.processing') %></span>' +
                             '<br>' +

@@ -142,6 +142,7 @@ en:
       withdraw: extract
       transfer: transfer
       encrypted_packet: Password bomb
+      encrypted_room: 密码间
       person: "%{number}Player"
       person_losers: "%{number}Players %{bomb}bomb"
       join_game: Help defuse the bomb
