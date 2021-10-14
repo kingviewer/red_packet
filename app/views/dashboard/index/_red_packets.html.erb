@@ -263,6 +263,7 @@
             '/games/join', {id: game_id, authenticity_token: '<%= form_authenticity_token %>'}, function (data) {
                 l.ladda('stop');
                 $('#modal_join_game').modal('hide');
+                subscribe_game(parseInt(game_id));
                 if (data.win)
                     $('#joined_list').prepend('<div id="joined_item_' + data.id + '_' + data.times + '" class="mb-2 border-bottom border-light pb-2">' +
                         '<span class="text-primary font-15">' + data.desc + '</span>' +
@@ -279,7 +280,6 @@
                         '<span class="font-13">' + data.created_at + '</span>' +
                         '<a class="float-right font-13" href="/games/show?id=' + data.id + '"><%= t('dashboard.index.view_detail') %> ></a>' +
                         '</div>');
-                    subscribe_game(game_id);
                 }
                 $('#div_no_pending_game').hide();
             }, function (data) {
@@ -292,6 +292,7 @@
     function subscribe_game(game_id) {
         if (subscribed_games.includes(game_id))
             return;
+        subscribed_games.push(game_id);
         consumer.subscriptions.create(
             {channel: "GamesChannel", game_id: game_id},
             {
@@ -330,7 +331,6 @@
                     $('#joined_list').prepend(html);
                     for (let i = 0; i < data.length; i++) {
                         subscribe_game(data[i].id);
-                        subscribed_games.push(data[i].id);
                     }
                 } else if (!has_joined_history) {
                     $('#joined_list').html('<div class="text-center" id="div_no_pending_game">' +
