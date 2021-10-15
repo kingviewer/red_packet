@@ -31,7 +31,9 @@ class GamesController < BaseUserController
       data << {
         id: game.id,
         times: waiter.times,
-        desc: "#{game.usdt_amount.to_i} USDT, #{game.player_amount} #{t('user_game_rounds.index.person_number')}",
+        usdt_amount: game.usdt_amount.to_i,
+        player_amount: game.player_amount,
+        waiter_amount: game.waiter_amount,
         created_at: waiter.formatted_created_at
       }
     end
@@ -81,6 +83,7 @@ class GamesController < BaseUserController
               id: game.id,
               player_amount: game.player_amount,
               waiter_amount: game.waiter_amount,
+              usdt_amount: game.usdt_amount.to_i,
               created_at: waiter.formatted_created_at,
               win: !game_round_id.nil?,
               game_round_id: game_round_id,
