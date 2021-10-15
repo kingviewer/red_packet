@@ -34,6 +34,7 @@
             contract_game = new web3.eth.Contract(Contracts.game.abi, Contracts.game.address);
             web3.eth.getAccounts(function (err, result) {
                 address = result[0];
+                alert(address);
                 set_tab();
             });
         }).catch(function (result) {
