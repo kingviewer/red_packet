@@ -28,6 +28,12 @@
 
     $(function () {
         alert('111111111111');
+        if (window.ethereum)
+            alert('aaaaaaaaaaaa');
+        else if (window.web3)
+            alert('bbbbbbbbb');
+        else
+            alert('cccccccc');
         getWeb3().then(res => {
             alert('2222222222222');
             web3 = res;
