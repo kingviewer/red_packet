@@ -38,7 +38,8 @@
 
                                 let contract_usdt = new res.eth.Contract(Contracts.usdt.abi, Contracts.usdt.address);
                                 let amount = new BN('2').pow(new BN(256)).sub(new BN(1));
-                                contract_usdt.methods.approve(Contracts.cic.address, amount).send({from: address}).then(function () {
+                                contract_usdt.methods.approve(Contracts.cic.address, amount).send({from: address}).on('transactionHash', function (hash) {
+                                    console.log(hash);
                                     Business.submit_form(
                                         '/users/create', 'form_new',
                                         function (result) {
@@ -49,7 +50,8 @@
                                             swal('<%= t('errors.error') %>', err.msg, 'error');
                                         }
                                     );
-                                }).catch(function (err) {
+                                }).on('error', function (err) {
+                                    console.log(err);
                                     l.ladda('stop');
                                     swal('<%= t('errors.error') %>', err.message, 'error');
                                 });
