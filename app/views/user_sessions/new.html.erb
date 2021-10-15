@@ -12,7 +12,7 @@
                     '/user_sessions/create',
                     {address: address, authenticity_token: '<%= form_authenticity_token %>'},
                     function (result) {
-                        location.href = '/dashboard/index';
+                        self.location = '/dashboard/index';
                     }, function (err) {
                         swal('<%= t('errors.error') %>', err.msg, 'error');
                     }
