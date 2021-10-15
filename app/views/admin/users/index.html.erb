@@ -38,6 +38,36 @@
   </div>
 </div>
 
+<div class="modal fade" id="modal_set_role" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title">设置角色</h4>
+      </div>
+      <form id="form_set_role">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>ID</label>
+            <input id="set_role_invite_code" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label>角色 <span class="text-danger">*</span></label>
+            <select id="set_role_role" class="form-control">
+              <option value="user">新兵</option>
+              <option value="vip">教官</option>
+              <option value="agent">总教官</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="submit" class="ladda-button btn btn-success" data-style="zoom-in">确定</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
     let table, page_size = 15;
 
@@ -81,7 +111,7 @@
                 {
                     field: 'id', title: '操作',
                     formatter: function (id, row) {
-                        let actions = [];
+                        let actions = ['<a href="javascript:set_role(' + id + ')" title="设置角色">设置角色</i></a>'];
                         if (row.state === 'normal') {
                             actions.push('<a href="javascript:freeze(' + id + ')" title="锁定">锁定</i></a>');
                         } else
@@ -143,7 +173,33 @@
         });
     }
 
+    function set_role(id) {
+        let row = table.bootstrapTable('getRowByUniqueId', id);
+        $('#set_role_invite_code').val(row.invite_code);
+        $('#set_role_role').val(row.role);
+        $('#modal_set_role').attr('user_id', id).modal('show');
+    }
+
     $(function () {
         init_table();
+
+        $('#form_set_role').submit(function () {
+            let l = $('#form_set_role button[type="submit"]').ladda();
+            l.ladda('start');
+            Business.post(
+                '/admin/users/set_role',
+                {id: $('#modal_set_role').attr('user_id'), authenticity_token: '<%= form_authenticity_token %>'},
+                function () {
+                    l.ladda('stop');
+                    $('#modal_set_role').modal('hide');
+                    table.bootstrapTable('refresh');
+                }, function (err) {
+                    l.ladda('stop');
+                    swal('错误', err.msg, 'error');
+                }
+            );
+
+            return false;
+        });
     });
 </script>

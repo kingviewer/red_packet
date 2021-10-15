@@ -1,6 +1,6 @@
 class Admin::UsersController < Admin::BaseController
   before_action :auth_admin, only: [:index, :tree]
-  before_action :ajax_auth_admin, only: [:list_for_table, :list_tree, :lock, :unlock]
+  before_action :ajax_auth_admin, only: [:list_for_table, :list_tree, :lock, :unlock, :set_role]
 
   def index
   end
@@ -69,6 +69,15 @@ class Admin::UsersController < Admin::BaseController
       error('用户不存在')
     else
       user.normal!
+      success
+    end
+  end
+
+  def set_role
+    if not (user = User.find_by(id: params[:id]))
+      error('用户不存在')
+    else
+      user.update(role: params[:role])
       success
     end
   end
