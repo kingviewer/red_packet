@@ -222,44 +222,64 @@
             l.ladda('start');
             let amount = $('#modal_deposit_amount').val().trim(), asset_type = $('#modal_deposit_asset_type').val();
             if (asset_type === 'usdt')
-                contract_usdt.methods.transfer(Contracts.game.address, Contracts.usdt.to_real_amount(amount)).send({from: address})
-                    .then(function (result) {
+                contract_usdt.methods.transfer(Contracts.game.address, Contracts.usdt.to_real_amount(amount))
+                    .send({from: address})
+                    .on('transactionHash', function (result) {
                         l.ladda('stop');
                         $('#modal_deposit').modal('hide');
                         swal('<%= t('tips.success') %>', '<%= t('dashboard.index.entrust_successfully') %>', 'success');
-                    }).catch(function (err) {
-                        l.ladda('stop');
-                        swal('<%= t('errors.error') %>', err.message, 'error');
-                    }
-                );
+                    })
+                    .on('error', function (err) {
+                            l.ladda('stop');
+                            swal('<%= t('errors.error') %>', err.message, 'error');
+                        }
+                    );
             else
-                contract_cic.methods.transfer(Contracts.game.address, Contracts.cic.to_real_amount(amount)).send({from: address})
-                    .then(function (result) {
+                contract_cic.methods.transfer(Contracts.game.address, Contracts.cic.to_real_amount(amount))
+                    .send({from: address})
+                    .on('transactionHash', function (result) {
                         l.ladda('stop');
                         $('#modal_deposit').modal('hide');
                         swal('<%= t('tips.success') %>', '<%= t('dashboard.index.entrust_successfully') %>', 'success');
-                    }).catch(function (err) {
-                        l.ladda('stop');
-                        swal('<%= t('errors.error') %>', err.message, 'error');
-                    }
-                );
+                    })
+                    .on('error', function (err) {
+                            l.ladda('stop');
+                            swal('<%= t('errors.error') %>', err.message, 'error');
+                        }
+                    );
 
             return false;
         });
 
         $('#form_withdraw').submit(function () {
-            $('#modal_withdraw').modal('hide');
+            let l = $('#form_withdraw button[type="submit"]').ladda();
+            l.ladda('start');
             let asset_type = $('#modal_withdraw_asset').val(), amount = $('#modal_withdraw_amount').val().trim();
             if (asset_type === 'usdt')
-                contract_game.methods.withdrawQuote(address, Contracts.usdt.to_real_amount((amount))).send({from: address}).then(function () {
-                }).catch(function (err) {
-                    swal('<%= t('errors.error') %>', err.message, 'error');
-                });
+                contract_game.methods.withdrawQuote(address, Contracts.usdt.to_real_amount((amount)))
+                    .send({from: address})
+                    .on('transactionHash', function () {
+                        l.ladda('stop');
+                        $('#modal_withdraw').modal('hide');
+                        swal('<%= t('tips.success') %>', '<%= t('dashboard.index.withdraw_successfully') %>', 'success');
+                    })
+                    .on('error', function (err) {
+                            l.ladda('stop');
+                            swal('<%= t('errors.error') %>', err.message, 'error');
+                        }
+                    );
             else
-                contract_game.methods.withdrawPeer(address, Contracts.cic.to_real_amount((amount))).send({from: address}).then(function () {
-                }).catch(function (err) {
-                    swal('<%= t('errors.error') %>', err.message, 'error');
-                });
+                contract_game.methods.withdrawPeer(address, Contracts.cic.to_real_amount((amount)))
+                    .send({from: address})
+                    .on('transactionHash', function () {
+                        l.ladda('stop');
+                        $('#modal_withdraw').modal('hide');
+                        swal('<%= t('tips.success') %>', '<%= t('dashboard.index.withdraw_successfully') %>', 'success');
+                    })
+                    .on('error', function (err) {
+                        l.ladda('stop');
+                        swal('<%= t('errors.error') %>', err.message, 'error');
+                    });
 
             return false;
         });
@@ -273,26 +293,32 @@
             if (from === 'wallet') {
                 if (asset === 'usdt') {
                     try {
-                        contract_game.methods.depositQuoteForUser(Contracts.usdt.to_real_amount(amount)).send({from: address}).then(function (result) {
-                            l.ladda('stop');
-                            $('#modal_transfer').modal('hide');
-                            swal('<%= t('tips.success') %>', '<%= t('dashboard.index.transfer_successfully') %>', 'success');
-                        }).catch(function (err) {
-                            l.ladda('stop');
-                            swal('<%= t('errors.error') %>', err.message, 'error');
-                        });
+                        contract_game.methods.depositQuoteForUser(Contracts.usdt.to_real_amount(amount))
+                            .send({from: address})
+                            .on('transactionHash', function (result) {
+                                l.ladda('stop');
+                                $('#modal_transfer').modal('hide');
+                                swal('<%= t('tips.success') %>', '<%= t('dashboard.index.transfer_successfully') %>', 'success');
+                            })
+                            .on('error', function (err) {
+                                l.ladda('stop');
+                                swal('<%= t('errors.error') %>', err.message, 'error');
+                            });
                     } catch (e) {
                         console.log(e);
                     }
                 } else {
-                    contract_game.methods.depositPeerForUser(Contracts.cic.to_real_amount(amount)).send({from: address}).then(function (result) {
-                        l.ladda('stop');
-                        $('#modal_transfer').modal('hide');
-                        swal('<%= t('tips.success') %>', '<%= t('dashboard.index.transfer_successfully') %>', 'success');
-                    }).catch(function (err) {
-                        l.ladda('stop');
-                        swal('<%= t('errors.error') %>', err.message, 'error');
-                    });
+                    contract_game.methods.depositPeerForUser(Contracts.cic.to_real_amount(amount))
+                        .send({from: address})
+                        .on('transactionHash', function (result) {
+                            l.ladda('stop');
+                            $('#modal_transfer').modal('hide');
+                            swal('<%= t('tips.success') %>', '<%= t('dashboard.index.transfer_successfully') %>', 'success');
+                        })
+                        .on('error', function (err) {
+                            l.ladda('stop');
+                            swal('<%= t('errors.error') %>', err.message, 'error');
+                        });
                 }
             } else {
                 Business.submit_form('/transfers/create', 'form_transfer',
