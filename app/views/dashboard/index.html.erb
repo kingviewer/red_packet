@@ -27,27 +27,21 @@
     }
 
     $(function () {
-        if (window.ethereum) {
+        if (window.ethereum)
             web3 = new Web3(window.ethereum);
-            web3.eth.getAccounts(function (err, result) {
-                address = result[0];
-                alert(address);
-            });
+        else if (window.web3)
+            web3 = window.web3;
+        else {
+            swal('<%= t('errors.error') %>', 'No available wallet', 'error');
+            return;
         }
-<!--        getWeb3().then(res => {-->
-<!--            alert('2222222222222');-->
-<!--            web3 = res;-->
-<!--            contract_usdt = new web3.eth.Contract(Contracts.usdt.abi, Contracts.usdt.address);-->
-<!--            contract_cic = new web3.eth.Contract(Contracts.cic.abi, Contracts.cic.address);-->
-<!--            contract_game = new web3.eth.Contract(Contracts.game.abi, Contracts.game.address);-->
-<!--            web3.eth.getAccounts(function (err, result) {-->
-<!--                address = result[0];-->
-<!--                set_tab();-->
-<!--            });-->
-<!--        }).catch(function (result) {-->
-<!--            alert('33333333333333');-->
-<!--            console.log(result);-->
-<!--            swal('<%= t('errors.error') %>', result, 'error');-->
-<!--        });-->
+
+        contract_usdt = new web3.eth.Contract(Contracts.usdt.abi, Contracts.usdt.address);
+        contract_cic = new web3.eth.Contract(Contracts.cic.abi, Contracts.cic.address);
+        contract_game = new web3.eth.Contract(Contracts.game.abi, Contracts.game.address);
+        web3.eth.getAccounts(function (err, result) {
+            address = result[0];
+            set_tab();
+        });
     });
 </script>
