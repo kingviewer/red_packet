@@ -31,7 +31,7 @@ class GamesController < BaseUserController
       data << {
         id: game.id,
         times: waiter.times,
-        desc: "#{game.usdt_amount.to_i} USDT, #{t('user_game_rounds.index.person_number', number: game.player_amount)}",
+        desc: "#{game.usdt_amount.to_i} USDT, #{game.player_amount} #{t('user_game_rounds.index.person_number')}",
         created_at: waiter.formatted_created_at
       }
     end
@@ -79,7 +79,7 @@ class GamesController < BaseUserController
             game_round_id = game.check_win
             success(
               id: game.id,
-              desc: "#{game.usdt_amount.to_i} USDT, #{t('user_game_rounds.index.person_number', number: game.player_amount)}",
+              player_amount: game.player_amount,
               waiter_amount: game.waiter_amount,
               created_at: waiter.formatted_created_at,
               win: !game_round_id.nil?,
@@ -102,7 +102,7 @@ class GamesController < BaseUserController
     else
       success(
         usdt_amount: LZUtils.format_coin(game.usdt_amount),
-        person_number: t('user_game_rounds.index.person_number', number: "#{game.waiter_amount}/#{game.player_amount}"),
+        person_number: "#{game.waiter_amount}/#{game.player_amount} #{t('user_game_rounds.index.person_number')}",
         progress: "#{(game.waiter_amount * 100 / game.player_amount).to_i}%"
       )
     end

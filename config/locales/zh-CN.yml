@@ -210,7 +210,7 @@ zh-CN:
   user_game_rounds:
     index:
       title: 参与记录
-      person_number: "%{number}人"
+      person_number: 人
       password_packet: 密码拆弹
       normal_packet: 普通拆弹
       win_amount: 拆弹成功

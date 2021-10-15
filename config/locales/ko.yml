@@ -210,7 +210,7 @@ ko:
   user_game_rounds:
     index:
       title: 참여기록
-      person_number: "%{number}명"
+      person_number: 명
       password_packet: 비밀폭탄
       normal_packet: 보통폭탄
       win_amount: 폭탄제성공

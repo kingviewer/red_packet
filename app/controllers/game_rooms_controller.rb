@@ -66,7 +66,7 @@ class GameRoomsController < BaseUserController
         user_amount: user_amount,
         joiner_amount: joiner_amount,
         progress: (joiner_amount * 100 / game_room.player_amount).to_i,
-        player_amount_display: t('user_game_rounds.index.person_number', number: "#{joiner_amount}/#{game_room.player_amount}"),
+        player_amount_display: "#{joiner_amount}/#{game_room.player_amount} #{t('user_game_rounds.index.person_number')}",
         entered: !ur.nil?,
         joined: !ur.nil? && ur.joined
       )

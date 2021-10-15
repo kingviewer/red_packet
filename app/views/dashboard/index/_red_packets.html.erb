@@ -266,7 +266,7 @@
                 subscribe_game(parseInt(game_id));
                 if (data.win)
                     $('#joined_list').prepend('<div id="joined_item_' + data.id + '_' + data.times + '" class="mb-2 border-bottom border-light pb-2">' +
-                        '<span class="text-primary font-15">' + data.desc + '</span>' +
+                        '<span class="text-primary font-15 people">' + data.waiter_amount + '/' + data.player_amount + '<%= t('user_game_rounds.index.person_number') %></span>' +
                         '<br><span class="font-13 text-warning state"><%= t('dashboard.index.finished') %></span>' +
                         '<br>' +
                         '<span class="font-13">' + data.created_at + '</span>' +
@@ -274,7 +274,7 @@
                         '</div>');
                 else {
                     $('#joined_list').prepend('<div id="joined_item_' + data.id + '_' + data.times + '" class="mb-2 border-bottom border-light pb-2">' +
-                        '<span class="text-primary font-15">' + data.desc + '</span>' +
+                        '<span class="text-primary font-15 people">' + data.waiter_amount + '/' + data.player_amount + '<%= t('user_game_rounds.index.person_number') %></span>' +
                         '<br><span class="font-13 text-warning state"><%= t('dashboard.index.processing') %></span>' +
                         '<br>' +
                         '<span class="font-13">' + data.created_at + '</span>' +
@@ -304,9 +304,12 @@
                     if (msg.action === 'win') {
                         let div = $('#joined_item_' + msg.id + '_' + msg.times);
                         if (div.length && div.length > 0) {
+                            div.find('.people').text(msg.player_amount + '/' + msg.player_amount + '<%= t('user_game_rounds.index.person_number') %>');
                             div.find('.state').text('<%= t('dashboard.index.finished') %>');
                             div.find('a').attr('href', '/game_rounds/show?id=' + msg.game_round_id).text('<%= t('dashboard.index.open_red_packet') %> >');
                         }
+                    } else if (msg.action === 'join') {
+                        $('#joined_item_' + msg.id + '_' + msg.times + ' .people').text(msg.waiter_amount + '/' + msg.player_amount + '<%= t('user_game_rounds.index.person_number') %>');
                     }
                 }
             }
