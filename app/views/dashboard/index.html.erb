@@ -27,17 +27,19 @@
     }
 
     $(function () {
+        alert('111111111111');
         getWeb3().then(res => {
+            alert('2222222222222');
             web3 = res;
             contract_usdt = new web3.eth.Contract(Contracts.usdt.abi, Contracts.usdt.address);
             contract_cic = new web3.eth.Contract(Contracts.cic.abi, Contracts.cic.address);
             contract_game = new web3.eth.Contract(Contracts.game.abi, Contracts.game.address);
             web3.eth.getAccounts(function (err, result) {
                 address = result[0];
-                alert(address);
                 set_tab();
             });
         }).catch(function (result) {
+            alert('33333333333333');
             console.log(result);
             swal('<%= t('errors.error') %>', result, 'error');
         });
