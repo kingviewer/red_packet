@@ -188,7 +188,11 @@
             l.ladda('start');
             Business.post(
                 '/admin/users/set_role',
-                {id: $('#modal_set_role').attr('user_id'), authenticity_token: '<%= form_authenticity_token %>'},
+                {
+                    id: $('#modal_set_role').attr('user_id'),
+                    role: $('#set_role_role').val(),
+                    authenticity_token: '<%= form_authenticity_token %>'
+                },
                 function () {
                     l.ladda('stop');
                     $('#modal_set_role').modal('hide');
