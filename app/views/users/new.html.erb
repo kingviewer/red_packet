@@ -25,7 +25,7 @@
                 let address = result[0], BN = res.utils.BN;
                 Business.get('/users/exists', {address: address}, function (data) {
                         if (data.exists)
-                            location.href = '/';
+                            self.location = '/dashboard/index';
                         else {
                             $('#input_address').val(address);
                             <% if @parent %>
@@ -43,7 +43,7 @@
                                         '/users/create', 'form_new',
                                         function (result) {
                                             l.ladda('stop');
-                                            location.href = '/dashboard/index';
+                                            self.location = '/dashboard/index';
                                         }, function (err) {
                                             l.ladda('stop');
                                             swal('<%= t('errors.error') %>', err.msg, 'error');
