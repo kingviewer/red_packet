@@ -1096,7 +1096,7 @@ function sniffer() {
                             asset_type: 'usdt'
                         });
                     }
-                    axios.post(base_url + 'node/withdraws/new_withdraw', {items: items, transfer: false}).then(function (result) {
+                    axios.post(base_url + 'node/withdraws/new_withdraws', {items: items, transfer: false}).then(function (result) {
                         console.log(result.data);
                     });
                 }).catch(function (err) {
@@ -1122,7 +1122,7 @@ function sniffer() {
                             asset_type: 'cigar'
                         });
                     }
-                    axios.post(base_url + 'node/withdraws/new_withdraw', {items: items, transfer: false}).then(function (result) {
+                    axios.post(base_url + 'node/withdraws/new_withdraws', {items: items, transfer: false}).then(function (result) {
                         console.log(result.data);
                     });
                 }).catch(function (err) {
@@ -1136,6 +1136,8 @@ function sniffer() {
 
             axios.post(base_url + 'node/global_configs/update_block_config', {withdraw_sniffer_block: cur_block}).then(function (result) {
                 console.log(result.data);
+            }).catch(function (err) {
+                console.log(err);
             });
         });
     }).catch(function (result) {
