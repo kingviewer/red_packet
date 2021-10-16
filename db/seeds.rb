@@ -7,6 +7,8 @@ SysAccount.create(account_type: :vip_usdt) unless SysAccount.vip_usdt.exists?
 SysAccount.create(account_type: :vip_cic) unless SysAccount.vip_cic.exists?
 SysAccount.create(account_type: :agent_usdt) unless SysAccount.agent_usdt.exists?
 SysAccount.create(account_type: :agent_cic) unless SysAccount.agent_cic.exists?
+SysAccount.create(account_type: :exchange_usdt) unless SysAccount.exchange_usdt.exists?
+SysAccount.create(account_type: :exchange_cic) unless SysAccount.exchange_cic.exists?
 
 admin_account = Rails.application.credentials.dig(:default_admin, :account)
 Admin.create(

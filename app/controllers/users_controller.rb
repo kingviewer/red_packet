@@ -299,6 +299,20 @@ class UsersController < BaseUserController
           flow_type: :exchange_cic,
           amount: amount
         )
+        sys_account_u = SysAccount.exchange_usdt.first
+        sys_account_c = SysAccount.exchange_cic.first
+        SysAccount.where(id: sys_account_u.id).update_all(['balance = balance + ?, total = total + ?', cost_usdt, cost_usdt])
+        SysAccount.where(id: sys_account_c.id).update_all(['balance = balance + ?, total = total + ?', amount, amount])
+        SysFlow.create(
+          sys_account_id: sys_account_u.id,
+          flow_type: :exchange,
+          amount: cost_usdt
+        )
+        SysFlow.create(
+          sys_account_id: sys_account_c.id,
+          flow_type: :exchange,
+          amount: amount
+        )
         success(packet_usdt_available: LZUtils.format_coin(cur_user.packet_usdt_available))
       end
     end

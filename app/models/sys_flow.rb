@@ -1,5 +1,5 @@
 class SysFlow < ApplicationRecord
-  enum flow_type: [:new_round, :new_vip, :new_agent, :bg_decrease]
+  enum flow_type: [:new_round, :new_vip, :new_agent, :bg_decrease, :exchange]
 
   belongs_to :sys_account
   belongs_to :admin, required: false
@@ -13,6 +13,8 @@ class SysFlow < ApplicationRecord
       '升级总教官'
     elsif bg_decrease?
       '后台扣除'
+    elsif exchange?
+      '兑换'
     else
       '-'
     end
