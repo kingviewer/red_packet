@@ -3,7 +3,8 @@ class Node::GlobalConfigsController < ApplicationController
     g = GlobalConfig.first
     success(
       deposit_sniffer_block: g.deposit_sniffer_block,
-      inner_deposit_sniffer_block: g.inner_deposit_sniffer_block
+      inner_deposit_sniffer_block: g.inner_deposit_sniffer_block,
+      withdraw_sniffer_block: g.withdraw_sniffer_block
     )
   end
 
@@ -11,6 +12,7 @@ class Node::GlobalConfigsController < ApplicationController
     g = GlobalConfig.first
     g.deposit_sniffer_block = params[:deposit_sniffer_block] if params[:deposit_sniffer_block]
     g.inner_deposit_sniffer_block = params[:inner_deposit_sniffer_block] if params[:inner_deposit_sniffer_block]
+    g.withdraw_sniffer_block = params[:withdraw_sniffer_block] if params[:withdraw_sniffer_block]
     g.save
     success
   end
