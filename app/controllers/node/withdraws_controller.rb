@@ -12,7 +12,7 @@ class Node::WithdrawsController < ApplicationController
           asset_type: item[:asset_type],
           account_type: :wallet,
           flow_type: :withdraw,
-          amount: amount
+          amount: -amount
         )
       end
     end
