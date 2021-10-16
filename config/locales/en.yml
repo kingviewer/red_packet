@@ -1,41 +1,41 @@
 en:
   common:
-    plat_name: bomb disposal expert
-    language: English
-    no_record: No record
-    coming_soon: open soon
-    load_more: load more
+    plat_name: Bomb disposal expert
+    language: Simplified Chinese
+    no_record: There is no record
+    coming_soon: Immediately open
+    load_more: To load more
   errors:
-    error: error
-    permission_denied: permission_denied
+    error: Error
+    permission_denied: Unable to operate
     system_busy: Network congestion, please try again later
     invalid_request: Illegal request
     login_to_operate: You have not logged in or the session has expired. Please log in and try again
     invalid_params: Invalid or incorrect parameter
     user_not_exist: The address is not registered
   tips:
-    success: success
-    operation_success: Operation successful
-    failed: failed
-    confirm: confirm
-    confirm_operation: Confirm operation
-    cancel: cancel
-    submit: submit
-    close: close
-    copied: 已复制
+    success: Success
+    operation_success: Operation is successful
+    failed: Failure
+    confirm: Determine
+    confirm_operation: Confirm the operation
+    cancel: Cancel
+    submit: Submit
+    close: Close
+    copied: Copied
   utils:
     accounts:
       packet: Bomb account
-      wallet: wallet account
+      wallet: The wallet account
   models:
     asset_flow:
       flow_types:
-        deposit: 充值
-        withdraw: withdraw
-        transfer: transfer
-        win: win
-        lose: lose
-        lose_reward: Bomb disposal benefit
+        deposit: Top-up
+        withdraw: Withdrawal
+        transfer: Transfer
+        win: Win
+        lose: Lose
+        lose_reward: Welfare
         parent_reward: Direct referral rewards
         grand_reward: Indirect referral reward
         agent_reward: Training allowance
@@ -45,71 +45,71 @@ en:
         team_new_vip: Training allowance
         vip_init_reward: Instructor subsidies
         agent_init_reward: Chief instructor allowance
-        exchange_cic: 兑换BOMB
+        exchange_cic: Exchange the BOMB
     user:
       roles:
-        user: new recruits
-        vip: new recruits
-        agent: Chief instructor
+        user: The new recruits
+        vip: Instructor
+        agent: Total military instructor
       states:
-        normal: 正常
-        locked: 已锁定
+        normal: Normal
+        locked: Has been locked
     article:
       article_types:
-        guide: guide
-        reward_rule: reward rule
+        guide: Instructions
+        reward_rule: Reward rules
       langs:
         en: English
-        zh-CN: 简体中文
+        zh-CN: Simplified Chinese
         ko: Korean
   users:
     new:
       sign_up_tip: Please enter your inviter ID to register
       your_address: Your address
       parent_id: Inviter's ID
-      sign_up: registere
+      sign_up: Registered
     create:
       parent_not_exist: Inviter does not exist
       address_already_exists: The address is registered
     apply_agent:
-      agent_price: cost
-      price_desc: "%{price} USDT or (50% value BOMB)"
+      agent_price: Cost
+      price_desc: "%{price} USDT or (50% BOMB value)"
       pay_type: Payment type
-      agent_rules: Chief instructor rules
-      rules_content: 总教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则
+      agent_rules: Total Military Instructor rules
+      rules_content: General instructor rules
       apply_agent_success: General Instructor upgrade succeeded
     apply_vip:
-      vip_price: cost
-      price_desc: "%{price} USDT or (50%valueBOMB)"
+      vip_price: Cost
+      price_desc: "%{price} USDT or (50% BOMB value)"
       pay_type: Payment type
-      vip_rules: Chief instructor rules
-      rules_content: 教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则
-      apply_vip_success: General Instructor upgrade succeeded
+      vip_rules: Instructor rules
+      rules_content: Instructor rules
+      apply_vip_success: Instructor upgrade succeeded
     become_agent:
-      already_agent: You are already the chief instructor. There is no need to
+      already_agent: You are already the chief instructor. There is no need to upgrade again
     become_vip:
       already_vip: You are already an instructor. Do not repeat the upgrade
-      already_agent: You are the chief instructor. There is no need to upgrade
+      already_agent: You are the chief instructor. There is no need to upgrade the instructor
     exchange_cic:
-      packet_usdt_available: 拆弹账户可用金额
-      cic_usdt_price: BOMB/USDT 价格
-      exchange_amount: 兑换数量
-      cic_amount_you_will_exchange: 您要兑换的BOMB数量
-      cost_usdt_amount: 预计花费USDT数量
-      exchange_success: 兑换成功
+      packet_usdt_available: Amount available in bomb disposal account
+      cic_usdt_price: BOMB/USDT price
+      exchange_amount: Exchange quantity
+      cic_amount_you_will_exchange: The number of bombs you want to exchange
+      cost_usdt_amount: Estimated cost USDT quantity
+      exchange_success: For successful
   user_sessions:
     new:
-      connecting_wallet: The wallet is linking
+      connecting_wallet: Connecting the wallet...
   game_rooms:
     show:
-      game_room_id: room ID
+      game_room_id: Room number
       join_now: Immediately to participate in
       joined: Has been involved in
       joined_leave_tip: You have participated in the defusing of the bomb, exit the room will cancel your participation. Are you sure to quit?
-      win_records: Bomb defusing log
+      win_records: Bomb disposal records
       not_joined: Was not involved in
     create:
-      game_not_exist: The amount for defusing the bomb does not exist
+      game_not_exist: The amount for bomb disposal does not exist
       min_usdt_amount_less_than_game_required: The minimum deposit should not be less than the amount of bomb disposal
       in_room_not_to_create: You are currently participating in a password room and cannot create a password room again
       usdt_available_less_than_min: Your USDT available balance is less than the minimum margin to create a password room
@@ -119,105 +119,105 @@ en:
     search:
       room_not_exist: The password room does not exist
     enter:
-      have_joined_a_room: You have participated in one password room bomb defusing, can not participate in another password bomb defusing
+      have_joined_a_room: You have participated in one password defusing bomb and cannot participate in another password defusing bomb
     join:
-      have_joined_the_room: You have participated in the password room to defuse the bomb, do not participate again
-      room_stopped: The password room has been defused
+      have_joined_the_room: You have participated in the code to defuse the bomb, do not participate again
+      room_stopped: The code to defuse the bomb has ended
       usdt_available_insufficient: Insufficient USDT available balance
   games:
     show:
-      title: Details of bomb disposal
+      title: Details of the bomb
     join:
       game_not_exist: The bomb does not exist
       already_joined: You have participated in this bomb disposal, can not participate again
   dashboard:
     titles:
-      red_packets: battlefield
+      red_packets: Battlefield
       friends: Comrades in arms
-      assets: assets
-      settings: settings
+      assets: Assets
+      settings: SET
     index:
       my_id: My ID
-      entrusted: 可用拆弹余额
-      entrust: 充值
-      withdraw: extract
-      transfer: transfer
+      entrusted: Available balance
+      entrust: Top-up
+      withdraw: Extract
+      transfer: Transfer
       encrypted_packet: Password bomb
-      encrypted_room: 密码间
-      person: "%{number}Player"
-      person_losers: "%{number}Players %{bomb}bomb"
-      join_game: Help defuse the bomb
+      encrypted_room: Password room
+      person: "%{number} people"
+      person_losers: "%{number} People %{bomb} Bomb"
+      join_game: Participate in bomb disarming
       full_players: The number of full
       confirm_joining: Confirm to participate in
-      amount: amount
-      current_balance: current balance
-      entrust_successfully: 充值成功，请等待区块确认
-      choose_asset: choose asset
+      amount: Amount
+      current_balance: The current balance
+      entrust_successfully: Recharge successfully, please wait for block confirmation
+      choose_asset: Select the currency
       withdraw_available: Can mention amount
-      withdraw_successfully: Can mention amount
-      transfer_from: Out of the account
-      transfer_to: Into the account
-      balance_of_transfer_from: Transfer Account Balance
-      transfer_successfully: 划转成功，请耐心等待区块确认
-      balance_insufficient: balance insufficient
-      i_joined:  i joined
-      processing: ongoing
-      view_detail: view details
-      joins_game: "joins game"
-      game_round_finished: After bomb removal is complete, click "Bomb removal" to view the result of bomb removal
-      open_red_packet: Disarm bombs
-      players: players
-      finished: Defused bomb
-      total_assets_estimated: total assets estimated
-      account: account
-      asset: asset
-      balance: balance
-      my_info: my info
-      total_flow: total flow
-      invitation_url: invitation url
-      friend_list: friend list
-      friends_amount: friends amount
-      exchange: exchange
-      address: address
-      role: role
-      language: language
-      system_helps: system helps
-      playing_rules: playing rules
-      playing_records: playing records
+      withdraw_successfully: Extraction of success
+      transfer_from: Transfer out acc
+      transfer_to: Transfer in acc
+      balance_of_transfer_from: Transfer out ACC balance
+      transfer_successfully: Transfer successful, please wait patiently for block confirmation
+      balance_insufficient: Insufficient available balance
+      i_joined: I participate in
+      processing: Underway
+      view_detail: View details
+      joins_game: Enter matching queue
+      game_round_finished: When the match is complete, click "De-bomb" to view the de-bomb result。
+      open_red_packet: bomb
+      players: Player list
+      finished: Has been removed
+      total_assets_estimated: Total asset replacement
+      account: Account
+      asset: Assets
+      balance: Balance
+      my_info: My info
+      total_flow: Statement
+      invitation_url: Invite link
+      friend_list: Comrades list
+      friends_amount: Number of comrades in arms
+      exchange: Switch
+      address: Address
+      role: Role
+      language: Language
+      system_helps: Instructions
+      playing_rules: Reward rules
+      playing_records: Participate record
       apply_agent: Upgrade the chief instructor
       apply_vip: Upgrade instructor
-      exchange_cic: 兑换BOMB
-      join_encrypted_packet: Participate in the code to defuse the bomb
-      create_encrypted_packet: Create a password to defuse the bomb room
-      packet_usdt: Amount of bomb defused
+      exchange_cic: Exchange BOMB
+      join_encrypted_packet: Participate in password defusing bombs
+      create_encrypted_packet: Create password bomb disposal room
+      packet_usdt: Bomb disposal amount
       min_balance_required: Minimum bomb disposal account balance
-      loser_amount: loser amount
-      loser_amount_tip: The minimum is 1, and the maximum is 1 minus the number of participants in bomb disarming
-      packet_password: Defusing bomb code
-      encrypted_packet_room_id: room ID
-      packet_finished: finished
-      game_pserson_usdt: "%{usdt_amount} USDT, %{player_amount}players"
+      loser_amount: Loser amount
+      loser_amount_tip: The minimum is 1, and the maximum is 1 minus the number of bomb disposal participants
+      packet_password: Bomb password
+      encrypted_packet_room_id: Code bomb disposal room number
+      packet_finished: Disarm bombs
+      game_pserson_usdt: "%{usdt_amount} USDT, %{player_amount} people"
   deposits:
     create:
-      tx_hash_exists: 该比充值已提交过，请勿重复提交
+      tx_hash_exists: This pen recharge has been submitted, please do not submit again
       tx_hash_invalid: Incorrect TX Hash
   asset_flows:
     index:
       title: Assets report
-      account_balance: account balance
-      available: available
-      frozen: frozen
+      account_balance: Account balance
+      available: Available balance
+      frozen: Frozen
   user_game_rounds:
     index:
-      title: Participation Record
-      person_number: players
-      password_packet: password bomb
-      normal_packet: ordinary bomb
-      win_amount: win
-      lose: lose
+      title: Participate in the record
+      person_number: "%{number} people"
+      password_packet: Password bomb
+      normal_packet: Ordinary bomb
+      win_amount: Win
+      lose: Lose
   game_rounds:
     show:
-      title: result
-      total_funds: total bonus
+      title: Result
+      total_funds: Total bonus
     info:
       not_exist: The bomb disposal record does not exist

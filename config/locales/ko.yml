@@ -22,7 +22,7 @@ ko:
     cancel: 취소
     submit: 제출
     close: 닫기
-    copied: 已复制
+    copied: 복사완료
   utils:
     accounts:
       packet: 폭탄제거계정
@@ -30,7 +30,7 @@ ko:
   models:
     asset_flow:
       flow_types:
-        deposit: 充值
+        deposit: 충전
         withdraw: 출금
         transfer: 이체
         win: 폭탄제거성공
@@ -45,23 +45,23 @@ ko:
         team_new_vip: 교육수당
         vip_init_reward: 교관 리워드
         agent_init_reward: 장관 리워드
-        exchange_cic: 兑换BOMB
+        exchange_cic: BOMB교환
     user:
       roles:
         user: 사병
         vip: 교관
         agent: 장관
       states:
-        normal: 正常
-        locked: 已锁定
+        normal: 정상
+        locked: 락업
     article:
       article_types:
-        guide: 操作指南
-        reward_rule: 奖励规则
+        guide: 게임가이드
+        reward_rule: 보너스규칙
       langs:
-        en: 英文
-        zh-CN: 简体中文
-        ko: 韩文
+        en: 영어
+        zh-CN: 중국어
+        ko: 한국어
   users:
     new:
       sign_up_tip: 추천자의 ID를 입력하십시오
@@ -91,12 +91,12 @@ ko:
       already_vip: 유저님은 이미 교관입니다, 중복 승격 하지마십시오
       already_agent: 유저님은 이미 장관입니다, 교관 승격이 필요없습니다
     exchange_cic:
-      packet_usdt_available: 拆弹账户可用金额
-      cic_usdt_price: BOMB/USDT 价格
-      exchange_amount: 兑换数量
-      cic_amount_you_will_exchange: 您要兑换的BOMB数量
-      cost_usdt_amount: 预计花费USDT数量
-      exchange_success: 兑换成功
+      packet_usdt_available: 폭탄제거계정잔액
+      cic_usdt_price: BOMB/USDT 가격
+      exchange_amount: 교환수량
+      cic_amount_you_will_exchange: BOMB교환할수량
+      cost_usdt_amount: 필요USDT수량
+      exchange_success: 교환성공
   user_sessions:
     new:
       connecting_wallet: 지갑연결중...
@@ -105,15 +105,15 @@ ko:
       game_room_id: 방번호
       join_now: 바로참여
       joined: 참여중
-      joined_leave_tip: 폭탄제거에 참여중입니다，방을 나가면 참여를 취소합니다, 방에서 나가겠습니까 ? 
+      joined_leave_tip: 폭탄제거에 참여중입니다，방을 나가면 참여를 취소합니다, 방에서 나가겠습니까 ?
       win_records: 폭탄제거 기록
       not_joined: 미참여
     create:
       game_not_exist: 참여금액이 존재하지 않습니다
-      min_usdt_amount_less_than_game_required: 최소보증금은 폭탄제거금액보다 많아야 합니다 
+      min_usdt_amount_less_than_game_required: 최소보증금은 폭탄제거금액보다 많아야 합니다
       in_room_not_to_create: 모임방에 참여중입니다, 새로운 모임방을 만들수 없습니다
       usdt_available_less_than_min: 유저님의 USDT 사용가능 잔액이 부족합니다
-      loser_amount_lager_than_player_amount: 폭발자의 수량은 유저총수보다 작아야 하며 1보다 커야 합니다 
+      loser_amount_lager_than_player_amount: 폭발자의 수량은 유저총수보다 작아야 하며 1보다 커야 합니다
     query:
       room_not_exist: 해당 모임방은 존재하지 않거나 이미 해체되었습니다
     search:
@@ -138,33 +138,33 @@ ko:
       settings: 설정
     index:
       my_id: 나의ID
-      entrusted: 可用拆弹余额
-      entrust: 充值
+      entrusted: 사용가능잔액
+      entrust: 충전
       withdraw: 출금
       transfer: 이체
       encrypted_packet: 비밀폭탄
-      encrypted_room: 密码间
-      person: "%{number}명"
-      person_losers: "%{number}人 %{bomb}炸弹"
+      encrypted_room: 비밀방
+      person: "%{number}인"
+      person_losers: "%{number인 %{bomb}폭탄"
       join_game: 폭탄제거참여
       full_players: 제한 참여자수
       confirm_joining: 참여확인
       amount: 금액
       current_balance: 현재잔액
-      entrust_successfully: 充值成功，请等待区块确认
+      entrust_successfully: 충전성공，블록체인확인중
       choose_asset: 코인선택
       withdraw_available: 출금가능금액
       withdraw_successfully: 출금성공
       transfer_from: 출금계정
       transfer_to: 입금계정
       balance_of_transfer_from: 출금계정잔액
-      transfer_successfully: 划转成功，请耐心等待区块确认
+      transfer_successfully: 이체성공，블록체인확인중
       balance_insufficient: 사용가능금액부족
       i_joined: 나의 참여기록
       processing: 진행중
       view_detail: 상세보기
       joins_game: "매칭시작하기"
-      game_round_finished: 폭탄제거 매칭완료，"폭탄제거"클릭해서 결과보기 . 
+      game_round_finished: 폭탄제거 매칭완료，"폭탄제거"클릭해서 결과보기 .
       open_red_packet: 폭탄제거
       players: 유저리스트
       finished: 폭탄제거완료
@@ -186,20 +186,20 @@ ko:
       playing_records: 참여기록
       apply_agent: 장관승격
       apply_vip: 교관승격
-      exchange_cic: 兑换BOMB
-      join_encrypted_packet: 모임방 들어가기
-      create_encrypted_packet: 모임방 만들기
+      exchange_cic: BOMB교환
+      join_encrypted_packet: 비밀방 들어가기
+      create_encrypted_packet: 비밀방 만들기
       packet_usdt: 폭탄제거금액
       min_balance_required: 최소보증금
       loser_amount: 폭발자수 설정
       loser_amount_tip: 최소1，최대는 참여자수-1
       packet_password: 방 비밀번호
-      encrypted_packet_room_id: 모임방 번호
+      encrypted_packet_room_id: 비밀방 번호
       packet_finished: 폭탄제거 완성
-      game_pserson_usdt: "%{usdt_amount} USDT, %{player_amount}人"
+      game_pserson_usdt: "%{usdt_amount} USDT, %{player_amount}인"
   deposits:
     create:
-      tx_hash_exists: 该比充值已提交过，请勿重复提交
+      tx_hash_exists: 충전요청이 이미 제출되었습니다，중복제출하지 마세요
       tx_hash_invalid: 잘못된 TX Hash
   asset_flows:
     index:
