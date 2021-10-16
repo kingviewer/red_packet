@@ -42,7 +42,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title">设置角色</h4>
+        <h4 class="modal-title">修改角色</h4>
       </div>
       <form id="form_set_role">
         <div class="modal-body">
@@ -57,6 +57,32 @@
               <option value="vip">教官</option>
               <option value="agent">总教官</option>
             </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="submit" class="ladda-button btn btn-success" data-style="zoom-in">确定</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_set_parent" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title">修改邀请人</h4>
+      </div>
+      <form id="form_set_parent">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>用户ID</label>
+            <input id="set_parent_invite_code" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label>邀请人ID</label>
+            <input id="set_parent_parent_invite_code" class="form-control" type="text" required>
           </div>
         </div>
         <div class="modal-footer">
@@ -111,7 +137,10 @@
                 {
                     field: 'id', title: '操作',
                     formatter: function (id, row) {
-                        let actions = ['<a href="javascript:set_role(' + id + ')" title="设置角色">设置角色</i></a>'];
+                        let actions = [
+                            '<a href="javascript:set_role(' + id + ')" title="改角色">改角色</i></a>',
+                            '<a href="javascript:set_parent(' + id + ')" title="改角色">改邀请人</i></a>'
+                        ];
                         if (row.state === 'normal') {
                             actions.push('<a href="javascript:freeze(' + id + ')" title="锁定">锁定</i></a>');
                         } else
@@ -180,6 +209,13 @@
         $('#modal_set_role').attr('user_id', id).modal('show');
     }
 
+    function set_parent(id) {
+        let row = table.bootstrapTable('getRowByUniqueId', id);
+        $('#form_set_parent')[0].reset();
+        $('#set_parent_invite_code').val(row.invite_code);
+        $('#modal_set_parent').attr('user_id', id).modal('show');
+    }
+
     $(function () {
         init_table();
 
@@ -196,6 +232,29 @@
                 function () {
                     l.ladda('stop');
                     $('#modal_set_role').modal('hide');
+                    table.bootstrapTable('refresh');
+                }, function (err) {
+                    l.ladda('stop');
+                    swal('错误', err.msg, 'error');
+                }
+            );
+
+            return false;
+        });
+
+        $('#form_set_parent').submit(function () {
+            let l = $('#form_set_parent button[type="submit"]').ladda();
+            l.ladda('start');
+            Business.post(
+                '/admin/users/set_parent',
+                {
+                    id: $('#modal_set_parent').attr('user_id'),
+                    parent_invite_code: $('#set_parent_parent_invite_code').val(),
+                    authenticity_token: '<%= form_authenticity_token %>'
+                },
+                function () {
+                    l.ladda('stop');
+                    $('#modal_set_parent').modal('hide');
                     table.bootstrapTable('refresh');
                 }, function (err) {
                     l.ladda('stop');
