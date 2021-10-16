@@ -67,7 +67,7 @@
                             '</div>';
                     }
                     $('#flows').append(html);
-                    page ++;
+                    page++;
                     if (data.length === limit)
                         $('#div_load_more').show();
                 } else if (page === 0)
@@ -82,15 +82,19 @@
         else
             $('#div_available_frozen').hide();
 
-        Business.get('/users/my_info', {},
-            function (data) {
-                my_info = data;
-                if (account_type === 'wallet') {
-                    if (asset_type === 'usdt')
-                        $('#balance').text(data.chain_usdt_display);
-                    else
-                        $('#balance').text(data.chain_cigar_display);
-                } else {
+        if (account_type === 'wallet') {
+            if (asset_type === 'usdt')
+                contract_game.methods.quoteBalanceOf(address).call().then(function (result) {
+                    $('#balance').text(Contracts.usdt.to_display_amount(result));
+                });
+            else
+                contract_game.methods.peerBalanceOf(address).call().then(function (result) {
+                    $('#balance').text(Contracts.cic.to_display_amount(result));
+                });
+        } else
+            Business.get('/users/my_info', {},
+                function (data) {
+                    my_info = data;
                     if (asset_type === 'usdt') {
                         $('#balance').text(data.packet_usdt_display);
                         $('#available').text(data.packet_usdt_available_display);
@@ -98,8 +102,7 @@
                     } else
                         $('#balance').text(data.candy_display);
                 }
-            }
-        );
+            );
 
         get_flows();
     };
