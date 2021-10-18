@@ -24,6 +24,7 @@ class Admin::UsersController < Admin::BaseController
         packet_usdt: LZUtils.format_coin(user.packet_usdt),
         candy: LZUtils.format_coin(user.candy),
         team_usdt_flow: LZUtils.format_coin(user.team_usdt_flow),
+        team_user_amount: user.team_user_amount,
         created_at: user.formatted_created_at
       }
     end
@@ -47,7 +48,7 @@ class Admin::UsersController < Admin::BaseController
     users.each do |user|
       data << {
         id: user.id,
-        name: "#{user.invite_code}(#{user.encrypted_address})",
+        name: "#{user.invite_code}(#{user.encrypted_address}, 伞下人数 #{user.team_user_amount})",
         isParent: User.where(parent_id: user.id).exists?
       }
     end

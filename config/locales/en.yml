@@ -97,7 +97,8 @@ en:
       exchange_amount: Exchange quantity
       cic_amount_you_will_exchange: The number of bombs you want to exchange
       cost_usdt_amount: Estimated cost USDT quantity
-      exchange_success: For successful
+      exchange_success: Operation successful
+      max_exchange_amount: "You can exchange up to #{amount} BOMB in total"
   user_sessions:
     new:
       connecting_wallet: Connecting the wallet...

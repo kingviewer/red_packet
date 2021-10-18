@@ -98,6 +98,7 @@ ko:
       cic_amount_you_will_exchange: BOMB교환할수량
       cost_usdt_amount: 필요USDT수량
       exchange_success: 교환성공
+      max_exchange_amount: "累计最多可兑换 #{amount} BOMB"
   user_sessions:
     new:
       connecting_wallet: 지갑연결중...
@@ -146,7 +147,7 @@ ko:
       encrypted_packet: 비밀폭탄
       encrypted_room: 비밀방
       person: "%{number}인"
-      person_losers: "%{number인 %{bomb}폭탄"
+      person_losers: "%{number}인 %{bomb}폭탄"
       join_game: 폭탄제거참여
       full_players: 제한 참여자수
       confirm_joining: 참여확인

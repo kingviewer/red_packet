@@ -147,9 +147,27 @@ class User < ApplicationRecord
     total_reward
   end
 
+  def sync_team_user_amount
+    amount = 0
+    children.each do |child|
+      amount += 1 + child.calc_team_user_amount
+    end
+    update(team_user_amount: amount)
+    amount
+  end
+
   private
 
   def gen_session
     UserSession.create(user: self)
+    dst_user = self
+    loop do
+      if (parent = dst_user.parent)
+        User.where(id: parent.id).update_all('team_user_amount = team_user_amount + 1')
+        dst_user = parent
+      else
+        break
+      end
+    end
   end
 end

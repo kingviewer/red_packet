@@ -93,7 +93,7 @@ class UsersController < BaseUserController
         id: child.id,
         invite_code: child.invite_code,
         address: child.encrypted_address,
-        friends: child.children.count,
+        friends: child.team_user_amount,
         created_at: child.formatted_created_at
       }
     end
