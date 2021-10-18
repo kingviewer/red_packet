@@ -40,8 +40,8 @@ class Admin::AdminsController < Admin::BaseController
   def modify_password
     if not (admin = Admin.find_by(id: params[:admin][:id]))
       error('账号不存在')
-    elsif admin.account == Rails.application.credentials.dig(:default_admin, :account)
-      error('不能修改默认管理员的密码')
+    # elsif admin.account == Rails.application.credentials.dig(:default_admin, :account)
+    #   error('不能修改默认管理员的密码')
     else
       admin.update(password: params[:admin][:password])
       success
