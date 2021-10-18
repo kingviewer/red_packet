@@ -23,6 +23,7 @@ zh-CN:
     submit: 提交
     close: 关闭
     copied: 已复制
+    notice: 请注意
   utils:
     accounts:
       packet: 拆弹账户
@@ -197,6 +198,7 @@ zh-CN:
       encrypted_packet_room_id: 密码拆弹房间号
       packet_finished: 拆弹完成
       game_pserson_usdt: "%{usdt_amount} USDT, %{player_amount}人"
+      switch_to_bsc: 本合约在币安智能链主网上运行。请将您的钱包切换到币安链主网再试。
   deposits:
     create:
       tx_hash_exists: 该比充值已提交过，请勿重复提交

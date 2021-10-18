@@ -23,6 +23,7 @@ ko:
     submit: 제출
     close: 닫기
     copied: 복사완료
+    notice: 请注意
   utils:
     accounts:
       packet: 폭탄제거계정
@@ -197,6 +198,7 @@ ko:
       encrypted_packet_room_id: 비밀방 번호
       packet_finished: 폭탄제거 완성
       game_pserson_usdt: "%{usdt_amount} USDT, %{player_amount}인"
+      switch_to_bsc: 本合约在币安智能链主网上运行。请将您的钱包切换到币安链主网再试。
   deposits:
     create:
       tx_hash_exists: 충전요청이 이미 제출되었습니다，중복제출하지 마세요
