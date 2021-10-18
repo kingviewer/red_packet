@@ -11,7 +11,7 @@ class GamesController < BaseUserController
   # 获取全部红包列表
   def list_all
     data = []
-    Game.order(usdt_amount: :asc, player_amount: :asc).each do |game|
+    Game.where(on_shelf: true).order(usdt_amount: :asc, player_amount: :asc).each do |game|
       data << {
         id: game.id,
         usdt_amount: game.usdt_amount.to_i,
@@ -55,7 +55,7 @@ class GamesController < BaseUserController
 
   # 参与
   def join
-    if not (game = Game.find_by(id: params[:id]))
+    if not (game = Game.find_by(id: params[:id], on_shelf: true))
       error(t('.game_not_exist'))
     else
       begin

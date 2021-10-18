@@ -1,7 +1,7 @@
 class Admin::GamesController < Admin::BaseController
   before_action :auth_admin, only: [:index]
   before_action :ajax_auth_admin, only: [:list_for_table]
-  before_action only: [:create, :update] do
+  before_action only: [:create, :update, :set_on_shelf, :set_off_shelf] do
     ajax_auth_admin('admin')
   end
 
@@ -16,6 +16,7 @@ class Admin::GamesController < Admin::BaseController
         usdt_amount: game.usdt_amount,
         player_amount: game.player_amount,
         loser_amount: game.loser_amount,
+        on_shelf: game.on_shelf,
         created_at: game.formatted_created_at
       }
     end
@@ -42,6 +43,41 @@ class Admin::GamesController < Admin::BaseController
         error(game.errors.full_messages[0])
       else
         success
+      end
+    end
+  end
+
+  def set_on_shelf
+    if not (game = Game.find_by(id: params[:id]))
+      error('游戏不存在')
+    elsif game.on_shelf
+      error('该游戏已经上架')
+    else
+      game.update(on_shelf: true)
+      success
+    end
+  end
+
+  def set_off_shelf
+    if not (game = Game.find_by(id: params[:id]))
+      error('游戏不存在')
+    elsif not game.on_shelf
+      error('该游戏已经下架')
+    else
+      game.with_lock do
+        if not game.on_shelf
+          error('该游戏已经下架')
+        else
+          game.game_waiters.each do |waiter|
+            User.where(id: waiter.user_id).update_all(
+              ['packet_usdt_available = packet_usdt_available + ?, packet_usdt_frozen = packet_usdt_frozen - ?',
+               game.usdt_amount, game.usdt_amount]
+            )
+            waiter.destroy
+          end
+          game.update(waiter_amount: 0, on_shelf: false)
+          success
+        end
       end
     end
   end

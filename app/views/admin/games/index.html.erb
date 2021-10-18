@@ -112,8 +112,19 @@
                 {field: 'usdt_amount', title: '单份金额(USDT)'},
                 {field: 'player_amount', title: '开奖人数'},
                 {
+                    field: 'on_shelf', title: '状态', formatter: function (id, row) {
+                        if (row.on_shelf)
+                            return '<span class="text-primary">已上架</span>';
+                        return '<span class="text-danger">已下架</span>';
+                    }
+                },
+                {
                     field: 'id', title: '操作', formatter: function (id, row) {
                         let actions = ['<a href="javascript:edit(' + id + ')" title="修改">修改</a>'];
+                        if (row.on_shelf)
+                            actions.push('<a href="javascript:set_off_shelf(' + id + ')" title="下架">下架</a>');
+                        else
+                            actions.push('<a href="javascript:set_on_shelf(' + id + ')" title="上架">上架</a>');
                         return actions.join(' ');
                     }
                 }
@@ -134,6 +145,72 @@
         $('#form_edit input[name="game[player_amount]"]').val(row.player_amount);
         $('#form_edit input[name="game[loser_amount]"]').val(row.loser_amount);
         $('#modal_edit').modal('show');
+    }
+
+    function set_on_shelf(id) {
+        swal({
+            title: '确认操作',
+            text: '确认上架该游戏？',
+            icon: 'info',
+            buttons: {
+                cancel: {
+                    text: '取消',
+                    value: null,
+                    visible: true,
+                    className: 'btn btn-default',
+                    closeModal: true,
+                },
+                confirm: {
+                    text: '确认',
+                    value: true,
+                    visible: true,
+                    className: 'btn btn-primary',
+                    closeModal: true
+                }
+            }
+        }).then((confirmed) => {
+            if (confirmed) {
+                Business.post(
+                    '/admin/games/set_on_shelf', {id: id, authenticity_token: '<%= form_authenticity_token %>'},
+                    function () {
+                        table.bootstrapTable('refresh');
+                    }
+                );
+            }
+        });
+    }
+
+    function set_off_shelf(id) {
+        swal({
+            title: '确认操作',
+            text: '确认下架该游戏？',
+            icon: 'info',
+            buttons: {
+                cancel: {
+                    text: '取消',
+                    value: null,
+                    visible: true,
+                    className: 'btn btn-default',
+                    closeModal: true,
+                },
+                confirm: {
+                    text: '确认',
+                    value: true,
+                    visible: true,
+                    className: 'btn btn-primary',
+                    closeModal: true
+                }
+            }
+        }).then((confirmed) => {
+            if (confirmed) {
+                Business.post(
+                    '/admin/games/set_off_shelf', {id: id, authenticity_token: '<%= form_authenticity_token %>'},
+                    function () {
+                        table.bootstrapTable('refresh');
+                    }
+                );
+            }
+        });
     }
 
     $(function () {
