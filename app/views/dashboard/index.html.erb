@@ -26,49 +26,53 @@
         change_main_tab(tab_id);
     }
 
+    function init_page() {
+        web3.eth.getAccounts(function (err, result) {
+            address = result[0];
+            set_tab();
+        });
+    }
+
     getWeb3().then(res => {
         web3 = res;
         contract_usdt = new web3.eth.Contract(Contracts.usdt.abi, Contracts.usdt.address);
         contract_cic = new web3.eth.Contract(Contracts.cic.abi, Contracts.cic.address);
         contract_game = new web3.eth.Contract(Contracts.game.abi, Contracts.game.address);
-        web3.eth.getAccounts(function (err, result) {
-            address = result[0];
-            web3.eth.getChainId().then(function (result) {
-                if (result === 56)
-                    set_tab();
-                else if (window.ethereum)
-                    window.ethereum.request({
-                        method: 'wallet_switchEthereumChain',
-                        params: [{chainId: '0x38'}],
-                    }).then(() => {
-                        set_tab();
-                    }).catch((err) => {
-                        console.log(err);
-                        if (err.code === 4092) {
-                            window.ethereum.request({
-                                method: 'wallet_addEthereumChain',
-                                params: [{
-                                    chainId: '0x38',
-                                    chainName: 'Binance Smart Chain Mainnet',
-                                    nativeCurrency: {
-                                        name: 'Binance Coin',
-                                        symbol: 'BNB',
-                                        decimals: 18
-                                    },
-                                    rpcUrls: ['https://bsc-dataseed1.defibit.io'],
-                                    blockExplorerUrls: ['https://bscscan.com']
-                                }]
-                            }).then((result) => {
-                                set_tab();
-                            }).catch(() => {
-                                swal('<%= t('tips.notice') %>', '<%= t('dashboard.index.switch_to_bsc') %>', 'info');
-                            });
-                        } else
+        web3.eth.getChainId().then(function (result) {
+            if (result === 56)
+                init_page();
+            else if (window.ethereum)
+                window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{chainId: '0x38'}],
+                }).then(() => {
+                    init_page();
+                }).catch((err) => {
+                    console.log(err);
+                    if (err.code === 4092) {
+                        window.ethereum.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [{
+                                chainId: '0x38',
+                                chainName: 'Binance Smart Chain Mainnet',
+                                nativeCurrency: {
+                                    name: 'Binance Coin',
+                                    symbol: 'BNB',
+                                    decimals: 18
+                                },
+                                rpcUrls: ['https://bsc-dataseed1.defibit.io'],
+                                blockExplorerUrls: ['https://bscscan.com']
+                            }]
+                        }).then((result) => {
+                            init_page();
+                        }).catch(() => {
                             swal('<%= t('tips.notice') %>', '<%= t('dashboard.index.switch_to_bsc') %>', 'info');
-                    });
-                else
-                    swal('<%= t('tips.notice') %>', '<%= t('dashboard.index.switch_to_bsc') %>', 'info');
-            });
+                        });
+                    } else
+                        swal('<%= t('tips.notice') %>', '<%= t('dashboard.index.switch_to_bsc') %>', 'info');
+                });
+            else
+                swal('<%= t('tips.notice') %>', '<%= t('dashboard.index.switch_to_bsc') %>', 'info');
         });
     }).catch(function (result) {
         console.log(result);
