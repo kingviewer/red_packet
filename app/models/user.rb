@@ -150,7 +150,7 @@ class User < ApplicationRecord
   def sync_team_user_amount
     amount = 0
     children.each do |child|
-      amount += 1 + child.calc_team_user_amount
+      amount += 1 + child.sync_team_user_amount
     end
     update(team_user_amount: amount)
     amount
