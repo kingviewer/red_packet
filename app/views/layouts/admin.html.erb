@@ -141,6 +141,12 @@
             </li>
           </ul>
         </li>
+        <li class="<%= 'active' if params[:controller] == 'admin/asset_flows' and params[:action] == 'index' %>">
+          <a href="/admin/asset_flows/index">
+            <i class="fa fa-list"></i>
+            <span>用户资金明细</span>
+          </a>
+        </li>
         <li class="has-sub <%= 'active' if params[:controller] == 'admin/articles' %>">
           <a href="javascript:;">
             <b class="caret"></b>

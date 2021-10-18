@@ -6,7 +6,29 @@ class AssetFlow < ApplicationRecord
     :team_new_agent, :team_new_vip, :vip_init_reward, :agent_init_reward, :exchange_cic
   ]
 
+  belongs_to :user
+
   def flow_type_name
     I18n.t("models.asset_flow.flow_types.#{flow_type}")
+  end
+
+  def asset_type_name
+    if usdt?
+      'USDT'
+    elsif cigar?
+      'BOMB'
+    else
+      '-'
+    end
+  end
+
+  def account_type_name
+    if packet?
+      I18n.t('utils.accounts.packet')
+    elsif wallet?
+      I18n.t('utils.accounts.wallet')
+    else
+      '-'
+    end
   end
 end

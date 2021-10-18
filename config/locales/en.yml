@@ -23,7 +23,7 @@ en:
     submit: Submit
     close: Close
     copied: Copied
-    notice: 请注意
+    notice: Notice
   utils:
     accounts:
       packet: Bomb account
@@ -198,7 +198,7 @@ en:
       encrypted_packet_room_id: Code bomb disposal room number
       packet_finished: Disarm bombs
       game_pserson_usdt: "%{usdt_amount} USDT, %{player_amount} people"
-      switch_to_bsc: 本合约在币安智能链主网上运行。请将您的钱包切换到币安链主网再试。
+      switch_to_bsc: This contract is run on the main network of Binance smart chain. Please switch your wallet to the main network of Binance smart chain and try again.
   deposits:
     create:
       tx_hash_exists: This pen recharge has been submitted, please do not submit again
