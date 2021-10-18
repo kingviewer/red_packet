@@ -270,6 +270,8 @@ class UsersController < BaseUserController
     amount = BigDecimal(params[:cic_amount])
     if amount <= 0
       invalid_params
+    elsif AssetFlow.where(user_id: cur_user.id, flow_type: :exchange_cic, asset_type: :cigar).sum(:amount) + amount > 1000
+      error(t('.exchange_cic.max_exchange_amount', amount: 1000))
     else
       global_config = GlobalConfig.first
       cost_usdt = (amount * global_config.cigar_usdt_price).ceil(8)
