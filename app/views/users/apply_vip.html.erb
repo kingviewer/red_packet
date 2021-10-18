@@ -3,7 +3,7 @@
     <div class="widget-content widget-content-area">
       <div class="form-group">
         <label style="width: 100%"><%= t('.vip_price') %>
-          <span class="float-right" onclick="$('#modal_rule').modal('show')"><i class="la la-list"></i> <%= t('.vip_rules') %></span></label>
+          <span class="float-right" onclick="location.href='/articles/show?article_type=reward_rule'"><i class="la la-list"></i> <%= t('.vip_rules') %></span></label>
         <div class="form-control"><%= t('.price_desc', price: @global_config.vip_price) %></div>
       </div>
       <div class="form-group">

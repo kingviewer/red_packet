@@ -77,14 +77,12 @@ zh-CN:
       price_desc: "%{price} USDT 或 (50%价值的BOMB)"
       pay_type: 支付类型
       agent_rules: 总教官规则
-      rules_content: 总教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则
       apply_agent_success: 升级总教官成功
     apply_vip:
       vip_price: 费用
       price_desc: "%{price} USDT 或 (50%价值的BOMB)"
       pay_type: 支付类型
       vip_rules: 教官规则
-      rules_content: 教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则宗教官规则
       apply_vip_success: 升级教官成功
     become_agent:
       already_agent: 您已经是总教官，无需再次升级

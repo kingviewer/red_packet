@@ -16,7 +16,7 @@
     <div class="form-group">
       <label><%= t('users.exchange_cic.exchange_amount') %></label>
       <div class="input-group">
-        <input id="cic_amount" class="form-control" type="number" min="1" step="0.000001" placeholder="<%= t('.cic_amount_you_will_exchange') %>" required>
+        <input id="cic_amount" class="form-control" type="number" min="1" max="1000" step="0.000001" placeholder="<%= t('.cic_amount_you_will_exchange') %>" required>
         <div class="input-group-append">
           <span class="input-group-text" style="width: 58px;">BOMB</span>
         </div>

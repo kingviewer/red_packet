@@ -11,6 +11,8 @@ class Admin::AssetFlowsController < Admin::BaseController
     relation.order(id: :desc).limit(params[:limit].to_i).offset(params[:limit].to_i * params[:page].to_i).each do |flow|
       data << {
         id: flow.id,
+        invite_code: flow.user.invite_code,
+        address: flow.user.address,
         account_type_name: flow.account_type_name,
         flow_type_name: flow.flow_type_name,
         asset_type_name: flow.asset_type_name,

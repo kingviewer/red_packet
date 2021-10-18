@@ -3,7 +3,7 @@
     <div class="widget-content widget-content-area">
       <div class="form-group">
         <label style="width: 100%"><%= t('.agent_price') %>
-          <span class="float-right" onclick="$('#modal_rule').modal('show')"><i class="la la-list"></i> <%= t('.agent_rules') %></span></label>
+          <span class="float-right" onclick="location.href='/articles/show?article_type=reward_rule'"><i class="la la-list"></i> <%= t('.agent_rules') %></span></label>
         <div class="form-control"><%= t('.price_desc', price: @global_config.agent_price) %></div>
       </div>
       <div class="form-group">
@@ -17,25 +17,6 @@
     </div>
   </div>
 </form>
-
-<div id="modal_rule" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"><%= t('.agent_rules') %></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <i class="las la-times"></i>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p><%= t('.rules_content') %></p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> <%= t('tips.close') %></button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script>
     $(function () {
