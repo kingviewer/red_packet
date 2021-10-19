@@ -208,7 +208,7 @@ en:
     index:
       title: Assets report
       account_balance: Account balance
-      available: Available balance
+      available: Available
       frozen: Frozen
   user_game_rounds:
     index:
