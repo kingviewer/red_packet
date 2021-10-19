@@ -11,7 +11,7 @@ class GamesController < BaseUserController
   # 获取全部红包列表
   def list_all
     data = []
-    Game.where(on_shelf: true).order(usdt_amount: :asc, player_amount: :asc).each do |game|
+    Game.where(on_shelf: true).order(player_amount: :asc, usdt_amount: :asc).each do |game|
       data << {
         id: game.id,
         usdt_amount: game.usdt_amount.to_i,
