@@ -160,7 +160,9 @@ class User < ApplicationRecord
     users = []
     User.find_each do |user|
       user.with_lock do
-        if GameWaiter.where(user_id: user.id).count == 0 && UserRoom.where(user_id: user.id, joined: true).count == 0 && user.packet_usdt_frozen > 0
+        if GameWaiter.joins(:game).where(user_id: user.id).sum('games.usdt_amount') +
+          UserRoom.joins(:game_room).where(user_id: user.id, joined: true).sum('game_rooms.usdt_amount') >
+          user.packet_usdt_frozen
           users << user
         end
       end

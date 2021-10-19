@@ -23,7 +23,7 @@ ko:
     submit: 제출
     close: 닫기
     copied: 복사완료
-    notice: 请注意
+    notice: 알림
   utils:
     accounts:
       packet: 폭탄제거계정
@@ -98,7 +98,7 @@ ko:
       cic_amount_you_will_exchange: BOMB교환할수량
       cost_usdt_amount: 필요USDT수량
       exchange_success: 교환성공
-      max_exchange_amount: "累计最多可兑换 #{amount} BOMB"
+      max_exchange_amount: "누적 최대 교환 하능 #{amount} BOMB"
   user_sessions:
     new:
       connecting_wallet: 지갑연결중...
@@ -199,7 +199,7 @@ ko:
       encrypted_packet_room_id: 비밀방 번호
       packet_finished: 폭탄제거 완성
       game_pserson_usdt: "%{usdt_amount} USDT, %{player_amount}인"
-      switch_to_bsc: 本合约在币安智能链主网上运行。请将您的钱包切换到币安链主网再试。
+      switch_to_bsc: 해당 DAPP은 BSC체인에서 운행되는 스마트 컨트렉트 입니다, BSC 체인 지갑으로 교체하고 시도 하십시오
   deposits:
     create:
       tx_hash_exists: 충전요청이 이미 제출되었습니다，중복제출하지 마세요
