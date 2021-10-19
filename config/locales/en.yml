@@ -213,7 +213,7 @@ en:
   user_game_rounds:
     index:
       title: Participate in the record
-      person_number: "%{number} people"
+      person_number: "people"
       password_packet: Password bomb
       normal_packet: Ordinary bomb
       win_amount: Win

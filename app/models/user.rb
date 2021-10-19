@@ -156,6 +156,18 @@ class User < ApplicationRecord
     amount
   end
 
+  def revert_frozen_error
+    users = []
+    User.find_each do |user|
+      user.with_lock do
+        if GameWaiter.where(user_id: user.id).count == 0 && UserRoom.where(user_id: user.id, joined: true).count == 0 && user.packet_usdt_frozen > 0
+          users << user
+        end
+      end
+    end
+    users
+  end
+
   private
 
   def gen_session
