@@ -134,10 +134,10 @@ en:
       already_joined: You have participated in this bomb disposal, can not participate again
   dashboard:
     titles:
-      red_packets: Battlefield
-      friends: Comrades in arms
+      red_packets: Battle
+      friends: Partners
       assets: Assets
-      settings: SET
+      settings: Setting
     index:
       my_id: My ID
       entrusted: Available balance
