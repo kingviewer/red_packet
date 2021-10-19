@@ -27,7 +27,7 @@ en:
   utils:
     accounts:
       packet: Bomb account
-      wallet: The wallet account
+      wallet: Wallet account
   models:
     asset_flow:
       flow_types:
