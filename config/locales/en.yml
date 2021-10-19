@@ -17,7 +17,7 @@ en:
     success: Success
     operation_success: Operation is successful
     failed: Failure
-    confirm: Determine
+    confirm: Confirm
     confirm_operation: Confirm the operation
     cancel: Cancel
     submit: Submit
@@ -152,14 +152,14 @@ en:
       full_players: The number of full
       confirm_joining: Confirm to participate in
       amount: Amount
-      current_balance: The current balance
+      current_balance: Available
       entrust_successfully: Recharge successfully, please wait for block confirmation
-      choose_asset: Select the currency
-      withdraw_available: Can mention amount
+      choose_asset: Select the asset
+      withdraw_available: Available
       withdraw_successfully: Extraction of success
-      transfer_from: Transfer out acc
-      transfer_to: Transfer in acc
-      balance_of_transfer_from: Transfer out ACC balance
+      transfer_from: From
+      transfer_to: To
+      balance_of_transfer_from: Available
       transfer_successfully: Transfer successful, please wait patiently for block confirmation
       balance_insufficient: Insufficient available balance
       i_joined: I participate in
