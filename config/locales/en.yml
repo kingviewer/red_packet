@@ -31,8 +31,8 @@ en:
   models:
     asset_flow:
       flow_types:
-        deposit: Top-up
-        withdraw: Withdrawal
+        deposit: Deposit
+        withdraw: Withdraw
         transfer: Transfer
         win: Win
         lose: Lose
@@ -141,8 +141,8 @@ en:
     index:
       my_id: My ID
       entrusted: Available balance
-      entrust: Top-up
-      withdraw: Extract
+      entrust: Deposit
+      withdraw: Withdraw
       transfer: Transfer
       encrypted_packet: Password bomb
       encrypted_room: Password room
