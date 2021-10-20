@@ -135,7 +135,7 @@ en:
   dashboard:
     titles:
       red_packets: Battle
-      friends: Comrade in arms
+      friends: Partners
       assets: Assets
       settings: Settings
     index:
@@ -154,7 +154,7 @@ en:
       amount: Amount
       current_balance: Current balance
       entrust_successfully: Recharge successfully, please wait for block confirmation
-      choose_asset: Select the currency type
+      choose_asset: Select the asset type
       withdraw_available: Withdraw Available
       withdraw_successfully: Withdraw Success
       transfer_from: Transfer From
@@ -178,7 +178,7 @@ en:
       total_flow: Cumulative flow
       invitation_url: Invitation link
       friend_list: Comrades list
-      friends_amount: Amount of comrade in arms
+      friends_amount: Amount of partners
       exchange: Switch
       address: Address
       role: Role
