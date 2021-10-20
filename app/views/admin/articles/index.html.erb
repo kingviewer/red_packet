@@ -147,8 +147,8 @@
 
     function edit_article(id) {
         $('#form_edit')[0].reset();
-        $('#form_edit input[name="article[id]"]').val('article_id', id);
-        $('#form_edit').modal();
+        $('#form_edit input[name="article[id]"]').val(id);
+        $('#modal_edit').modal('show');
         let l = $('#form_edit button[type="submit"]').ladda();
         l.ladda('start');
         Business.get('/admin/articles/get', {id: id},

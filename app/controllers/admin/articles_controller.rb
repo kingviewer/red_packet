@@ -47,7 +47,7 @@ class Admin::ArticlesController < Admin::BaseController
   end
 
   def update
-    if not (article = Article.find_by(id: params[:id]))
+    if not (article = Article.find_by(id: params[:article][:id]))
       error('该文章不存在')
     else
       article.attributes = params.require(:article).permit(:article_type, :lang)
