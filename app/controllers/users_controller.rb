@@ -89,7 +89,9 @@ class UsersController < BaseUserController
 
   def my_friends
     data = []
-    cur_user.children.order(id: :desc).limit(params[:limit].to_i).offset(params[:page].to_i * params[:limit].to_i).each do |child|
+    limit = params[:limit].to_i
+    page = params[:page].to_i - 1
+    cur_user.children.order(id: :desc).limit(limit).offset(page * limit).each do |child|
       data << {
         id: child.id,
         invite_code: child.invite_code,
