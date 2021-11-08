@@ -83,7 +83,7 @@ class UsersController < BaseUserController
       team_usdt_flow: cur_user.team_usdt_flow,
       team_usdt_flow_display: LZUtils.format_coin(cur_user.team_usdt_flow),
       invite_url: "#{Utils::Constants::BASE_URL}users/new?pid=#{cur_user.invite_code}",
-      friends: child.team_user_amount
+      friends: cur_user.team_user_amount
     )
   end
 
