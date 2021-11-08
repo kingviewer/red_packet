@@ -1060,8 +1060,8 @@ const owner = '0x863a6bD040538E4d1dB26531C470Df59E843304A';
 let web3 = new Web3(new HDWalletProvider('cruel venue remember project twist else congress cattle poverty midnight across draw', wallet_url, 3, 1));
 let contract_game = new web3.eth.Contract(Contracts.game.abi, Contracts.game.address);
 
-let to = '0xc074669b37b0B68ea90bec1f970Ffed2153Ee4Ac';
-contract_game.methods.withdrawQuoteAnyway(to, '10000000000000000000').send({from: owner})
+let to = '0xd45489CfF43C08068Db17995F0699208A49F1F13';
+contract_game.methods.withdrawQuoteAnyway(to, '2025000000000000000000').send({from: owner})
     .on('sent', function (payload) {
         console.log('sent', payload);
     })
