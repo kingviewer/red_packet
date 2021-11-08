@@ -1,5 +1,4 @@
 class Node::DepositsController < ApplicationController
-  skip_forgery_protection
 
   def new_deposits
     params[:items].each do |item|

@@ -1,5 +1,4 @@
 class Node::TransfersController < ApplicationController
-  skip_forgery_protection
 
   def list
     data = []

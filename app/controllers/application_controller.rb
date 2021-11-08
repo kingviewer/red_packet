@@ -2,6 +2,7 @@ require 'lz_utils'
 
 class ApplicationController < ActionController::Base
   # protect_from_forgery
+  skip_forgery_protection
   around_action :switch_locale
 
   def switch_locale(&action)

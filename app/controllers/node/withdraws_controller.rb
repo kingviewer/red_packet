@@ -1,5 +1,4 @@
 class Node::WithdrawsController < ApplicationController
-  skip_forgery_protection
 
   def new_withdraws
     params[:items].each do |item|
