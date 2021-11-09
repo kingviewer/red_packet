@@ -1,0 +1,66 @@
+		
+	.header{
+		
+		.lang{
+			height: 150rpx;
+			text-align: right;
+			display: flex;
+			justify-content: space-between;
+			image{
+				width: 180rpx;
+				height: 90rpx;
+			}
+		}
+		// 
+		.mainrow{
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content: space-between;
+			
+			// 用户信息
+			.userinfo{
+				display: flex;
+				// 头像
+				.avatar {
+					border-radius: 120rpx;
+					background: #006600;
+					border: 3px solid #000;
+					width: 160rpx;
+					height: 160rpx;
+					image{
+						width: 160rpx;
+						height: 160rpx;
+					}
+				}
+				.mainfo{
+					line-height: 70rpx;
+					font-weight: 700;
+					text-indent: 1em;
+					// 昵称
+					.nickname{
+						font-size: 50rpx;
+						margin-top: 10%;
+						overflow: hidden;
+						width: 100%;
+					}
+					// 级别
+					.levelname{
+						font-size: 40rpx;
+					}
+				}
+			}
+			// 消息
+			.notice{
+				text-align: right;
+				width: 190rpx;
+				image{
+					width: 190rpx;
+					height: 190rpx;
+					
+					animation: bounce;
+					animation-duration: 2s;
+					
+				}
+			}
+		}
+	}

@@ -1,0 +1,60 @@
+.uni-popup {
+	.popup-wrap {
+		position: relative;
+	}
+	.success-image {
+		height: 460rpx;
+		width: 460rpx;
+	}
+	.failed-image {
+		height: 572rpx;
+		width: 460rpx;
+	}
+	.content {
+		position: absolute;
+		bottom: 40rpx;
+		left: 35%;
+		text-align: center;
+	}
+	.num {
+		color: #a15c1a;
+		font-size: 40rpx;
+		font-weight: bold;
+	}
+	.replay-image {
+		display: block;
+		width: 126rpx;
+		height: 60rpx;
+		margin-top: 20rpx;
+	}
+	.pliers-image {
+		width: 97rpx;
+		height: 97rpx;
+	}
+	.content-fail {
+		position: absolute;
+		bottom: 40rpx;
+		left: 50%;
+		margin-left: -230rpx;
+		text-align: center;
+		width: 100%;
+		.replay-image {
+			margin-left: 165rpx;
+		}
+	}
+	.close {
+		width: 80rpx;
+		height: 80rpx;
+		display: block;
+		margin: 0 auto;
+	}
+	.form-wrap {
+		background: linear-gradient(to bottom, #11739d, #126c9a, #0b5b8f);
+		.title {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 40rpx;
+		}
+	}
+}
