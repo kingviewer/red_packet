@@ -46,12 +46,12 @@ class UsersController < BaseUserController
         user.parent_id = parent.id
         begin
           user.gen_invite_code
-          user.save
+          user.save!
+          cookies[:user_token] = user.address
+          success(user_token: user.address)
         rescue
-          retry
+          system_busy
         end
-        cookies[:user_token] = user.address
-        success(user_token: user.address)
       end
     end
   end
