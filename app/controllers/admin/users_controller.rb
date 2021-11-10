@@ -48,7 +48,7 @@ class Admin::UsersController < Admin::BaseController
     users.each do |user|
       data << {
         id: user.id,
-        name: "#{user.invite_code}(#{user.encrypted_address}, 伞下人数 #{user.team_user_amount})",
+        name: "#{user.invite_code}(#{user.address}, 伞下人数 #{user.team_user_amount})",
         isParent: User.where(parent_id: user.id).exists?
       }
     end
