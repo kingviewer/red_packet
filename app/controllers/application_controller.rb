@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   around_action :switch_locale
 
   def switch_locale(&action)
-    I18n.with_locale(params[:lang] || cookies[:lang] || :en, &action)
+    I18n.with_locale(params[:lang] || params[:language] || cookies[:lang] || :en, &action)
   end
 
   def success(data = nil)
