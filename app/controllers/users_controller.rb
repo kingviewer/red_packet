@@ -3,8 +3,9 @@ class UsersController < BaseUserController
   before_action :ajax_auth_user, only: [:my_info, :my_friends, :become_agent, :become_vip, :exchange_info, :exchange]
 
   def new
-    @parent = User.find_by_invite_code(params[:pid]) unless params[:pid].blank?
-    render layout: 'user_sessions'
+    # @parent = User.find_by_invite_code(params[:pid]) unless params[:pid].blank?
+    # render layout: 'user_sessions'
+    redirect_to '/'
   end
 
   def exists

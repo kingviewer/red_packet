@@ -2,7 +2,8 @@ class UserSessionsController < BaseUserController
   layout 'user_sessions', only: :new
 
   def new
-    cookies[:user_token] = nil
+    # cookies[:user_token] = nil
+    redirect_to '/'
   end
 
   def create
