@@ -82,7 +82,7 @@ class UsersController < BaseUserController
       estimate_to_usdt: cur_user.packet_usdt + cur_user.chain_usdt_available + (cur_user.chain_cigar_available + cur_user.candy) * config.cigar_usdt_price,
       team_usdt_flow: cur_user.team_usdt_flow,
       team_usdt_flow_display: LZUtils.format_coin(cur_user.team_usdt_flow),
-      invite_url: "#{Utils::Constants::BASE_URL}users/new?pid=#{cur_user.invite_code}",
+      invite_url: "#{Utils::Constants::BASE_URL}#/pages/register/register?invite_code=#{cur_user.invite_code}",
       friends: cur_user.team_user_amount
     )
   end
