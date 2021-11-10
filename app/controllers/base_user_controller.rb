@@ -1,7 +1,7 @@
 class BaseUserController < ApplicationController
   def cur_user
     @cur_user || (
-      if (user_token = cookies[:user_token] || params[:user_token])
+      if (user_token = params[:user_token] || cookies[:user_token])
         (@cur_user = User.find_by_address(user_token))
       end
     )
