@@ -5,6 +5,7 @@ ko:
     no_record: 기록없음
     coming_soon: 오픈예정
     load_more: 더 보기
+    invalid_address: Invalid address
   errors:
     error: 에러
     permission_denied: 권한없음

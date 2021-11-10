@@ -37,6 +37,8 @@ class UsersController < BaseUserController
   def create
     if not (parent = User.find_by_invite_code(params[:user][:invite_code]))
       error(t('.create.parent_not_exist'))
+    elsif not valid_address?(params[:user][:address])
+      error(t('common.invalid_address'))
     else
       user = User.new(params.require(:user).permit(:address))
       user.address = user.address.downcase

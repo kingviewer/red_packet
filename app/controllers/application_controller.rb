@@ -64,4 +64,9 @@ class ApplicationController < ActionController::Base
   def response_data(data)
     render json: data, status: :ok
   end
+
+  def valid_address?(address)
+    formatter = Ethereum::Formatter.new
+    formatter.valid_address?(address)
+  end
 end

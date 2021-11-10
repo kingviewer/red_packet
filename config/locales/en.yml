@@ -5,6 +5,7 @@ en:
     no_record: There is no record
     coming_soon: Coming Soon
     load_more: Load more
+    invalid_address: Address is invalid
   errors:
     error: Error
     permission_denied: No permission to operate

@@ -5,6 +5,7 @@ zh-CN:
     no_record: 没有记录
     coming_soon: 马上开放
     load_more: 加载更多
+    invalid_address: 地址不合法
   errors:
     error: 错误
     permission_denied: 无权操作
