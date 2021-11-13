@@ -43,4 +43,5 @@ development:
 #
 production:
   <<: *default
-  database: <%= Rails.application.credentials.dig(:database, :db) %>
+  database: red_packet_pro
+#  database: <%#= Rails.application.credentials.dig(:database, :db) %>
