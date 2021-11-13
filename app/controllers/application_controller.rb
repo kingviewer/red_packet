@@ -6,11 +6,13 @@ class ApplicationController < ActionController::Base
   around_action :switch_locale
 
   def switch_locale(&action)
-    I18n.with_locale(params[:lang] || params[:language] || cookies[:lang] || :en, &action)
+    lang = params[:lang] || params[:language] || cookies[:lang] || :en
+    lang = 'zh-TW' if lang.downcase == 'zh'
+    I18n.with_locale(lang, &action)
   end
 
   def success(data = nil)
-    rs = {code: Utils::ReturnCodes::SUCCESS}
+    rs = { code: Utils::ReturnCodes::SUCCESS }
     rs[:data] = data if data
     render json: rs, status: :ok
   end
