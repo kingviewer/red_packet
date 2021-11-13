@@ -48,6 +48,7 @@ en:
         vip_init_reward: Instructor's Reward
         agent_init_reward: Chief instructor's Reward
         exchange_cic: Exchange BOMB
+        air_drop: Air drop
     user:
       roles:
         user: Recruit
@@ -64,6 +65,8 @@ en:
         en: English
         zh-CN: Simplified Chinese
         ko: Korean
+    pliers_flow:
+      air_drop: Air drop
   users:
     new:
       sign_up_tip: Please enter your inviter ID to register
@@ -100,6 +103,8 @@ en:
       cost_usdt_amount: Estimated cost USDT quantity
       exchange_success: Redemption successful
       max_exchange_amount: "Cumulative maximum can be redeemed #{amount} BOMB in total"
+    get_air_drop:
+      have_gotten: You have received the airdrop.
   user_sessions:
     new:
       connecting_wallet: Connecting wallet...

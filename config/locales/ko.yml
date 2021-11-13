@@ -48,6 +48,7 @@ ko:
         vip_init_reward: 교관 리워드
         agent_init_reward: 장관 리워드
         exchange_cic: BOMB교환
+        air_drop: 투하
     user:
       roles:
         user: 사병
@@ -64,6 +65,8 @@ ko:
         en: 영어
         zh-CN: 중국어
         ko: 한국어
+    pliers_flow:
+      air_drop: 투하
   users:
     new:
       sign_up_tip: 추천자의 ID를 입력하십시오
@@ -100,6 +103,8 @@ ko:
       cost_usdt_amount: 필요USDT수량
       exchange_success: 교환성공
       max_exchange_amount: "누적 최대 교환 하능 #{amount} BOMB"
+    get_air_drop:
+      have_gotten: 당신은 이미 공중낙하물을 수령하셨으니 중복하여 받지 마십시오
   user_sessions:
     new:
       connecting_wallet: 지갑연결중...

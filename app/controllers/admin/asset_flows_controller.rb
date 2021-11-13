@@ -40,7 +40,7 @@ class Admin::AssetFlowsController < Admin::BaseController
     relation = relation.where(asset_type: params[:asset_type]) unless params[:asset_type].blank?
     relation = relation.where(flow_type: params[:flow_type]) unless params[:flow_type].blank?
     relation = relation.where(['asset_flows.created_at >= ?', "#{params[:start_at].strip} 00:00:00.000000"]) unless params[:start_at].blank?
-    relation.where(['asset_flows.created_at <= ?', "#{params[:end_at].strip} 23:59:59.999999"]) unless params[:end_at].blank?
+    relation = relation.where(['asset_flows.created_at <= ?', "#{params[:end_at].strip} 23:59:59.999999"]) unless params[:end_at].blank?
     relation
   end
 end

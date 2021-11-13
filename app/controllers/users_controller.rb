@@ -1,6 +1,8 @@
 class UsersController < BaseUserController
   before_action :auth_user, only: [:apply_agent, :apply_vip, :exchange_cic]
-  before_action :ajax_auth_user, only: [:my_info, :my_friends, :become_agent, :become_vip, :exchange_info, :exchange]
+  before_action :ajax_auth_user, only: [
+    :my_info, :my_friends, :become_agent, :become_vip, :exchange_info, :exchange, :get_air_drop
+  ]
 
   def new
     # @parent = User.find_by_invite_code(params[:pid]) unless params[:pid].blank?
@@ -86,7 +88,9 @@ class UsersController < BaseUserController
       team_usdt_flow: cur_user.team_usdt_flow,
       team_usdt_flow_display: LZUtils.format_coin(cur_user.team_usdt_flow),
       invite_url: "#{Utils::Constants::BASE_URL}#/pages/register/register?invite_code=#{cur_user.invite_code}",
-      friends: cur_user.team_user_amount
+      friends: cur_user.team_user_amount,
+      pliers_amount: cur_user.pliers_amount,
+      air_drop_gotten: cur_user.air_drop_gotten
     )
   end
 
@@ -335,6 +339,33 @@ class UsersController < BaseUserController
           amount: amount
         )
         success(packet_usdt_available: LZUtils.format_coin(cur_user.packet_usdt_available))
+      end
+    end
+  end
+
+  def get_air_drop
+    if cur_user.air_drop_gotten
+      error(t('.have_gotten'))
+    else
+      cur_user.with_lock do
+        if cur_user.air_drop_gotten
+          error(t('.have_gotten'))
+        else
+          User.where(id: cur_user.id).update_all(['candy_available = candy_available + ?, pliers_amount = pliers_amount + ?, air_drop_gotten = ?', 100, 3, true])
+          AssetFlow.create(
+            user_id: cur_user.id,
+            amount: 100,
+            flow_type: :air_drop,
+            asset_type: :cigar,
+            account_type: :packet
+          )
+          PliersFlow.create(
+            user_id: cur_user.id,
+            amount: 3,
+            flow_type: :air_drop
+          )
+          success
+        end
       end
     end
   end

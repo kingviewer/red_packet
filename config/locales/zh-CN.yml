@@ -48,6 +48,7 @@ zh-CN:
         vip_init_reward: 教官补贴
         agent_init_reward: 总教官补贴
         exchange_cic: 兑换BOMB
+        air_drop: 空投
     user:
       roles:
         user: 新兵
@@ -64,6 +65,8 @@ zh-CN:
         en: 英文
         zh-CN: 简体中文
         ko: 韩文
+    pliers_flow:
+      air_drop: 空投
   users:
     new:
       sign_up_tip: 请输入您的邀请人ID进行注册
@@ -98,6 +101,8 @@ zh-CN:
       cost_usdt_amount: 预计花费USDT数量
       exchange_success: 兑换成功
       max_exchange_amount: "累计最多可兑换 #{amount} BOMB"
+    get_air_drop:
+      have_gotten: 您已经领取过空投，请勿重复领取
   user_sessions:
     new:
       connecting_wallet: 正在连接钱包...
