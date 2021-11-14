@@ -1,0 +1,2 @@
+class LocalizeRec < ApplicationRecord
+end
