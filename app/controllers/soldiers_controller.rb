@@ -46,7 +46,12 @@ class SoldiersController < BaseUserController
           if soldier.contribution > 0
             cur_user.new_contribution(soldier.contribution * amount)
           end
-          success
+          success(
+            candy_available: cur_user.candy_available,
+            candy_available_display: LZUtils.format_coin(cur_user.candy_available),
+            candy: cur_user.candy,
+            candy_display: LZUtils.format_coin(cur_user.candy)
+          )
         end
       end
     end
