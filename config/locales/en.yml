@@ -234,3 +234,7 @@ en:
       total_funds: Total Reward
     info:
       not_exist: The bomb disposal record does not exist
+  soldiers:
+    buy:
+      soldier_not_exist: 该工兵不存在
+      max_employ_amount: 雇佣工兵总数不可超过最大数量

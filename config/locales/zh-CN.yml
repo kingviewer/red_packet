@@ -235,4 +235,4 @@ zh-CN:
   soldiers:
     buy:
       soldier_not_exist: 该工兵不存在
-      max_employ_amount: 您雇佣该工兵已达最大数量
+      max_employ_amount: 雇佣工兵总数不可超过最大数量

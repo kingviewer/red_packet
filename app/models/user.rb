@@ -173,7 +173,30 @@ class User < ApplicationRecord
 
   # 新增/减贡献值，更新贡献、级别
   def new_contribution(contribution)
+    self.my_contribution += contribution
+    role_amount = update_new_role
+    save
+    parent&.sync_for_contribution(
+      contribution, role_amount[:pai], role_amount[:lian], role_amount[:ying], role_amount[:tuan],
+      role_amount[:shi], role_amount[:jun]
+    )
+  end
 
+  # 增加团队贡献，更新团队贡献、级别
+  def sync_for_contribution(contribution, _pai = 0, _lian = 0, _ying = 0, _tuan = 0, _shi = 0, _jun = 0)
+    self.team_contribution += contribution
+    self.team_pai += _pai
+    self.team_lian += _lian
+    self.team_ying += _ying
+    self.team_tuan += _tuan
+    self.team_shi += _shi
+    self.team_jun += _jun
+    role_amount = update_new_role
+    save
+    parent&.sync_for_contribution(
+      contribution, role_amount[:pai], role_amount[:lian], role_amount[:ying], role_amount[:tuan],
+      role_amount[:shi], role_amount[:jun]
+    )
   end
 
   private
@@ -188,6 +211,87 @@ class User < ApplicationRecord
       else
         break
       end
+    end
+  end
+
+  def judge_role
+    if self.team_contribution >= 5000 && children.where(['team_jun >= 1 or team_shi >= 1']).count >= 2
+      :jun
+    elsif self.team_contribution >= 3000 && children.where(['team_jun >= 1 or team_shi >= 1 or team_tuan >= 1']).count >= 2
+      :shi
+    elsif self.team_contribution >= 1000 && children.where(['team_jun >= 1 or team_shi >= 1 or team_tuan >= 1 or team_ying >= 1']).count >= 2
+      :tuan
+    elsif self.team_contribution >= 200 && children.where(['team_jun >= 1 or team_shi >= 1 or team_tuan >= 1 or team_ying >= 1 or team_lian >= 1']).count >= 2
+      :ying
+    elsif self.team_contribution >= 20 && children.where(['team_jun >= 1 or team_shi >= 1 or team_tuan >= 1 or team_ying >= 1 or team_lian >= 1 or team_pai >= 1']).count >= 2
+      :lian
+    elsif self.my_contribution > 0
+      :pai
+    else
+      :user
+    end
+  end
+
+  def calc_role_change(new_role)
+    _pai = _lian = _ying = _tuan = _shi = _jun = 0
+    if pai?
+      _pai -= 1
+    elsif lian?
+      _lian -= 1
+    elsif ying?
+      _ying -= 1
+    elsif tuan?
+      _tuan -= 1
+    elsif shi?
+      _shi -= 1
+    elsif jun?
+      _jun -= 1
+    end
+    case new_role
+    when :pai
+      _pai += 1
+    when :lian
+      _lian += 1
+    when :ying
+      _ying += 1
+    when :tuan
+      _tuan += 1
+    when :shi
+      _shi += 1
+    when :jun
+      _jun += 1
+    end
+    {
+      pai: _pai,
+      lian: _lian,
+      ying: _ying,
+      tuan: _tuan,
+      shi: _shi,
+      jun: _jun
+    }
+  end
+
+  def update_new_role
+    new_role = judge_role
+    if role != new_role
+      role_amount = calc_role_change(new_role)
+      self.team_pai += role_amount[:pai]
+      self.team_lian += role_amount[:lian]
+      self.team_ying += role_amount[:ying]
+      self.team_tuan += role_amount[:tuan]
+      self.team_shi += role_amount[:shi]
+      self.team_jun += role_amount[:jun]
+      self.role = new_role
+      role_amount
+    else
+      {
+        pai: 0,
+        lian: 0,
+        ying: 0,
+        tuan: 0,
+        shi: 0,
+        jun: 0
+      }
     end
   end
 end
