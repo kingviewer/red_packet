@@ -9,6 +9,7 @@ class CreateUserSoldiers < ActiveRecord::Migration[6.1]
       t.boolean :expired, null: false, default: false, index: true, comment: '是否已过期'
       t.integer :gen_bomb, null: false, default: 0, comment: '产雷数量'
       t.decimal :gen_cic, null: false, default: 0, precision: 20, scale: 8, comment: '产CIC数量'
+      t.datetime :start_working_at, index: true, comment: '开始工作时间'
 
       t.timestamps
     end
