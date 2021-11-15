@@ -232,3 +232,6 @@ zh-CN:
       total_funds: 总奖金
     info:
       not_exist: 该拆弹记录不存在
+  soldiers:
+    buy:
+      soldier_not_exist: 该工兵不存在

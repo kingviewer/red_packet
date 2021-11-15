@@ -20,6 +20,7 @@ class Admin::SoldiersController < Admin::BaseController
         max_employ_amount: item.max_employ_amount,
         contribution: item.contribution,
         power: item.power,
+        bomb_cost_pliers: item.bomb_cost_pliers,
         on_shelf: item.on_shelf,
         image: item.image.service_url
       }
@@ -29,7 +30,7 @@ class Admin::SoldiersController < Admin::BaseController
 
   def create
     soldier = Soldier.new(params.require(:soldier).
-      permit(:price, :duration, :max_employ_amount, :contribution, :power, :image, :bomb_cost, :bomb_benefit))
+      permit(:price, :duration, :max_employ_amount, :contribution, :power, :image, :bomb_cost, :bomb_benefit, :bomb_cost_pliers))
     if soldier.save
       soldier.set_level(params[:soldier][:level], 'zh-CN')
       success
@@ -43,7 +44,7 @@ class Admin::SoldiersController < Admin::BaseController
       error('工兵不存在')
     else
       soldier.attributes = params.require(:soldier).
-        permit(:price, :duration, :max_employ_amount, :contribution, :power, :image, :bomb_cost, :bomb_benefit)
+        permit(:price, :duration, :max_employ_amount, :contribution, :power, :image, :bomb_cost, :bomb_benefit, :bomb_cost_pliers)
       if soldier.save
         soldier.set_level(params[:soldier][:level], 'zh-CN')
         success

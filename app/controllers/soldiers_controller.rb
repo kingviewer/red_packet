@@ -16,6 +16,10 @@ class SoldiersController < BaseUserController
   end
 
   def buy
-    
+    if not (soldier = Soldier.find_by(id: params[:id], on_shelf: true))
+      error(t('.soldier_not_exist'))
+    else
+
+    end
   end
 end

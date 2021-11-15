@@ -10,6 +10,7 @@ class CreateUserSoldiers < ActiveRecord::Migration[6.1]
       t.integer :power, null: false, index: true, comment: '战力'
       t.decimal :bomb_cost, null: false, comment: '雷成本(CIC)'
       t.decimal :bomb_benefit, null: false, comment: '雷收益(CIC)'
+      t.integer :bomb_cost_pliers, null: false, comment: '单个雷消耗钳子'
       t.integer :state, null: false, default: 0, index: true, comment: '状态'
 
       t.timestamps
