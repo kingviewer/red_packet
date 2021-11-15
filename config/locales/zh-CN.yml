@@ -236,3 +236,5 @@ zh-CN:
     buy:
       soldier_not_exist: 该工兵不存在
       max_employ_amount: 雇佣工兵总数不可超过最大数量
+    dispatch:
+      soldier_already_working: 该工兵已经在工作啦
