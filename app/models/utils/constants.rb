@@ -1034,5 +1034,8 @@ EOS
 EOS
       }
     }
+
+    # 工兵工作时长(分钟)
+    SOLDIER_WORKING_TIME = 120
   end
 end
