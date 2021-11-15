@@ -236,7 +236,7 @@ module Utils
             }
         ]
 EOS
-        },
+      },
       cic: {
         decimals: 8,
         address: '0x6F70B8f72AdE1fD34D01405C6984cd10336b0A30',
@@ -1037,5 +1037,45 @@ EOS
 
     # 工兵工作时长(分钟)
     SOLDIER_WORKING_TIME = 10
+
+    # 各角色奖励
+    REWARD_RATES = {
+      pai: {
+        disposal: {
+          rate: 0.1,
+          same_role: 0
+        }
+      },
+      lian: {
+        disposal: {
+          rate: 0.2,
+          same_role: 0.1
+        }
+      },
+      ying: {
+        disposal: {
+          rate: 0.3,
+          same_role: 0.1
+        }
+      },
+      tuan: {
+        disposal: {
+          rate: 0.4,
+          same_role: 0.1
+        }
+      },
+      shi: {
+        disposal: {
+          rate: 0.5,
+          same_role: 0.1
+        }
+      },
+      jun: {
+        disposal: {
+          rate: 0.6,
+          same_role: 0.1
+        }
+      }
+    }
   end
 end

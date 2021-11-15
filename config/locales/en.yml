@@ -51,6 +51,9 @@ en:
         air_drop: Air drop
         buy_soldier: 雇佣工兵
         buy_pliers: 兑换钳子
+        disposal: 拆弹
+        disposal_dynamic: 培训津贴
+        disposal_dynamic_same: 平级补贴
     user:
       roles:
         user: Recruit
@@ -250,3 +253,8 @@ en:
     start_working:
       soldier_already_working: 该工兵已经在工作啦
       today_has_worked: 该工兵今天已经工作过啦
+  bombs:
+    disposal:
+      bomb_not_exist: 该炸弹不存在
+      bomb_insufficient: 炸弹数量不足
+      pliers_insufficient: 钳子数量不足

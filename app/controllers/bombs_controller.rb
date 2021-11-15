@@ -13,4 +13,22 @@ class BombsController < BaseUserController
     end
     success(data)
   end
+
+  def disposal
+    amount = params[:amount].to_i
+    if amount <= 0
+      invalid_params
+    elsif not (bomb = Bomb.find_by(user_id: cur_user.id, id: params[:id]))
+      error(t('.bomb_not_exist'))
+    else
+      begin
+        bomb.with_lock do
+          bomb.disposal(amount)
+          success
+        end
+      rescue => e
+        error(e.message)
+      end
+    end
+  end
 end

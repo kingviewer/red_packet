@@ -4,7 +4,7 @@ class AssetFlow < ApplicationRecord
   enum flow_type: [
     :deposit, :withdraw, :transfer, :win, :lose, :lose_reward, :parent_reward, :grand_reward, :agent_reward, :buy_agent,
     :buy_vip, :team_new_agent, :team_new_vip, :vip_init_reward, :agent_init_reward, :exchange_cic, :air_drop,
-    :buy_soldier, :buy_pliers
+    :buy_soldier, :buy_pliers, :disposal, :disposal_dynamic, :disposal_dynamic_same
   ]
 
   belongs_to :user

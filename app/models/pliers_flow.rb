@@ -1,5 +1,5 @@
 class PliersFlow < ApplicationRecord
-  enum flow_type: [:air_drop, :buy]
+  enum flow_type: [:air_drop, :buy, :disposal]
 
   belongs_to :user
 
