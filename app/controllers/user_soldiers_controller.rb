@@ -7,6 +7,7 @@ class UserSoldiersController < BaseUserController
     relation = relation.where(state: params[:state]) unless params[:state].blank?
     relation.order(id: :desc).each do |us|
       data << {
+        id: us.id,
         level: us.soldier.level,
         amount: us.amount,
         left_duration: us.left_duration,
