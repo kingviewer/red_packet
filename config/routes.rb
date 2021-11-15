@@ -3,4 +3,7 @@ Rails.application.routes.draw do
 
   get ':controller/:action'
   post ':controller/:action'
+
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
 end
