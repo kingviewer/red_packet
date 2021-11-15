@@ -8,6 +8,7 @@ class SoldiersController < BaseUserController
         price: soldier.price,
         power: soldier.power,
         duration: soldier.duration,
+        max_employ_amount: soldier.max_employ_amount,
         contribution: soldier.contribution,
         image: soldier.image.service_url
       }
