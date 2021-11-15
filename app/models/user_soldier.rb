@@ -1,0 +1,2 @@
+class UserSoldier < ApplicationRecord
+end

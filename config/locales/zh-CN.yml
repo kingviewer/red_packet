@@ -52,8 +52,12 @@ zh-CN:
     user:
       roles:
         user: 新兵
-        vip: 教官
-        agent: 总教官
+        pai: 排长
+        lian: 连长
+        ying: 营长
+        tuan: 团长
+        shi: 师长
+        jun: 军长
       states:
         normal: 正常
         locked: 已锁定

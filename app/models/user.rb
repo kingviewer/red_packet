@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  enum role: [:user, :vip, :agent]
+  enum role: [:user, :pai, :lian, :ying, :tuan, :shi, :jun]
   enum state: [:normal, :locked]
 
   belongs_to :parent, foreign_key: :parent_id, class_name: 'User', required: false

@@ -1,5 +1,11 @@
 module Utils
   module Constants
+    LANGUAGES = %w[en zh-CN]
+    LANGUAGE_NAMES = {
+      'en' => '英文',
+      'zh-CN' => '简体中文'
+    }
+
     BASE_URL = 'https://www.bombgame.org/'
     WALLET_URL = 'https://bsc-dataseed1.defibit.io'
     CONTRACTS = {

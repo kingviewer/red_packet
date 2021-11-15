@@ -126,6 +126,12 @@
             <span>游戏管理</span>
           </a>
         </li>
+        <li class="<%= 'active' if params[:controller] == 'admin/soldiers' and params[:action] == 'index' %>">
+          <a href="/admin/soldiers/index">
+            <i class="fa fa-gamepad"></i>
+            <span>工兵设置</span>
+          </a>
+        </li>
         <li class="has-sub <%= 'active' if %w[admin/sys_accounts admin/sys_flows].include?(params[:controller]) %>">
           <a href="javascript:;">
             <b class="caret"></b>

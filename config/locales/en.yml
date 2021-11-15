@@ -52,8 +52,12 @@ en:
     user:
       roles:
         user: Recruit
-        vip: Instructor
-        agent: Chief Instructor
+        pai: Platoon leader
+        lian: Company commander
+        ying: Battalion commander
+        tuan: Regimental commander
+        shi: Division commander
+        jun: Army commander
       states:
         normal: Normal
         locked: Has been locked
