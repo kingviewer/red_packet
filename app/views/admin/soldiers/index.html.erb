@@ -38,6 +38,14 @@
             <input name="soldier[price]" class="form-control" type="number" min="0" required>
           </div>
           <div class="form-group">
+            <label>雷成本(CIC) <span class="text-danger">*</span></label>
+            <input name="soldier[bomb_cost]" class="form-control" type="number" min="0" required>
+          </div>
+          <div class="form-group">
+            <label>雷收益(CIC) <span class="text-danger">*</span></label>
+            <input name="soldier[bomb_benefit]" class="form-control" type="number" min="0" required>
+          </div>
+          <div class="form-group">
             <label>战力 <span class="text-danger">*</span></label>
             <input name="soldier[power]" class="form-control" type="text" required>
           </div>
@@ -86,8 +94,16 @@
             <input name="soldier[price]" class="form-control" type="number" min="0" required>
           </div>
           <div class="form-group">
+            <label>雷成本(CIC) <span class="text-danger">*</span></label>
+            <input name="soldier[bomb_cost]" class="form-control" type="number" min="0" required>
+          </div>
+          <div class="form-group">
+            <label>雷收益(CIC) <span class="text-danger">*</span></label>
+            <input name="soldier[bomb_benefit]" class="form-control" type="number" min="0" required>
+          </div>
+          <div class="form-group">
             <label>战力 <span class="text-danger">*</span></label>
-            <input name="soldier[power]" class="form-control" type="text" required>
+            <input name="soldier[power]" class="form-control" type="number" min="0" required>
           </div>
           <div class="form-group">
             <label>雇佣周期(天) <span class="text-danger">*</span></label>
@@ -171,6 +187,8 @@
                 {field: 'id', title: 'ID'},
                 {field: 'level', title: '等级'},
                 {field: 'price', title: '价格'},
+                {field: 'bomb_cost', title: '雷成本'},
+                {field: 'bomb_benefit', title: '雷收益'},
                 {field: 'power', title: '战力'},
                 {field: 'duration', title: '雇佣周期(天)'},
                 {field: 'max_employ_amount', title: '单用户最多雇佣'},
@@ -211,6 +229,8 @@
         $('#form_edit input[name="id"]').val(id);
         $('#form_edit input[name="soldier[level]"]').val(row.level);
         $('#form_edit input[name="soldier[price]"]').val(row.price);
+        $('#form_edit input[name="soldier[bomb_cost]"]').val(row.bomb_cost);
+        $('#form_edit input[name="soldier[bomb_benefit]"]').val(row.bomb_benefit);
         $('#form_edit input[name="soldier[power]"]').val(row.power);
         $('#form_edit input[name="soldier[duration]"]').val(row.duration);
         $('#form_edit input[name="soldier[max_employ_amount]"]').val(row.max_employ_amount);
