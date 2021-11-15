@@ -38,6 +38,10 @@
             <input name="soldier[price]" class="form-control" type="number" min="0" required>
           </div>
           <div class="form-group">
+            <label>雷编号 <span class="text-danger">*</span></label>
+            <input name="soldier[bomb_no]" class="form-control" type="text" required>
+          </div>
+          <div class="form-group">
             <label>雷成本(CIC) <span class="text-danger">*</span></label>
             <input name="soldier[bomb_cost]" class="form-control" type="number" step="0.000001" min="0" required>
           </div>
@@ -66,8 +70,12 @@
             <input name="soldier[contribution]" class="form-control" type="number" min="0" required>
           </div>
           <div class="form-group">
-            <label>图片 <span class="text-danger">*</span></label>
+            <label>工兵图片(375X330) <span class="text-danger">*</span></label>
             <input name="soldier[image]" type="file" class="form-control" accept="image/png" required>
+          </div>
+          <div class="form-group">
+            <label>雷图片(135X190) <span class="text-danger">*</span></label>
+            <input name="soldier[bomb_image]" type="file" class="form-control" accept="image/png" required>
           </div>
         </div>
         <div class="modal-footer">
@@ -98,6 +106,10 @@
             <input name="soldier[price]" class="form-control" type="number" min="0" required>
           </div>
           <div class="form-group">
+            <label>雷编号 <span class="text-danger">*</span></label>
+            <input name="soldier[bomb_no]" class="form-control" type="text" required>
+          </div>
+          <div class="form-group">
             <label>雷成本(CIC) <span class="text-danger">*</span></label>
             <input name="soldier[bomb_cost]" class="form-control" type="number" min="0" required>
           </div>
@@ -126,8 +138,12 @@
             <input name="soldier[contribution]" class="form-control" type="number" min="0" required>
           </div>
           <div class="form-group">
-            <label>图片</label>
+            <label>工兵图片(375X330)</label>
             <input name="soldier[image]" type="file" class="form-control" accept="image/png">
+          </div>
+          <div class="form-group">
+            <label>雷图片(135X190)</label>
+            <input name="soldier[bomb_image]" type="file" class="form-control" accept="image/png">
           </div>
         </div>
         <div class="modal-footer">
@@ -195,6 +211,7 @@
                 {field: 'id', title: 'ID'},
                 {field: 'level', title: '等级'},
                 {field: 'price', title: '价格'},
+                {field: 'bomb_no', title: '雷编号'},
                 {field: 'bomb_cost', title: '雷成本'},
                 {field: 'bomb_benefit', title: '雷收益'},
                 {field: 'power', title: '战力'},
@@ -208,7 +225,12 @@
                     }
                 },
                 {
-                    field: 'image', title: '图片', formatter: function (image) {
+                    field: 'image', title: '工兵图片', formatter: function (image) {
+                        return '<img src="' + image + '" style="width: 100px; height: 100px;">';
+                    }
+                },
+                {
+                    field: 'bomb_image', title: '雷图片', formatter: function (image) {
                         return '<img src="' + image + '" style="width: 100px; height: 100px;">';
                     }
                 },
@@ -238,6 +260,7 @@
         $('#form_edit input[name="id"]').val(id);
         $('#form_edit input[name="soldier[level]"]').val(row.level);
         $('#form_edit input[name="soldier[price]"]').val(row.price);
+        $('#form_edit input[name="soldier[bomb_no]"]').val(row.bomb_no);
         $('#form_edit input[name="soldier[bomb_cost]"]').val(row.bomb_cost);
         $('#form_edit input[name="soldier[bomb_benefit]"]').val(row.bomb_benefit);
         $('#form_edit input[name="soldier[power]"]').val(row.power);

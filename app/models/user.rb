@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :game_room
   has_many :game_waiters
   has_one :user_room
+  has_many :user_soldiers
 
   after_create :gen_session
 
@@ -168,6 +169,11 @@ class User < ApplicationRecord
       end
     end
     users
+  end
+
+  # 新增/减贡献值，更新贡献、级别
+  def new_contribution(contribution)
+
   end
 
   private

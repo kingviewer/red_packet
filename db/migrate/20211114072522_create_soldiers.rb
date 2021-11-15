@@ -9,6 +9,7 @@ class CreateSoldiers < ActiveRecord::Migration[6.1]
       t.decimal :bomb_cost, null: false, comment: '雷成本(CIC)'
       t.decimal :bomb_benefit, null: false, comment: '雷收益(CIC)'
       t.integer :bomb_cost_pliers, null: false, comment: '单个雷消耗钳子'
+      t.string :bomb_no, null: false, limit: 20, index: true, comment: '雷编号'
       t.boolean :on_shelf, null: false, default: false, index: true, comment: '是否上架'
 
       t.timestamps
