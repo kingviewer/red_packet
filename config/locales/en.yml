@@ -49,6 +49,8 @@ en:
         agent_init_reward: Chief instructor's Reward
         exchange_cic: Exchange BOMB
         air_drop: Air drop
+        buy_soldier: 雇佣工兵
+        buy_pliers: 兑换钳子
     user:
       roles:
         user: Recruit
@@ -71,6 +73,8 @@ en:
         ko: Korean
     pliers_flow:
       air_drop: Air drop
+      buy: 兑换
+      disposal: 拆弹
     bomb_flow:
       flow_types:
         search: 扫雷

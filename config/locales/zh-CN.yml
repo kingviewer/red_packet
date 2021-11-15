@@ -49,6 +49,8 @@ zh-CN:
         agent_init_reward: 总教官补贴
         exchange_cic: 兑换BOMB
         air_drop: 空投
+        buy_soldier: 雇佣工兵
+        buy_pliers: 兑换钳子
     user:
       roles:
         user: 新兵
@@ -71,6 +73,8 @@ zh-CN:
         ko: 韩文
     pliers_flow:
       air_drop: 空投
+      buy: 兑换
+      disposal: 拆弹
     bomb_flow:
       flow_types:
         search: 扫雷

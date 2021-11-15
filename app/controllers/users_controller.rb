@@ -1,7 +1,7 @@
 class UsersController < BaseUserController
   before_action :auth_user, only: [:apply_agent, :apply_vip, :exchange_cic]
   before_action :ajax_auth_user, only: [
-    :my_info, :my_friends, :become_agent, :become_vip, :exchange_info, :exchange, :get_air_drop
+    :my_info, :my_friends, :become_agent, :become_vip, :exchange_info, :exchange, :get_air_drop, :buy_pliers
   ]
 
   def new
@@ -365,6 +365,44 @@ class UsersController < BaseUserController
             flow_type: :air_drop
           )
           success
+        end
+      end
+    end
+  end
+
+  def buy_pliers
+    g = GlobalConfig.first
+    amount = params[:amount].to_i
+    if amount <= 0
+      invalid_params
+    else
+      cost = g.exchange_pliers_price * amount
+      cur_user.with_lock do
+        if cur_user.candy_available < cost
+          error(t('dashboard.index.balance_insufficient'))
+        else
+          cur_user.update(
+            candy_available: cur_user.candy_available - cost,
+            pliers_amount: cur_user.pliers_amount + amount
+          )
+          AssetFlow.create(
+            user: cur_user,
+            asset_type: :cigar,
+            account_type: :packet,
+            flow_type: :buy_pliers,
+            amount: -cost
+          )
+          PliersFlow.create(
+            user: cur_user,
+            flow_type: :buy,
+            amount: amount
+          )
+          success(
+            candy_available: cur_user.candy_available,
+            candy_available_display: LZUtils.format_coin(cur_user.candy_available),
+            candy: cur_user.candy,
+            candy_display: LZUtils.format_coin(cur_user.candy)
+          )
         end
       end
     end

@@ -41,7 +41,7 @@ class SoldiersController < BaseUserController
             flow_type: :buy_soldier,
             asset_type: :cigar,
             account_type: :packet,
-            amount: soldier.price * amount
+            amount: -soldier.price * amount
           )
           if soldier.contribution > 0
             cur_user.new_contribution(soldier.contribution * amount)

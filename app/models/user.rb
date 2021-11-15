@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :user_soldiers
   has_many :bombs
   has_many :bomb_flows
+  has_many :pliers_flows
 
   after_create :gen_session
 
