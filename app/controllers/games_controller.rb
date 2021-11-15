@@ -1,6 +1,6 @@
 class GamesController < BaseUserController
   layout 'user'
-  before_action :ajax_auth_user, except: :index
+  before_action :ajax_auth_user, only: [:list_my_pending, :join]
   before_action :auth_user, only: :index
 
   def show
