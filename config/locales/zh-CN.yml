@@ -71,6 +71,10 @@ zh-CN:
         ko: 韩文
     pliers_flow:
       air_drop: 空投
+    bomb_flow:
+      flow_types:
+        search: 扫雷
+        disposal: 拆弹
   users:
     new:
       sign_up_tip: 请输入您的邀请人ID进行注册

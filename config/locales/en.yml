@@ -71,6 +71,10 @@ en:
         ko: Korean
     pliers_flow:
       air_drop: Air drop
+    bomb_flow:
+      flow_types:
+        search: 扫雷
+        disposal: 拆弹
   users:
     new:
       sign_up_tip: Please enter your inviter ID to register

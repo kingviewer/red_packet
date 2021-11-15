@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_one :user_room
   has_many :user_soldiers
   has_many :bombs
+  has_many :bomb_flows
 
   after_create :gen_session
 

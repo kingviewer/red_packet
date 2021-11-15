@@ -16,5 +16,11 @@ class UserSoldier < ApplicationRecord
     else
       update(state: :free, left_duration: left_duration - 1)
     end
+    BombFlow.create(
+      user: user,
+      soldier: soldier,
+      flow_type: :search,
+      amount: amount
+    )
   end
 end
