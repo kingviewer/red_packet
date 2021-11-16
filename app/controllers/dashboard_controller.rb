@@ -3,6 +3,6 @@ class DashboardController < BaseUserController
   before_action :auth_user
 
   def index
-    redirect_to '/'
+    # redirect_to '/'
   end
 end

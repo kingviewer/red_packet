@@ -103,6 +103,7 @@ class GamesController < BaseUserController
       error(t('.join.game_not_exist'))
     else
       success(
+        player_amount: game.player_amount,
         usdt_amount: LZUtils.format_coin(game.usdt_amount),
         person_number: "#{game.waiter_amount}/#{game.player_amount} #{t('user_game_rounds.index.person_number')}",
         progress: "#{(game.waiter_amount * 100 / game.player_amount).to_i}%"
