@@ -62,16 +62,16 @@ class User < ApplicationRecord
     parent&.add_team_flow(amount)
   end
 
-  # 红包流水，代理往上奖励
+  # 红包流水，营长以上级别往上奖励
   def reward_flow(amount)
     prev_rate = 0
     same_rewarded = false
     prev_reward_amount = 0
     dst_user = parent
-    field_name = 'packet_usdt_available'
+    field_name = 'candy_available'
     total_reward = 0
     loop do
-      if dst_user.agent?
+      if dst_user.ying? || dst_user.tuan? || dst_user.shi? || dst_user.jun?
         rate = dst_user.agent_commission_rate
         if rate > prev_rate
           same_rewarded = false
@@ -80,7 +80,7 @@ class User < ApplicationRecord
           AssetFlow.create(
             user_id: dst_user.id,
             account_type: :packet,
-            asset_type: :usdt,
+            asset_type: :cigar,
             flow_type: :agent_reward,
             amount: reward_amount
           )
@@ -93,7 +93,7 @@ class User < ApplicationRecord
           AssetFlow.create(
             user_id: dst_user.id,
             account_type: :packet,
-            asset_type: :usdt,
+            asset_type: :cigar,
             flow_type: :agent_reward,
             amount: reward_amount
           )

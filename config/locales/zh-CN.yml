@@ -75,9 +75,11 @@ zh-CN:
         zh-CN: 简体中文
         ko: 韩文
     pliers_flow:
-      air_drop: 空投
-      buy: 兑换
-      disposal: 拆弹
+      flow_types:
+        air_drop: 空投
+        buy: 兑换
+        disposal: 拆弹
+        pk: 福利
     bomb_flow:
       flow_types:
         search: 扫雷
@@ -145,6 +147,7 @@ zh-CN:
       have_joined_the_room: 您已经参与了该密码拆弹，请勿重复参与
       room_stopped: 该密码拆弹已经结束
       usdt_available_insufficient: USDT可用余额不足
+      cic_available_insufficient: CIC可用余额不足
   games:
     show:
       title: 拆弹详情

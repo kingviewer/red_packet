@@ -64,11 +64,11 @@ class GamesController < BaseUserController
             error(t('.already_joined'))
           else
             User.where(id: cur_user.id).update_all(
-              ['packet_usdt_available = packet_usdt_available - ?, packet_usdt_frozen = packet_usdt_frozen + ?',
+              ['candy_available = candy_available - ?, candy_frozen = candy_frozen + ?',
                game.usdt_amount, game.usdt_amount]
             )
             cur_user.reload
-            raise t('game_rooms.join.usdt_available_insufficient') if cur_user.packet_usdt_available < 0
+            raise t('game_rooms.join.cic_available_insufficient') if cur_user.candy_available < 0
             waiter = GameWaiter.create(
               user_id: cur_user.id,
               game_id: game.id,

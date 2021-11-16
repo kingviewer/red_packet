@@ -75,9 +75,11 @@ en:
         zh-CN: Simplified Chinese
         ko: Korean
     pliers_flow:
-      air_drop: Air drop
-      buy: 兑换
-      disposal: 拆弹
+      flow_types:
+        air_drop: Air drop
+        buy: 兑换
+        disposal: 拆弹
+        pk: 福利
     bomb_flow:
       flow_types:
         search: 扫雷
@@ -147,6 +149,7 @@ en:
       have_joined_the_room: You have already participated in the password bomb disposal, please do not participate again
       room_stopped: The password bomb disposal has ended
       usdt_available_insufficient: Insufficient USDT available balance
+      cic_available_insufficient: Insufficient CIC available balance
   games:
     show:
       title: Details of the bomb disposal

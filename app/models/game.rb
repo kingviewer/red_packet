@@ -39,56 +39,56 @@ class Game < ApplicationRecord
         won_usdt += win
       end
 
-      # 输家给Candy
+      # 输家给钳子
       losers.each do |loser|
-        candy_amount = (usdt_amount * 0.01 / global_config.cigar_usdt_price).floor(6)
-        User.where(id: loser.id).update_all(
-          ['packet_usdt_frozen = packet_usdt_frozen - ?, candy_available = candy_available + ?', usdt_amount,
-           candy_amount]
-        )
-        AssetFlow.create(
-          user_id: loser.id,
-          account_type: :packet,
-          asset_type: :usdt,
-          flow_type: :lose,
-          amount: -usdt_amount
-        )
-        AssetFlow.create(
-          user_id: loser.id,
-          account_type: :packet,
-          asset_type: :cigar,
-          flow_type: :lose_reward,
-          amount: candy_amount
-        )
+        pliers_amount = (usdt_amount / global_config.pk_pliers_price).to_i
+        if pliers_amount > 0
+          User.where(id: loser.id).update_all(
+            ['candy_frozen = candy_frozen - ?, pliers_amount = pliers_amount + ?', usdt_amount,
+             pliers_amount]
+          )
+          AssetFlow.create(
+            user_id: loser.id,
+            account_type: :packet,
+            asset_type: :cigar,
+            flow_type: :lose,
+            amount: -usdt_amount
+          )
+          PliersFlow.create(
+            user_id: loser.id,
+            flow_type: :pk,
+            amount: pliers_amount
+          )
+        end
       end
 
       # 赢家给USDT
       total_fee_left = 0
       winners.each do |winner|
         User.where(id: winner[:user].id).update_all(
-          ['packet_usdt_available = packet_usdt_available + ?, packet_usdt_frozen = packet_usdt_frozen - ?',
+          ['candy_available = candy_available + ?, candy_frozen = candy_frozen - ?',
            usdt_amount + winner[:win], usdt_amount]
         )
         AssetFlow.create(
           user_id: winner[:user].id,
           account_type: :packet,
-          asset_type: :usdt,
+          asset_type: :cigar,
           flow_type: :win,
           amount: winner[:win]
         )
 
-        # 代理返佣
+        # 团队返佣
         fee -= winner[:user].reward_flow(winner[:win])
 
         # 直推
         if (parent = winner[:user].parent)
-          if parent.vip? || parent.agent?
+          unless parent.user?
             reward_amount = (winner[:win] * global_config.parent_reward_rate).floor(6)
             if reward_amount > 0
-              User.where(id: parent.id).update_all(['packet_usdt_available = packet_usdt_available + ?', reward_amount])
+              User.where(id: parent.id).update_all(['candy_available = candy_available + ?', reward_amount])
               AssetFlow.create(
                 user_id: parent.id,
-                asset_type: :usdt,
+                asset_type: :cigar,
                 account_type: :packet,
                 flow_type: :parent_reward,
                 amount: reward_amount
@@ -99,14 +99,14 @@ class Game < ApplicationRecord
 
           # 间推
           if (grand = parent.parent)
-            if grand.vip? || grand.agent?
+            if !grand.user? && !grand.pai?
               reward_amount = (winner[:win] * global_config.grand_reward_rate).floor(6)
               if reward_amount > 0
-                User.where(id: grand.id).update_all(['packet_usdt_available = packet_usdt_available + ?', reward_amount])
+                User.where(id: grand.id).update_all(['candy_available = candy_available + ?', reward_amount])
                 AssetFlow.create(
                   user_id: grand.id,
                   account_type: :packet,
-                  asset_type: :usdt,
+                  asset_type: :cigar,
                   flow_type: :grand_reward,
                   amount: reward_amount
                 )
@@ -120,27 +120,27 @@ class Game < ApplicationRecord
       end
 
       # 系统账户增加金额
-      back_fund = (total_fee_left * 0.1).floor(8)
-      SysAccount.back_fund.update_all(['balance = balance + ?, total = total + ?', back_fund, back_fund])
-      SysFlow.create(
-        sys_account_id: SysAccount.back_fund.first.id,
-        flow_type: :new_round,
-        amount: back_fund
-      )
-      token_fund = back_fund
-      SysAccount.token_fund.update_all(['balance = balance + ?, total = total + ?', token_fund, token_fund])
-      SysFlow.create(
-        sys_account_id: SysAccount.token_fund.first.id,
-        flow_type: :new_round,
-        amount: token_fund
-      )
-      sys_benefit = total_fee_left - back_fund - token_fund
-      SysAccount.income.update_all(['balance = balance + ?, total = total + ?', sys_benefit, sys_benefit])
-      SysFlow.create(
-        sys_account_id: SysAccount.income.first.id,
-        flow_type: :new_round,
-        amount: sys_benefit
-      )
+      # back_fund = (total_fee_left * 0.1).floor(8)
+      # SysAccount.back_fund.update_all(['balance = balance + ?, total = total + ?', back_fund, back_fund])
+      # SysFlow.create(
+      #   sys_account_id: SysAccount.back_fund.first.id,
+      #   flow_type: :new_round,
+      #   amount: back_fund
+      # )
+      # token_fund = back_fund
+      # SysAccount.token_fund.update_all(['balance = balance + ?, total = total + ?', token_fund, token_fund])
+      # SysFlow.create(
+      #   sys_account_id: SysAccount.token_fund.first.id,
+      #   flow_type: :new_round,
+      #   amount: token_fund
+      # )
+      # sys_benefit = total_fee_left - back_fund - token_fund
+      # SysAccount.income.update_all(['balance = balance + ?, total = total + ?', sys_benefit, sys_benefit])
+      # SysFlow.create(
+      #   sys_account_id: SysAccount.income.first.id,
+      #   flow_type: :new_round,
+      #   amount: sys_benefit
+      # )
 
       # 加流水
       winners.each do |winner|
