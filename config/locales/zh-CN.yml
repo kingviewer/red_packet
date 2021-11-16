@@ -135,8 +135,9 @@ zh-CN:
       game_not_exist: 该拆弹金额不存在
       min_usdt_amount_less_than_game_required: 最低保证金不应低于拆弹金额
       in_room_not_to_create: 您当前正在参与一个密码房间，不可再次创建密码房间
-      usdt_available_less_than_min: 您的USDT可用余额小于要创建的密码房的最低保证金
-      loser_amount_lager_than_player_amount: 输家数量应小于玩家数量且大于等于1
+      usdt_available_less_than_min: 您的CIC可用余额小于要创建的密码房要求的最低账户余额
+      loser_amount_lager_than_player_amount: PK成功人数应小于玩家数量且大于等于1
+      cic_amount_invalid: PK数额应为10的整数倍
     query:
       room_not_exist: 该密码房间不存在或已结束
     search:

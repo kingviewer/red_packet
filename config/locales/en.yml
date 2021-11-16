@@ -137,8 +137,9 @@ en:
       game_not_exist: The amount for bomb disposal does not exist
       min_usdt_amount_less_than_game_required: The minimum deposit should not be less than the amount of bomb disposal
       in_room_not_to_create: You are currently participating in a password room. New creation of password room denied
-      usdt_available_less_than_min: Your USDT available balance is less than the minimum margin to create a password room
-      loser_amount_lager_than_player_amount: The number of losers should be smaller than the number of players, greater than or equal to 1
+      usdt_available_less_than_min: Your CIC available balance is less than the minimum margin to create a password room
+      loser_amount_lager_than_player_amount: The number of winners should be smaller than the number of players, greater than or equal to 1
+      cic_amount_invalid: The CIC amount should be an integer multiple of 10
     query:
       room_not_exist: The password room does not exist or has ended
     search:
