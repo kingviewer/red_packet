@@ -24,7 +24,7 @@ class GameRoomsController < BaseUserController
       begin
         cur_user.with_lock do
           if UserRoom.where(user_id: cur_user.id).exists?
-            error('.in_room_not_to_create')
+            error(t('.in_room_not_to_create'))
           else
             User.where(id: cur_user.id).update_all(
               ['candy_available = candy_available - ?, candy_frozen = candy_frozen + ?',
