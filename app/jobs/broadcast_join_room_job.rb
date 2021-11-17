@@ -7,7 +7,8 @@ class BroadcastJoinRoomJob < ApplicationJob
       action: :join,
       id: game_room.id,
       user_id: user.id,
-      address: user.encrypted_address
+      address: user.encrypted_address,
+      invite_code: user.invite_code
     )
   end
 end

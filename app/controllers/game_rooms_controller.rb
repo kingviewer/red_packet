@@ -5,7 +5,7 @@ class GameRoomsController < BaseUserController
 
   def show
     @title = t('dashboard.index.encrypted_packet')
-    @room_id = GameRoom.find_by(id: params[:id].to_i - 1000)&.id
+    @room_id = GameRoom.find_by(id: params[:id].to_i)&.id
   end
 
   # 创建
@@ -38,7 +38,7 @@ class GameRoomsController < BaseUserController
               game_room.save!
               UserRoom.create(user_id: cur_user.id, game_room_id: game_room.id, joined: true)
               success(
-                id: game_room.id + 1000,
+                id: game_room.id,
                 usdt_amount: game_room.usdt_amount,
                 player_amount: game_room.player_amount,
                 loser_amount: game_room.loser_amount,
@@ -60,7 +60,6 @@ class GameRoomsController < BaseUserController
       joiner_amount = UserRoom.where(game_room_id: game_room.id, joined: true).count
       success(
         id: game_room.id,
-        number: game_room.id + 1000,
         usdt_amount: game_room.usdt_amount.to_i,
         player_amount: game_room.player_amount,
         loser_amount: game_room.loser_amount,
@@ -77,7 +76,7 @@ class GameRoomsController < BaseUserController
 
   # ID和密码查找
   def search
-    if not (game_room = GameRoom.playing.find_by(id: params[:id].to_i - 1000, password: params[:password]))
+    if not (game_room = GameRoom.playing.find_by(id: params[:id].to_i, password: params[:password]))
       error(t('.room_not_exist'))
     elsif cur_user.packet_usdt_available < game_room.min_usdt_amount
       error(t('.join.cic_available_insufficient'))
@@ -177,7 +176,7 @@ class GameRoomsController < BaseUserController
     ur = UserRoom.find_by(user_id: cur_user.id)
     success(
       entered: !ur.nil?,
-      game_room_id: (ur&.game_room_id || 0) + 1000
+      game_room_id: ur&.game_room_id
     )
   end
 end
