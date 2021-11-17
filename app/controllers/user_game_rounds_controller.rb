@@ -11,6 +11,7 @@ class UserGameRoundsController < BaseUserController
     data = []
     relation = UserGameRound.includes(game_round: :game).joins(:game_round).where(user_id: cur_user.id)
     relation = relation.where(game_rounds: { game_room_id: nil }) if params[:only_normal]
+    relation = relation.where(game_rounds: {game_id: params[:game_id]}) if params[:game_id]
     relation.order(id: :desc).limit(params[:limit].to_i)
                  .offset(params[:limit].to_i * params[:page].to_i).each do |round|
       data << {
