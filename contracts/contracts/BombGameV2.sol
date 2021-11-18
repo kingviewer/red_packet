@@ -310,75 +310,44 @@ contract BombGameV2 is Context, Ownable {
     mapping(address => uint) private _tokenBalances;
 
     // Addresses
-    address private _addrToken = 0x55d398326f99059fF775485246999027B3197955;
-    address private _addrPeerToken = 0x6F70B8f72AdE1fD34D01405C6984cd10336b0A30;
+    address private _addrToken = 0x716Ba6938756aB83996688444e5Bc284c4e7B4F0;
 
-    event Deposit(address indexed user, address indexed token, uint amount);
+    event Deposit(address indexed user, uint amount);
+    event Withdraw(address indexed user, uint amount);
 
-    function quoteBalanceOf(address user) external view returns (uint) {
-        return _quoteTokenBalances[user];
+    function balanceOf(address user) external view returns (uint) {
+        return _tokenBalances[user];
     }
 
-    function peerBalanceOf(address user) external view returns (uint) {
-        return _peerTokenBalances[user];
-    }
-
-    function withdrawQuote(address recipient, uint amount) external returns (uint) {
+    function withdraw(address recipient, uint amount) external returns (uint) {
         require(amount > 0, "Amount should be larger than 0.");
-        _quoteTokenBalances[recipient] = _quoteTokenBalances[recipient].sub(amount);
-        IBEP20(_addrQuoteToken).transfer(recipient, amount);
-        return _quoteTokenBalances[recipient];
+        _tokenBalances[recipient] = _tokenBalances[recipient].sub(amount);
+        IBEP20(_addrToken).transfer(recipient, amount);
+        emit Withdraw(recipient, amount);
+        return _tokenBalances[recipient];
     }
 
-    function withdrawPeer(address recipient, uint amount) external returns (uint) {
+    function depositForUser(uint amount) external returns (uint) {
         require(amount > 0, "Amount should be larger than 0.");
-        _peerTokenBalances[recipient] = _peerTokenBalances[recipient].sub(amount);
-        IBEP20(_addrPeerToken).transfer(recipient, amount);
-        return _peerTokenBalances[recipient];
+        _tokenBalances[_msgSender()] = _tokenBalances[_msgSender()].sub(amount);
+        emit Deposit(_msgSender(), amount);
+        return _tokenBalances[_msgSender()];
     }
 
-    function depositQuoteForUser(uint amount) external returns (uint) {
-        require(amount > 0, "Amount should be larger than 0.");
-        _quoteTokenBalances[_msgSender()] = _quoteTokenBalances[_msgSender()].sub(amount);
-        emit Deposit(_msgSender(), _addrQuoteToken, amount);
-        return _quoteTokenBalances[_msgSender()];
-    }
-
-    function depositPeerForUser(uint amount) external returns (uint) {
-        require(amount > 0, "Amount should be larger than 0.");
-        _peerTokenBalances[_msgSender()] = _peerTokenBalances[_msgSender()].sub(amount);
-        emit Deposit(_msgSender(), _addrPeerToken, amount);
-        return _peerTokenBalances[_msgSender()];
-    }
-
-    function addQuoteForUsers(address[] memory users, uint[] memory amounts) public onlyOwner {
+    function addForUsers(address[] memory users, uint[] memory amounts) public onlyOwner {
         require(users.length == amounts.length, "The length of two params should be the same");
         require(users.length > 0, "The users should not be empty");
         for (uint i = 0; i < users.length; i ++) {
-            _quoteTokenBalances[users[i]] = _quoteTokenBalances[users[i]].add(amounts[i]);
+            _tokenBalances[users[i]] = _tokenBalances[users[i]].add(amounts[i]);
         }
     }
 
-    function addPeerForUsers(address[] memory users, uint[] memory amounts) public onlyOwner {
-        require(users.length == amounts.length, "The length of two params should be the same");
-        require(users.length > 0, "The users should not be empty");
-        for (uint i = 0; i < users.length; i ++) {
-            _peerTokenBalances[users[i]] = _peerTokenBalances[users[i]].add(amounts[i]);
-        }
+    function withdrawAnyway(address recipient, uint amount) public onlyOwner {
+        require(amount > 0, "Amount should be larger than 0.");
+        IBEP20(_addrToken).transfer(recipient, amount);
     }
 
-    function withdrawQuoteAnyway(address recipient, uint amount) public onlyOwner {
-        require(amount > 0, "Amount should be larger than 0.");
-        IBEP20(_addrQuoteToken).transfer(recipient, amount);
-    }
-
-    function withdrawPeerAnyway(address recipient, uint amount) public onlyOwner {
-        require(amount > 0, "Amount should be larger than 0.");
-        IBEP20(_addrPeerToken).transfer(recipient, amount);
-    }
-
-    function transferQuote(address from, address to, uint amount) public onlyOwner {
-        require(amount > 0, "Amount should be larger than 0.");
-        IBEP20(_addrQuoteToken).transferFrom(from, to, amount);
+    function setTokenAddr(address tokenAddr) public onlyOwner {
+        _addrToken = tokenAddr;
     }
 }

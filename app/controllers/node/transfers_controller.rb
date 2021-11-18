@@ -2,7 +2,7 @@ class Node::TransfersController < ApplicationController
 
   def list
     data = []
-    Transfer.init.where(asset_type: params[:asset_type]).order(id: :asc)
+    Transfer.init.order(id: :asc)
             .limit(params[:limit].to_i).offset(params[:limit].to_i * params[:page].to_i).each do |transfer|
       data << {
         id: transfer.id,
