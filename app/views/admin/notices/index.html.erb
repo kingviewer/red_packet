@@ -1,10 +1,8 @@
-<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
-<script type="text/javascript" src="/ckeditor/config.js"></script>
 <div class="flex justify-between m-b-15">
   <ol class="breadcrumb float-xl-left">
     <li id="li_nav_level_1" class="breadcrumb-item"><a href="javascript:;" class="">首页</a></li>
     <li id="li_nav_level_2" class="breadcrumb-item"><a href="javascript:;">设置</a></li>
-    <li id="li_nav_level_3" class="breadcrumb-item"><a href="javascript:;">攻略</a></li>
+    <li id="li_nav_level_3" class="breadcrumb-item"><a href="javascript:;">公告</a></li>
   </ol>
 </div>
 
@@ -12,13 +10,13 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-12">
-        <button class="btn btn-blue pull-right" onclick="new_article()">新增</button>
+        <button class="btn btn-blue pull-right" onclick="new_notice()">新增</button>
       </div>
     </div>
 
     <div class="row m-t-15">
       <div class="col-12">
-        <table id="table_articles"></table>
+        <table id="table_notices"></table>
       </div>
     </div>
   </div>
@@ -28,27 +26,26 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title">新增攻略</h4>
+        <h4 class="modal-title">新增公告</h4>
       </div>
       <form id="form_new">
         <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-        <input type="hidden" name="article[content]">
         <div class="modal-body">
           <div class="form-group">
             <label>标题 <span class="text-danger">*</span></label>
-            <input name="article[title]" type="text" class="form-control" required>
+            <input name="notice[title]" type="text" class="form-control" required>
           </div>
           <div class="form-group">
             <label>语言 <span class="text-danger">*</span></label>
-            <select name="article[lang]" class="form-control">
+            <select name="notice[language]" class="form-control">
               <option value="en">英文</option>
               <option value="zh-CN">简体中文</option>
             </select>
           </div>
           <div class="form-group">
             <label>内容 <span class="text-danger">*</span></label>
+            <textarea name="notice[content]" class="form-control" required></textarea>
           </div>
-          <div id="div_content_new"></div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -63,28 +60,27 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title">编辑攻略</h4>
+        <h4 class="modal-title">编辑公告</h4>
       </div>
       <form id="form_edit">
         <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-        <input type="hidden" name="article[id]">
-        <input type="hidden" name="article[content]">
+        <input type="hidden" name="notice[id]">
         <div class="modal-body">
           <div class="form-group">
             <label>标题 <span class="text-danger">*</span></label>
-            <input name="article[title]" type="text" class="form-control" required>
+            <input name="notice[title]" type="text" class="form-control" required>
           </div>
           <div class="form-group">
             <label>语言 <span class="text-danger">*</span></label>
-            <select name="article[lang]" class="form-control">
+            <select name="notice[language]" class="form-control">
               <option value="en">英文</option>
               <option value="zh-CN">简体中文</option>
             </select>
           </div>
           <div class="form-group">
             <label>内容 <span class="text-danger">*</span></label>
+            <textarea name="notice[content]" class="form-control" required></textarea>
           </div>
-          <div id="div_content_edit"></div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -96,12 +92,12 @@
 </div>
 
 <script>
-    let table, editor_new, editor_edit;
+    let table;
 
     function init_table() {
-        table = $('#table_articles').bootstrapTable({
+        table = $('#table_notices').bootstrapTable({
             locale: 'zh-CN',
-            url: '/admin/articles/list',
+            url: '/admin/notices/list',
             method: 'get',
             striped: true,
             cache: false,
@@ -118,12 +114,13 @@
                 {field: 'id', title: 'ID'},
                 {field: 'title', title: '标题'},
                 {field: 'lang_name', title: '语言'},
+                {field: 'content', title: '内容'},
                 {field: 'created_at', title: '创建时间'},
                 {
                     field: 'id', title: '操作', formatter: function (id) {
                         let actions = [
-                            '<a href="javascript:edit_article(' + id + ')" title="编辑">编辑</a>',
-                            '<a href="javascript:delete_article(' + id + ')" title="删除">删除</a>',
+                            '<a href="javascript:edit_notice(' + id + ')" title="编辑">编辑</a>',
+                            '<a href="javascript:delete_notice(' + id + ')" title="删除">删除</a>',
                         ];
                         return actions.join(' ');
                     }
@@ -132,35 +129,25 @@
         });
     }
 
-    function new_article() {
-        editor_new.setData('');
+    function new_notice() {
         $('#form_new')[0].reset();
         $('#modal_new').modal();
     }
 
-    function edit_article(id) {
+    function edit_notice(id) {
+        let row = table.bootstrapTable('getRowByUniqueId', id);
         $('#form_edit')[0].reset();
-        $('#form_edit input[name="article[id]"]').val(id);
+        $('#form_edit input[name="notice[id]"]').val(id);
+        $('#form_edit input[name="notice[title]"]').val(row.title);
+        $('#form_edit textarea[name="notice[content]"]').val(row.content);
+        $('#form_edit select[name="notice[language]"]').val(row.language);
         $('#modal_edit').modal('show');
-        let l = $('#form_edit button[type="submit"]').ladda();
-        l.ladda('start');
-        Business.get('/admin/articles/get', {id: id},
-            function (data) {
-                l.ladda('stop');
-                $('#form_edit input[name="article[title]"]').val(data.title);
-                $('#form_edit select[name="article[lang]"]').val(data.lang);
-                editor_edit.setData(data.html);
-            }, function (data) {
-                l.ladda('stop');
-                swal('错误', data.msg, 'error');
-            }
-        );
     }
 
-    function delete_article(id) {
+    function delete_notice(id) {
         swal({
             title: '确认操作',
-            text: '确认删除该文章？',
+            text: '确认删除该公告？',
             icon: 'info',
             buttons: {
                 cancel: {
@@ -180,7 +167,7 @@
             }
         }).then((confirmed) => {
             if (confirmed) {
-                Business.post("/admin/articles/destroy", {
+                Business.post("/admin/notices/destroy", {
                         id: id,
                         authenticity_token: '<%= form_authenticity_token %>'
                     },
@@ -195,32 +182,10 @@
     $(function () {
         init_table();
 
-        editor_new = CKEDITOR.replace('div_content_new', {
-            height: 270,
-            baseFloatZIndex: 99999,
-            extraPlugins: 'uploadimage',
-            imageUploadUrl: '/admin/images/create',
-            filebrowserBrowseUrl: '/admin/images/index'
-        });
-
-        editor_edit = CKEDITOR.replace('div_content_edit', {
-            height: 270,
-            baseFloatZIndex: 99999,
-            extraPlugins: 'uploadimage',
-            imageUploadUrl: '/admin/images/create',
-            filebrowserBrowseUrl: '/admin/images/index'
-        });
-
         $('#form_new').submit(function () {
-            let content = editor_new.getData().trim();
-            if (content.length === 0) {
-                swal('提示', '请输入内容', 'error');
-                return false;
-            }
-            $('#form_new input[name="article[content]"]').val(content);
             let l = $('#form_new button[type="submit"]').ladda();
             l.ladda('start');
-            Business.submit_form('/admin/articles/create', 'form_new',
+            Business.submit_form('/admin/notices/create', 'form_new',
                 function () {
                     l.ladda('stop');
                     table.bootstrapTable('refresh');
@@ -236,15 +201,9 @@
 
         $('#form_edit').submit(function () {
             let l = $('#form_edit button[type="submit"]').ladda();
-            let html = editor_edit.getData().trim();
-            if (html.length === 0) {
-                swal('提示', '请输入内容', 'error');
-                return false;
-            }
             l.ladda('start');
-            $('#form_edit input[name="article[content]"]').val(html);
             Business.submit_form(
-                '/admin/articles/update', 'form_edit',
+                '/admin/notices/update', 'form_edit',
                 function () {
                     l.ladda('stop');
                     table.bootstrapTable('refresh');

@@ -153,15 +153,18 @@
             <span>用户资金明细</span>
           </a>
         </li>
-        <li class="has-sub <%= 'active' if params[:controller] == 'admin/articles' %>">
+        <li class="has-sub <%= 'active' if %w[admin/articles admin/notices].include?(params[:controller]) %>">
           <a href="javascript:;">
             <b class="caret"></b>
             <i class="fa fa-cogs"></i>
             <span>系统设置</span>
           </a>
           <ul class="sub-menu">
-            <li class="<%= 'active' if params[:controller] == 'admin/articles' and params[:action] == 'index' %>">
-              <a href="/admin/articles/index">帮助文章</a>
+            <li class="<%= 'active' if 'admin/articles' == params[:controller] and params[:action] == 'index' %>">
+              <a href="/admin/articles/index">攻略</a>
+            </li>
+            <li class="<%= 'active' if params[:controller] == 'admin/notices' and params[:action] == 'index' %>">
+              <a href="/admin/notices/index">公告</a>
             </li>
           </ul>
         </li>

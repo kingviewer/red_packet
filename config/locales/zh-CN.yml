@@ -260,3 +260,6 @@ zh-CN:
       bomb_not_exist: 该炸弹不存在
       bomb_insufficient: 炸弹数量不足
       pliers_insufficient: 钳子数量不足
+  articles:
+    detail:
+      article_not_exist: 该文章不存在
