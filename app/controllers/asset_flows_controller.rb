@@ -13,7 +13,7 @@ class AssetFlowsController < BaseUserController
 
   def list_my
     data = []
-    AssetFlow.where(user_id: cur_user.id, asset_type: params[:asset_type], account_type: params[:account_type])
+    AssetFlow.where(user_id: cur_user.id, asset_type: :cigar, account_type: params[:account_type])
              .order(id: :desc).limit(params[:limit].to_i).offset(params[:limit].to_i * params[:page].to_i).each do |flow|
       data << {
         id: flow.id,
