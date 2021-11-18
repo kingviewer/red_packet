@@ -1016,7 +1016,7 @@ const Contracts = {
         ]
     },
     game: {
-        address: '0x77955B5FeF5923a9a821721ED159b197016c2232',
+        address: '0x1d5B0e91355E3A1f978575631cC4e1bf61C69F7A',
         abi: [
             {
                 "anonymous": false,
@@ -1025,12 +1025,6 @@ const Contracts = {
                         "indexed": true,
                         "internalType": "address",
                         "name": "user",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": true,
-                        "internalType": "address",
-                        "name": "token",
                         "type": "address"
                     },
                     {
@@ -1063,55 +1057,54 @@ const Contracts = {
                 "type": "event"
             },
             {
-                "constant": false,
+                "anonymous": false,
                 "inputs": [
                     {
-                        "internalType": "address[]",
-                        "name": "users",
-                        "type": "address[]"
+                        "indexed": true,
+                        "internalType": "address",
+                        "name": "user",
+                        "type": "address"
                     },
                     {
-                        "internalType": "uint256[]",
-                        "name": "amounts",
-                        "type": "uint256[]"
-                    }
-                ],
-                "name": "addPeerForUsers",
-                "outputs": [],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "internalType": "address[]",
-                        "name": "users",
-                        "type": "address[]"
-                    },
-                    {
-                        "internalType": "uint256[]",
-                        "name": "amounts",
-                        "type": "uint256[]"
-                    }
-                ],
-                "name": "addQuoteForUsers",
-                "outputs": [],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
+                        "indexed": false,
                         "internalType": "uint256",
                         "name": "amount",
                         "type": "uint256"
                     }
                 ],
-                "name": "depositPeerForUser",
+                "name": "Withdraw",
+                "type": "event"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "internalType": "address[]",
+                        "name": "users",
+                        "type": "address[]"
+                    },
+                    {
+                        "internalType": "uint256[]",
+                        "name": "amounts",
+                        "type": "uint256[]"
+                    }
+                ],
+                "name": "addForUsers",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "user",
+                        "type": "address"
+                    }
+                ],
+                "name": "balanceOf",
                 "outputs": [
                     {
                         "internalType": "uint256",
@@ -1120,7 +1113,7 @@ const Contracts = {
                     }
                 ],
                 "payable": false,
-                "stateMutability": "nonpayable",
+                "stateMutability": "view",
                 "type": "function"
             },
             {
@@ -1132,7 +1125,7 @@ const Contracts = {
                         "type": "uint256"
                     }
                 ],
-                "name": "depositQuoteForUser",
+                "name": "depositForUser",
                 "outputs": [
                     {
                         "internalType": "uint256",
@@ -1160,51 +1153,24 @@ const Contracts = {
                 "type": "function"
             },
             {
-                "constant": true,
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "user",
-                        "type": "address"
-                    }
-                ],
-                "name": "peerBalanceOf",
-                "outputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
+                "constant": false,
+                "inputs": [],
+                "name": "renounceOwnership",
+                "outputs": [],
                 "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "constant": true,
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "user",
-                        "type": "address"
-                    }
-                ],
-                "name": "quoteBalanceOf",
-                "outputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
+                "stateMutability": "nonpayable",
                 "type": "function"
             },
             {
                 "constant": false,
-                "inputs": [],
-                "name": "renounceOwnership",
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "tokenAddr",
+                        "type": "address"
+                    }
+                ],
+                "name": "setTokenAddr",
                 "outputs": [],
                 "payable": false,
                 "stateMutability": "nonpayable",
@@ -1230,31 +1196,6 @@ const Contracts = {
                 "inputs": [
                     {
                         "internalType": "address",
-                        "name": "from",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "address",
-                        "name": "to",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "amount",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "transferQuote",
-                "outputs": [],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "internalType": "address",
                         "name": "recipient",
                         "type": "address"
                     },
@@ -1264,7 +1205,7 @@ const Contracts = {
                         "type": "uint256"
                     }
                 ],
-                "name": "withdrawPeer",
+                "name": "withdraw",
                 "outputs": [
                     {
                         "internalType": "uint256",
@@ -1290,53 +1231,7 @@ const Contracts = {
                         "type": "uint256"
                     }
                 ],
-                "name": "withdrawPeerAnyway",
-                "outputs": [],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "recipient",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "amount",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "withdrawQuote",
-                "outputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "recipient",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "amount",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "withdrawQuoteAnyway",
+                "name": "withdrawAnyway",
                 "outputs": [],
                 "payable": false,
                 "stateMutability": "nonpayable",

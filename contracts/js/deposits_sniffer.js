@@ -1021,7 +1021,7 @@ const Contracts = {
         ]
     },
     game: {
-        address: '0xc30968b923F71d92d3c4bBe06b9E23832c00DD56',
+        address: '0x1d5B0e91355E3A1f978575631cC4e1bf61C69F7A',
         abi: [
             {
                 "anonymous": false,
@@ -1059,6 +1059,25 @@ const Contracts = {
                     }
                 ],
                 "name": "OwnershipTransferred",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "internalType": "address",
+                        "name": "user",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "uint256",
+                        "name": "amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Withdraw",
                 "type": "event"
             },
             {

@@ -1021,7 +1021,7 @@ const Contracts = {
         ]
     },
     game: {
-        address: '0xc30968b923F71d92d3c4bBe06b9E23832c00DD56',
+        address: '0x1d5B0e91355E3A1f978575631cC4e1bf61C69F7A',
         abi: [
             {
                 "anonymous": false,
@@ -1059,6 +1059,25 @@ const Contracts = {
                     }
                 ],
                 "name": "OwnershipTransferred",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "internalType": "address",
+                        "name": "user",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "uint256",
+                        "name": "amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Withdraw",
                 "type": "event"
             },
             {
@@ -1267,11 +1286,11 @@ function sniffer() {
                 if (to_block > cur_block)
                     to_block = cur_block;
 
-                contract_cic.getPastEvents('Transfer',
+                contract_game.getPastEvents('Withdraw',
                     {
                         fromBlock: '0x' + from_block.toString(16),
                         toBlock: '0x' + to_block.toString(16),
-                        filter: {from: Contracts.game.address}
+                        filter: {}
                     }
                 ).then(function (events) {
                     if (events.length === 0)
@@ -1281,8 +1300,8 @@ function sniffer() {
                         let event = events[i];
                         items.push({
                             tx_hash: event.transactionHash,
-                            to: event.returnValues.to,
-                            amount: Contracts.cic.to_display_amount(event.returnValues.value),
+                            to: event.returnValues.user,
+                            amount: Contracts.cic.to_display_amount(event.returnValues.amount),
                             asset_type: 'cigar'
                         });
                     }
