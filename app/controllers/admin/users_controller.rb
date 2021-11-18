@@ -25,6 +25,7 @@ class Admin::UsersController < Admin::BaseController
         candy: LZUtils.format_coin(user.candy),
         team_usdt_flow: LZUtils.format_coin(user.team_usdt_flow),
         team_user_amount: user.team_user_amount,
+        pliers_amount: user.pliers_amount,
         created_at: user.formatted_created_at
       }
     end
