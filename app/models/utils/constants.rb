@@ -1036,7 +1036,7 @@ EOS
     }
 
     # 工兵工作时长(分钟)
-    SOLDIER_WORKING_TIME = 10
+    SOLDIER_WORKING_TIME = 1
 
     # 各角色奖励
     REWARD_RATES = {
