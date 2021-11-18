@@ -37,12 +37,12 @@ class UsersController < BaseUserController
   end
 
   def create
-    if not (parent = User.find_by_invite_code(params[:user][:invite_code]))
+    if not (parent = User.find_by_invite_code(params[:invite_code]))
       error(t('.create.parent_not_exist'))
-    elsif not valid_address?(params[:user][:address])
+    elsif not valid_address?(params[:address])
       error(t('common.invalid_address'))
     else
-      user = User.new(params.require(:user).permit(:address))
+      user = User.new(params.permit(:address))
       user.address = user.address.downcase
       if User.exists?(address: user.address)
         error(t('.address_already_exists'))
