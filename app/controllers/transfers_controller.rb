@@ -2,7 +2,8 @@ class TransfersController < BaseUserController
   before_action :ajax_auth_user
 
   def create
-    transfer = Transfer.new(params.require(:transfer).permit(:asset_type, :amount))
+    transfer = Transfer.new(params.require(:transfer).permit(:amount))
+    transfer.asset_type = :cigar
     transfer.user_id = cur_user.id
     cur_user.with_lock do
       if transfer.usdt? && transfer.amount > cur_user.packet_usdt_available ||
