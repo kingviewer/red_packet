@@ -243,8 +243,8 @@ zh-CN:
       person_number: 人
       password_packet: 密码拆弹
       normal_packet: 普通拆弹
-      win_amount: 拆弹成功
-      lose: 拆弹失败
+      win_amount: PK成功
+      lose: PK失败
   game_rounds:
     show:
       title: 拆弹结果
