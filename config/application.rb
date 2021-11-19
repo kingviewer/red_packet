@@ -39,6 +39,9 @@ module RedPacket
     config.active_job.queue_adapter = :sidekiq
     config.action_mailer.deliver_later_queue_name = :default
 
+    config.time_zone = 'UTC'
+    config.active_record.default_timezone = :local
+
     config.generators.orm :active_record
     # config.generators.orm :mongoid
 
