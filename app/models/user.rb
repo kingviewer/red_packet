@@ -58,7 +58,7 @@ class User < ApplicationRecord
   end
 
   def add_team_flow(amount)
-    User.where(id: id).update_all(['team_usdt_flow = team_usdt_flow + ?', amount]) if agent?
+    User.where(id: id).update_all(['team_usdt_flow = team_usdt_flow + ?', amount])
     parent&.add_team_flow(amount)
   end
 
