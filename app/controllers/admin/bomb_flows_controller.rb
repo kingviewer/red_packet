@@ -1,6 +1,6 @@
 class Admin::BombFlowsController < Admin::BaseController
   before_action :auth_admin, only: :index
-  before_action :ajax_auth_admin, only: :list_for_table
+  before_action :ajax_auth_admin, only: [:list_for_table, :statistics]
 
   def index
   end

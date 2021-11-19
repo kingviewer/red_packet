@@ -147,11 +147,11 @@
             </li>
           </ul>
         </li>
-        <li class="has-sub <%= 'active' if %w[admin/asset_flows admin/pliers_flows admin/bomb_flows].include?(params[:controller]) %>">
+        <li class="has-sub <%= 'active' if %w[admin/asset_flows admin/pliers_flows admin/bomb_flows admin/user_soldiers].include?(params[:controller]) %>">
           <a href="javascript:;">
             <b class="caret"></b>
             <i class="fa fa-money-bill"></i>
-            <span>用户资金</span>
+            <span>用户资产</span>
           </a>
           <ul class="sub-menu">
             <li class="<%= 'active' if params[:controller] == 'admin/asset_flows' and params[:action] == 'index' %>">
@@ -162,6 +162,9 @@
             </li>
             <li class="<%= 'active' if params[:controller] == 'admin/bomb_flows' and params[:action] == 'index' %>">
               <a href="/admin/bomb_flows/index">炸弹流水</a>
+            </li>
+            <li class="<%= 'active' if params[:controller] == 'admin/user_soldiers' and params[:action] == 'index' %>">
+              <a href="/admin/user_soldiers/index">工兵列表</a>
             </li>
           </ul>
         </li>

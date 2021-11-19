@@ -100,7 +100,8 @@ class Admin::SoldiersController < Admin::BaseController
     Soldier.find_each do |soldier|
       data << {
         id: soldier.id,
-        bomb_no: soldier.bomb_no
+        bomb_no: soldier.bomb_no,
+        level: soldier.level,
       }
     end
     success(data)

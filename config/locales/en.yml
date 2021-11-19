@@ -84,6 +84,10 @@ en:
       flow_types:
         search: 扫雷
         disposal: 拆弹
+    user_soldier:
+      states:
+        free: 休息
+        working: 扫雷中
   users:
     new:
       sign_up_tip: Please enter your inviter ID to register

@@ -2,7 +2,7 @@
   <ol class="breadcrumb float-xl-left">
     <li id="li_nav_level_1" class="breadcrumb-item"><a href="javascript:;" class="">首页</a></li>
     <li id="li_nav_level_2" class="breadcrumb-item"><a href="javascript:;">用户资产</a></li>
-    <li class="breadcrumb-item"><a href="javascript:;">炸弹流水</a></li>
+    <li class="breadcrumb-item"><a href="javascript:;">工兵列表</a></li>
   </ol>
 </div>
 
@@ -16,25 +16,18 @@
       </div>
       <div class="col-2">
         <div class="form-group">
-          <select id="filter_flow_type" class="form-control">
-            <option value="-1">全部类型</option>
-            <option value="search">扫雷</option>
-            <option value="disposal">拆弹</option>
+          <select id="filter_state" class="form-control">
+            <option value="-1">全部状态</option>
+            <option value="free">休息</option>
+            <option value="working">扫雷中</option>
           </select>
         </div>
       </div>
       <div class="col-2">
         <div class="form-group">
           <select id="filter_soldier_id" class="form-control">
-            <option value="-1">全部编号</option>
+            <option value="-1">全部等级</option>
           </select>
-        </div>
-      </div>
-      <div class="form-group col-3">
-        <div class="input-group input-daterange">
-          <input id="filter_start_at" type="text" class="form-control" name="start" placeholder="开始时间"/>
-          <span class="input-group-addon border-radius-0">-</span>
-          <input id="filter_end_at" type="text" class="form-control" name="end" placeholder="结束时间"/>
         </div>
       </div>
       <div class="col-1">
@@ -49,7 +42,7 @@
 
     <div class="row m-t-15">
       <div class="col-12">
-        <table id="table_bomb_flows"></table>
+        <table id="table_user_soldiers"></table>
       </div>
     </div>
   </div>
@@ -59,9 +52,9 @@
     let table, page_size = 15;
 
     function init_table() {
-        table = $('#table_bomb_flows').bootstrapTable({
+        table = $('#table_user_soldiers').bootstrapTable({
             locale: 'zh-CN',
-            url: '/admin/bomb_flows/list_for_table',
+            url: '/admin/user_soldiers/list_for_table',
             method: 'get',
             striped: true,
             cache: false,
@@ -70,15 +63,10 @@
             queryParams: function (params) {
                 params['page'] = params.pageNumber - 1;
                 params['limit'] = params.pageSize;
-                let start_at = $('#filter_start_at').val().trim(), end_at = $('#filter_end_at').val().trim(),
-                    flow_type = $('#filter_flow_type').val(), keyword = $('#filter_keyword').val().trim(),
+                let state = $('#filter_state').val(), keyword = $('#filter_keyword').val().trim(),
                     soldier_id = $('#filter_soldier_id').val();
-                if (start_at.length > 0)
-                    params['start_at'] = start_at;
-                if (end_at.length > 0)
-                    params['end_at'] = end_at;
-                if (flow_type !== '-1')
-                    params['flow_type'] = flow_type;
+                if (state !== '-1')
+                    params['state'] = state;
                 if (soldier_id !== '-1')
                     params['soldier_id'] = soldier_id;
                 if (keyword.length > 0)
@@ -97,9 +85,15 @@
                 {field: 'id', title: 'ID'},
                 {field: 'invite_code', title: '用户ID'},
                 {field: 'address', title: '地址'},
-                {field: 'bomb_no', title: '炸弹编号'},
-                {field: 'flow_type_name', title: '流水类型'},
+                {field: 'level', title: '等级'},
+                {field: 'state_name', title: '状态'},
                 {field: 'amount', title: '数量'},
+                {field: 'left_duration', title: '剩余排除次数'},
+                {
+                    field: 'expired', title: '已过期?', formatter: function (expired) {
+                        return expired ? '<span class="text-danger">是</span>' : '<span class="text-primary">否</span>';
+                    }
+                },
                 {field: 'created_at', title: '时间'}
             ]
         });
@@ -107,7 +101,7 @@
 
     function get_statistics(params) {
         Business.get(
-            '/admin/bomb_flows/statistics', params,
+            '/admin/user_soldiers/statistics', params,
             function (data) {
                 $('#total_statistics').text('合计:' + data.total);
             }
@@ -121,7 +115,7 @@
                 let html = '';
                 for (let i = 0; i < data.length; i++) {
                     let item = data[i];
-                    html += '<option value="' + item.id + '">' + item.bomb_no + '</option>';
+                    html += '<option value="' + item.id + '">' + item.level + '</option>';
                 }
                 $('#filter_soldier_id').append(html);
             }

@@ -23,4 +23,8 @@ class UserSoldier < ApplicationRecord
       amount: amount
     )
   end
+
+  def state_name
+    I18n.t("models.user_soldier.states.#{state}")
+  end
 end
