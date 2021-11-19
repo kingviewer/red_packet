@@ -2,7 +2,7 @@
   <ol class="breadcrumb float-xl-left">
     <li id="li_nav_level_1" class="breadcrumb-item"><a href="javascript:;" class="">首页</a></li>
     <li id="li_nav_level_2" class="breadcrumb-item"><a href="javascript:;">用户资金</a></li>
-    <li class="breadcrumb-item"><a href="javascript:;">CIC流水</a></li>
+    <li class="breadcrumb-item"><a href="javascript:;">炸弹流水</a></li>
   </ol>
 </div>
 
@@ -16,42 +16,17 @@
       </div>
       <div class="col-2">
         <div class="form-group">
-          <select id="filter_account_type" class="form-control">
-            <option value="-1">全部账户</option>
-            <option value="packet">红包账户</option>
-            <option value="wallet">钱包账户</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-2">
-        <div class="form-group">
-          <select id="filter_asset_type" class="form-control">
-            <option value="-1">全部币种</option>
-            <option value="usdt">USDT</option>
-            <option value="cigar">BOMB</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-2">
-        <div class="form-group">
           <select id="filter_flow_type" class="form-control">
             <option value="-1">全部类型</option>
-            <option value="deposit">充值</option>
-            <option value="withdraw">提现</option>
-            <option value="transfer">划转</option>
-            <option value="win">拆弹成功</option>
-            <option value="lose">拆弹失败</option>
-            <option value="lose_reward">拆弹福利</option>
-            <option value="parent_reward">直推奖励</option>
-            <option value="grand_reward">间推奖励</option>
-            <option value="agent_reward">训练津贴</option>
-            <option value="buy_agent">升级总教官</option>
-            <option value="buy_vip">升级教官</option>
-            <option value="team_new_agent">培训津贴(总)</option>
-            <option value="team_new_vip">培训津贴</option>
-            <option value="vip_init_reward">教官补贴</option>
-            <option value="agent_init_reward">总教官补贴</option>
-            <option value="exchange_cic">兑换BOMB</option>
+            <option value="search">扫雷</option>
+            <option value="disposal">拆弹</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="form-group">
+          <select id="filter_soldier_id" class="form-control">
+            <option value="-1">全部编号</option>
           </select>
         </div>
       </div>
@@ -74,7 +49,7 @@
 
     <div class="row m-t-15">
       <div class="col-12">
-        <table id="table_asset_flows"></table>
+        <table id="table_bomb_flows"></table>
       </div>
     </div>
   </div>
@@ -84,9 +59,9 @@
     let table, page_size = 15;
 
     function init_table() {
-        table = $('#table_asset_flows').bootstrapTable({
+        table = $('#table_bomb_flows').bootstrapTable({
             locale: 'zh-CN',
-            url: '/admin/asset_flows/list_for_table',
+            url: '/admin/bomb_flows/list_for_table',
             method: 'get',
             striped: true,
             cache: false,
@@ -96,18 +71,16 @@
                 params['page'] = params.pageNumber - 1;
                 params['limit'] = params.pageSize;
                 let start_at = $('#filter_start_at').val().trim(), end_at = $('#filter_end_at').val().trim(),
-                    account_type = $('#filter_account_type').val(), flow_type = $('#filter_flow_type').val(),
-                    asset_type = $('#filter_asset_type').val(), keyword = $('#filter_keyword').val().trim();
+                    flow_type = $('#filter_flow_type').val(), keyword = $('#filter_keyword').val().trim(),
+                    soldier_id = $('#filter_soldier_id').val();
                 if (start_at.length > 0)
                     params['start_at'] = start_at;
                 if (end_at.length > 0)
                     params['end_at'] = end_at;
                 if (flow_type !== '-1')
                     params['flow_type'] = flow_type;
-                if (account_type !== '-1')
-                    params['account_type'] = account_type;
-                if (asset_type !== '-1')
-                    params['asset_type'] = asset_type;
+                if (soldier_id !== '-1')
+                    params['soldier_id'] = soldier_id;
                 if (keyword.length > 0)
                     params['keyword'] = keyword;
                 get_statistics(params);
@@ -124,11 +97,9 @@
                 {field: 'id', title: 'ID'},
                 {field: 'invite_code', title: '用户ID'},
                 {field: 'address', title: '地址'},
-                {field: 'account_type_name', title: '账户'},
-                {field: 'flow_type_name', title: '类型'},
-                {field: 'asset_type_name', title: '资产'},
+                {field: 'bomb_no', title: '炸弹编号'},
+                {field: 'flow_type_name', title: '流水类型'},
                 {field: 'amount', title: '数量'},
-                {field: 'tx_hash', title: 'TX Hash'},
                 {field: 'created_at', title: '时间'}
             ]
         });
@@ -136,9 +107,23 @@
 
     function get_statistics(params) {
         Business.get(
-            '/admin/asset_flows/statistics', params,
+            '/admin/bomb_flows/statistics', params,
             function (data) {
                 $('#total_statistics').text('合计:' + data.total);
+            }
+        );
+    }
+
+    function load_bomb_numbers() {
+        Business.get(
+            '/admin/soldiers/bomb_nos', {},
+            function (data) {
+                let html = '';
+                for (let i = 0; i < data.length; i++) {
+                    let item = data[i];
+                    html += '<option value="' + item.id + '">' + item.bomb_no + '</option>';
+                }
+                $('#filter_soldier_id').append(html);
             }
         );
     }
@@ -150,5 +135,6 @@
         });
 
         init_table();
+        load_bomb_numbers();
     });
 </script>

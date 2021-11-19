@@ -147,11 +147,23 @@
             </li>
           </ul>
         </li>
-        <li class="<%= 'active' if params[:controller] == 'admin/asset_flows' and params[:action] == 'index' %>">
-          <a href="/admin/asset_flows/index">
-            <i class="fa fa-list"></i>
-            <span>用户资金明细</span>
+        <li class="has-sub <%= 'active' if %w[admin/asset_flows admin/pliers_flows admin/bomb_flows].include?(params[:controller]) %>">
+          <a href="javascript:;">
+            <b class="caret"></b>
+            <i class="fa fa-money-bill"></i>
+            <span>用户资金</span>
           </a>
+          <ul class="sub-menu">
+            <li class="<%= 'active' if params[:controller] == 'admin/asset_flows' and params[:action] == 'index' %>">
+              <a href="/admin/asset_flows/index">CIC流水</a>
+            </li>
+            <li class="<%= 'active' if params[:controller] == 'admin/pliers_flows' and params[:action] == 'index' %>">
+              <a href="/admin/pliers_flows/index">钳子流水</a>
+            </li>
+            <li class="<%= 'active' if params[:controller] == 'admin/bomb_flows' and params[:action] == 'index' %>">
+              <a href="/admin/bomb_flows/index">炸弹流水</a>
+            </li>
+          </ul>
         </li>
         <li class="has-sub <%= 'active' if %w[admin/articles admin/notices].include?(params[:controller]) %>">
           <a href="javascript:;">

@@ -94,4 +94,15 @@ class Admin::SoldiersController < Admin::BaseController
       success
     end
   end
+
+  def bomb_nos
+    data = []
+    Soldier.find_each do |soldier|
+      data << {
+        id: soldier.id,
+        bomb_no: soldier.bomb_no
+      }
+    end
+    success(data)
+  end
 end

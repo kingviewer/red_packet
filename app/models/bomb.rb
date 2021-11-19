@@ -14,6 +14,12 @@ class Bomb < ApplicationRecord
       flow_type: :disposal,
       amount: -pliers_amount
     )
+    BombFlow.create(
+      user: user,
+      soldier_id: soldier_id,
+      flow_type: :disposal,
+      amount: -count
+    )
 
     # 自己收益
     benefit = soldier.bomb_benefit * count
