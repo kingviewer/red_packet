@@ -35,8 +35,8 @@ zh-CN:
         deposit: 充值
         withdraw: 提现
         transfer: 划转
-        win: 拆弹成功
-        lose: 拆弹失败
+        win: PK成功
+        lose: PK失败
         lose_reward: 拆弹福利
         parent_reward: 直推奖励
         grand_reward: 间推奖励
