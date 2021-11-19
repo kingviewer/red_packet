@@ -12,7 +12,7 @@ class UserSoldiersController < BaseUserController
         amount: us.amount,
         left_duration: us.left_duration,
         contribution: us.soldier.contribution,
-        start_working_at: LZUtils.format_datetime(us.start_working_at),
+        start_working_at: (LZUtils.format_datetime(us.start_working_at) if us.start_working_at),
         left_secs: us.working? ? (us.start_working_at.since(Utils::Constants::SOLDIER_WORKING_TIME.minutes) - Time.now).to_i : 0,
         power: us.soldier.power,
         image: us.soldier.image.service_url,
