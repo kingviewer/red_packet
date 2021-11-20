@@ -26,11 +26,3 @@ class NoticesController < BaseUserController
     )
   end
 end
-{
-  "code": "success",
-  "data": {
-    "id": 1,
-    "title": "公告12",
-    "content": "公告1公告1公告1公告1公告1公告1公告1公告12"
-  }
-}
