@@ -15,6 +15,14 @@ class BombsController < BaseUserController
     success(data)
   end
 
+  def cost_pliers
+    if not (bomb = cur_user.bombs.find_by(id: params[:id]))
+      error(t('bombs.disposal.bomb_not_exist'))
+    else
+      success(cost_pliers: bomb.soldier.bomb_cost_pliers)
+    end
+  end
+
   def disposal
     amount = params[:amount].to_i
     if amount <= 0
