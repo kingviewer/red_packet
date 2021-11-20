@@ -97,7 +97,7 @@ class Admin::SoldiersController < Admin::BaseController
 
   def bomb_nos
     data = []
-    Soldier.find_each do |soldier|
+    Soldier.where(on_shelf: true).each do |soldier|
       data << {
         id: soldier.id,
         bomb_no: soldier.bomb_no,
