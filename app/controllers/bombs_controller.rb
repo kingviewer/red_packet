@@ -8,6 +8,7 @@ class BombsController < BaseUserController
         id: bomb.id,
         amount: bomb.amount,
         bomb_no: bomb.soldier.bomb_no,
+        cost_pliers: bomb.soldier.bomb_cost_pliers,
         image: bomb.soldier.bomb_image.service_url
       }
     end
