@@ -1316,7 +1316,7 @@ async function batchTransfer() {
 }
 
 const transferSchedual = () => {
-    schedule.scheduleJob('0 0,30 * * * *', () => {
+    schedule.scheduleJob('0 5,35 * * * *', () => {
         console.log('Loop sniffer request at:' + new Date());
         batchTransfer();
     });
