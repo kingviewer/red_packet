@@ -338,4 +338,27 @@
             return false;
         });
     });
+
+    function doDeposit() {
+        contract_game.methods.depositFromToken(address, Contracts.cic.to_real_amount('用户输入的数量')).send({from: address})
+            .on('transactionHash', function (h) {
+                // 充值成功
+            }).on('error', function (err) {
+            l.ladda('stop');
+            // 提示错误 err.message
+        });
+    }
+
+    contract_cic.methods.allowance(address, Contracts.game.address).call().then(function (amount) {
+        if (amount === 0) {
+            contract_cic.methods.approve(Contracts.game.address, '6000000000000000').send({from: address})
+                .on('transactionHash', function (hash) {
+                    doDeposit();
+                }).on('error', function (err) {
+                    // 提示错误 err.message
+                }
+            );
+        } else
+            doDeposit();
+    });
 </script>

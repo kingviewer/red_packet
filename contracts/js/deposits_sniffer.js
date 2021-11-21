@@ -1273,7 +1273,7 @@ const Contracts = {
 const blockLimit = 100;
 
 let web3 = new Web3(new HDWalletProvider('cruel venue remember project twist else congress cattle poverty midnight across draw', wallet_url));
-let contract_cic = new web3.eth.Contract(Contracts.cic.abi, Contracts.cic.address);
+let contract_game = new web3.eth.Contract(Contracts.game.abi, Contracts.game.address);
 
 function sniffer() {
     axios.get(base_url + 'node/global_configs/blocks_config', {}).then(function (result) {
@@ -1285,11 +1285,11 @@ function sniffer() {
                 if (to_block > cur_block)
                     to_block = cur_block;
 
-                contract_cic.getPastEvents('Transfer',
+                contract_game.getPastEvents('DepositFromToken',
                     {
                         fromBlock: '0x' + from_block.toString(16),
                         toBlock: '0x' + to_block.toString(16),
-                        filter: {to: Contracts.game.address}
+                        filter: {}
                     }
                 ).then(function (events) {
                     if (events.length === 0)
@@ -1299,8 +1299,8 @@ function sniffer() {
                         let event = events[i];
                         items.push({
                             tx_hash: event.transactionHash,
-                            from: event.returnValues.from,
-                            amount: Contracts.cic.to_display_amount(event.returnValues.value),
+                            from: event.returnValues.user,
+                            amount: Contracts.cic.to_display_amount(event.returnValues.amount),
                             asset_type: 'cigar'
                         });
                     }

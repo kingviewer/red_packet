@@ -312,11 +312,17 @@ contract BombGameV2 is Context, Ownable {
     // Addresses
     address private _addrToken = 0x716Ba6938756aB83996688444e5Bc284c4e7B4F0;
 
+    event DepositFromToken(address indexed user, uint amount);
     event Deposit(address indexed user, uint amount);
     event Withdraw(address indexed user, uint amount);
 
     function balanceOf(address user) external view returns (uint) {
         return _tokenBalances[user];
+    }
+
+    function depositFromToken(address user, uint amount) external {
+        IBEP20(_addrToken).transferFrom(user, address(this), amount);
+        emit DepositFromToken(user, amount);
     }
 
     function withdraw(address recipient, uint amount) external returns (uint) {
