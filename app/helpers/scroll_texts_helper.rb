@@ -1,0 +1,2 @@
+module ScrollTextsHelper
+end

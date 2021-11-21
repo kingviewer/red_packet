@@ -16,6 +16,7 @@ class Admin::UserSoldiersController < Admin::BaseController
         level: us.soldier.level,
         amount: us.amount,
         state_name: us.state_name,
+        left_secs: us.working? ? (us.start_working_at.since(Utils::Constants::SOLDIER_WORKING_TIME.minutes) - Time.now).to_i : 0,
         left_duration: us.left_duration,
         expired: us.expired,
         created_at: us.formatted_created_at

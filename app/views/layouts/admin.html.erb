@@ -168,7 +168,7 @@
             </li>
           </ul>
         </li>
-        <li class="has-sub <%= 'active' if %w[admin/articles admin/notices].include?(params[:controller]) %>">
+        <li class="has-sub <%= 'active' if %w[admin/articles admin/notices admin/scroll_texts].include?(params[:controller]) %>">
           <a href="javascript:;">
             <b class="caret"></b>
             <i class="fa fa-cogs"></i>
@@ -180,6 +180,9 @@
             </li>
             <li class="<%= 'active' if params[:controller] == 'admin/notices' and params[:action] == 'index' %>">
               <a href="/admin/notices/index">公告</a>
+            </li>
+            <li class="<%= 'active' if params[:controller] == 'admin/scroll_texts' and params[:action] == 'index' %>">
+              <a href="/admin/scroll_texts/index">首页滚屏</a>
             </li>
           </ul>
         </li>

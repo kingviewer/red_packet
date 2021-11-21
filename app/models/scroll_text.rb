@@ -1,0 +1,2 @@
+class ScrollText < ApplicationRecord
+end

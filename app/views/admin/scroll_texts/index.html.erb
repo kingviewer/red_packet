@@ -1,0 +1,73 @@
+<div class="flex justify-between m-b-15">
+  <ol class="breadcrumb float-xl-left">
+    <li id="li_nav_level_1" class="breadcrumb-item"><a href="javascript:;" class="">首页</a></li>
+    <li id="li_nav_level_2" class="breadcrumb-item"><a href="javascript:;">设置</a></li>
+    <li class="breadcrumb-item"><a href="javascript:;">首页滚屏</a></li>
+  </ol>
+</div>
+
+<div class="panel panel-inverse">
+  <div class="panel-body">
+    <h5>中文</h5>
+    <div class="form-group">
+      <label>内容 <span class="text-danger">*</span></label>
+      <textarea id="content_zh" class="form-control" rows="20" type="text"><%= @scroll_text_cn&.content %></textarea>
+    </div>
+    <div class="form-group">
+      <button id="btn_zh" onclick="save_cn()" type="button" class="btn ladda-button btn-primary pull-right" data-style="zoom-in">确定</button>
+    </div>
+    <br>
+    <br>
+    <br>
+    <h5>英文</h5>
+    <div class="form-group">
+      <label>内容 <span class="text-danger">*</span></label>
+      <textarea id="content_en" class="form-control" rows="20" type="text" required><%= @scroll_text_en&.content %></textarea>
+    </div>
+    <div class="form-group">
+      <button id="btn_en" onclick="save_en()" type="button" class="btn btn-primary ladda-button pull-right" data-style="zoom-in">确定</button>
+    </div>
+  </div>
+</div>
+
+<script>
+    function save_cn() {
+        let content = $('#content_zh').val().trim();
+        if (content.length === 0) {
+            swal('提示', '请输入内容', 'info');
+            return;
+        }
+        let l = $('#btn_zh').ladda();
+        l.ladda('start');
+        Business.post(
+            '/admin/scroll_texts/set_zh', {content: content},
+            function () {
+                l.ladda('stop');
+                swal('成功', '更新成功', 'success');
+            }, function (err) {
+                l.ladda('stop');
+                swal('错误', err.msg, 'error');
+            }
+        );
+    }
+
+    function save_en() {
+        let content = $('#content_en').val().trim();
+        if (content.length === 0) {
+            swal('提示', '请输入内容', 'info');
+            return;
+        }
+        let l = $('#btn_en').ladda();
+        l.ladda('start');
+        Business.post(
+            '/admin/scroll_texts/set_en', {content: content},
+            function () {
+                l.ladda('stop');
+                swal('成功', '更新成功', 'success');
+            }, function (err) {
+                l.ladda('stop');
+                swal('错误', err.msg, 'error');
+            }
+        );
+    }
+</script>
