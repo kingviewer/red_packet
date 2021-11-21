@@ -106,7 +106,7 @@ class GamesController < BaseUserController
         player_amount: game.player_amount,
         loser_amount: game.loser_amount,
         usdt_amount: LZUtils.format_coin(game.usdt_amount),
-        person_number: "#{game.waiter_amount}/#{game.player_amount} #{t('user_game_rounds.index.person_number')}",
+        person_number: "#{game.waiter_amount}/#{game.player_amount}",
         progress: "#{(game.waiter_amount * 100 / game.player_amount).to_i}%",
         i_joined: !cur_user.nil? && GameWaiter.where(game_id: game.id, user_id: cur_user.id).exists?
       )
