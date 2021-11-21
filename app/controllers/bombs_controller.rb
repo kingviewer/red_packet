@@ -36,6 +36,8 @@ class BombsController < BaseUserController
           success
         end
       rescue => e
+        Rails.logger.error(e.message)
+        Rails.logger.error(e.backtrace)
         error(e.message)
       end
     end
