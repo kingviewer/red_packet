@@ -78,7 +78,7 @@ class GameRoomsController < BaseUserController
   def search
     if not (game_room = GameRoom.playing.find_by(id: params[:id].to_i, password: params[:password]))
       error(t('.room_not_exist'))
-    elsif cur_user.packet_usdt_available < game_room.min_usdt_amount
+    elsif cur_user.candy_available < game_room.min_usdt_amount
       error(t('.join.cic_available_insufficient'))
     else
       success(id: game_room.id)
