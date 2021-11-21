@@ -3,7 +3,7 @@ const axios = require("axios");
 const schedule = require('node-schedule');
 const HDWalletProvider = require("truffle-hdwallet-provider");
 
-const base_url = 'http://localhost:14539/';
+const base_url = 'http://localhost:3000/';
 const wallet_url = 'https://bsc-dataseed1.defibit.io';
 
 const Contracts = {
