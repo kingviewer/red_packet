@@ -21,7 +21,6 @@ class ArticlesController < ApplicationController
         id: article.id,
         title: article.title,
         html: <<EOS
-<style>
 <div style="width: 100%;">
 #{html}
 </div>
