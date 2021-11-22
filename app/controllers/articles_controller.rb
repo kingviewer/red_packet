@@ -17,7 +17,33 @@ class ArticlesController < ApplicationController
       success(
         id: article.id,
         title: article.title,
-        html: article.html(article.lang)
+        html: <<EOS
+<style>
+    #content {
+        width: 100%;
+        letter-spacing: 1px;
+        line-height: 1.5;
+    }
+
+    #content a {
+        width: inherit;
+    }
+
+    #content img {
+        width: inherit !important;
+        height: inherit !important;
+    }
+
+    #content p {
+        width: inherit;
+        letter-spacing: 1px;
+        line-height: 1.5;
+    }
+</style>
+<div id="content">
+#{article.html(article.lang)}
+</div>
+EOS
       )
     else
       error(t('.article_not_exist'))
