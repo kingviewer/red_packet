@@ -14,34 +14,16 @@ class ArticlesController < ApplicationController
 
   def detail
     if (article = Article.find_by(id: params[:id]))
+      html = article.html(article.lang).gsub('<p', '<p style="width: inherit; letter-spacing: 1px; line-height: 1.5;" ')
+                    .gsub('<a', '<a style="width: inherit !important; height: inherit !important;" ')
+                    .gsub('<img', '<img style="width: inherit !important;height: inherit !important;" ')
       success(
         id: article.id,
         title: article.title,
         html: <<EOS
 <style>
-    #content {
-        width: 100%;
-        letter-spacing: 1px;
-        line-height: 1.5;
-    }
-
-    #content a {
-        width: inherit;
-    }
-
-    #content img {
-        width: inherit !important;
-        height: inherit !important;
-    }
-
-    #content p {
-        width: inherit;
-        letter-spacing: 1px;
-        line-height: 1.5;
-    }
-</style>
-<div id="content">
-#{article.html(article.lang)}
+<div style="width: 100%;">
+#{html}
 </div>
 EOS
       )
