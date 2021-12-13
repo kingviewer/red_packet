@@ -53,7 +53,7 @@ class Admin::SoldiersController < Admin::BaseController
         soldier.set_level(params[:soldier][:level], 'zh-CN')
         success
       else
-        error(miner.errors.full_messages[0])
+        error(soldier.errors.full_messages[0])
       end
     end
   end

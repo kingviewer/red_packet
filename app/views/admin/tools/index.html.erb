@@ -1,0 +1,340 @@
+<div class="flex justify-between m-b-15">
+  <ol class="breadcrumb float-xl-left">
+    <li id="li_nav_level_1" class="breadcrumb-item"><a href="javascript:;" class="">首页</a></li>
+    <li id="li_nav_level_2" class="breadcrumb-item"><a href="javascript:;">道具设置</a></li>
+  </ol>
+</div>
+
+<div class="panel panel-inverse">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-12">
+        <button class="btn btn-sm btn-primary pull-right" onclick="add_tool()"><i class="fa fa-plus"></i> 新增</button>
+      </div>
+    </div>
+    <div class="row m-t-15">
+      <div class="col-12">
+        <table id="table_tools"></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_new" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title">新增道具</h4>
+      </div>
+      <form id="form_new">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>名称(简体中文) <span class="text-danger">*</span></label>
+            <input name="tool[name]" class="form-control" type="text" required>
+          </div>
+          <div class="form-group">
+            <label>价格(GTF) <span class="text-danger">*</span></label>
+            <input name="tool[price]" class="form-control" type="number" min="1" required>
+          </div>
+          <div class="form-group">
+            <label>收益增加倍数 <span class="text-danger">*</span></label>
+            <input name="tool[increase_times]" class="form-control" type="number" min="1" required>
+          </div>
+          <div class="form-group">
+            <label>图片 <span class="text-danger">*</span></label>
+            <input name="tool[image]" type="file" class="form-control" accept="image/gif, image/png" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="submit" class="ladda-button btn btn-success" data-style="zoom-in">确定</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title">编辑道具</h4>
+      </div>
+      <form id="form_edit">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="hidden" name="id">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>名称(简体中文) <span class="text-danger">*</span></label>
+            <input name="tool[name]" class="form-control" type="text" required>
+          </div>
+          <div class="form-group">
+            <label>价格(GTF) <span class="text-danger">*</span></label>
+            <input name="tool[price]" class="form-control" type="number" min="1" required>
+          </div>
+          <div class="form-group">
+            <label>收益增加倍数 <span class="text-danger">*</span></label>
+            <input name="tool[increase_times]" class="form-control" type="number" min="1" required>
+          </div>
+          <div class="form-group">
+            <label>图片</label>
+            <input name="tool[image]" type="file" class="form-control" accept="image/gif, image/png">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="submit" class="ladda-button btn btn-success" data-style="zoom-in">确定</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal_edit_lang" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title">多语</h4>
+      </div>
+      <form id="form_edit_lang">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="hidden" name="id">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>语言</label>
+            <select name="lang" class="form-control" required onchange="get_localize_info()"></select>
+          </div>
+          <div class="form-group">
+            <label>名称</label>
+            <input name="tool[name]" class="form-control" type="text" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="submit" class="ladda-button btn btn-success" data-style="zoom-in">确定</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    let table, page_size = 15;
+
+    function init_table() {
+        table = $('#table_tools').bootstrapTable({
+            locale: 'zh-CN',
+            url: '/admin/tools/list_for_table',
+            method: 'get',
+            striped: true,
+            cache: false,
+            pagination: true,
+            contentType: "application/x-www-form-urlencoded",
+            queryParams: function (params) {
+                params['page'] = params.pageNumber - 1;
+                params['limit'] = params.pageSize;
+                return params;
+            },
+            sidePagination: "server",
+            pageNumber: 1,
+            queryParamsType: "pageNumber",
+            pageSize: page_size,
+            strictSearch: true,
+            clickToSelect: true,
+            uniqueId: "id",
+            columns: [
+                {field: 'id', title: 'ID'},
+                {field: 'name', title: '名称'},
+                {field: 'price', title: '价格'},
+                {field: 'increase_times', title: '收益提升倍数'},
+                {
+                    field: 'on_shelf', title: '状态', formatter: function (on_shelf) {
+                        return on_shelf ? '<span class="text-primary">已上架</span>' : '<span class="text-danger">已下架</span>';
+                    }
+                },
+                {
+                    field: 'image', title: '图片', formatter: function (image) {
+                        return '<img src="' + image + '" style="width: 100px; height: 100px;">';
+                    }
+                },
+                {
+                    field: 'id', title: '操作', formatter: function (id, row) {
+                        let actions = ['<a href="javascript:edit(' + id + ')" title="编辑">编辑</a>',
+                            '<a href="javascript:edit_lang(' + id + ')" title="多语">多语</a>'];
+                        if (row.on_shelf)
+                            actions.push('<a href="javascript:set_off_shelf(' + id + ')" title="下架">下架</a>');
+                        else
+                            actions.push('<a href="javascript:set_on_shelf(' + id + ')" title="上架">上架</a>');
+                        return actions.join(' ');
+                    }
+                }
+            ]
+        });
+    }
+
+    function add_tool() {
+        $('#form_new')[0].reset();
+        $('#modal_new').modal();
+    }
+
+    function edit(id) {
+        $('#form_edit')[0].reset();
+        let row = table.bootstrapTable('getRowByUniqueId', id);
+        $('#form_edit input[name="id"]').val(id);
+        $('#form_edit input[name="tool[name]"]').val(row.name);
+        $('#form_edit input[name="tool[price]"]').val(row.price);
+        $('#form_edit input[name="tool[increase_times]"]').val(row.increase_times);
+        $('#modal_edit').modal('show');
+    }
+
+    function load_languages() {
+        Business.get('/admin/global_configs/languages', {}, function (data) {
+            let ele = $('#form_edit_lang select[name="lang"]');
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
+                ele.append('<option value="' + item.lang + '">' + item.name + '</option>');
+            }
+        });
+    }
+
+    function edit_lang(id) {
+        $('#form_edit_lang')[0].reset();
+        $('#form_edit_lang input[name="id"]').val(id);
+        get_localize_info();
+    }
+
+    function get_localize_info() {
+        $('#modal_edit_lang').modal('show');
+        let id = $('#form_edit_lang input[name="id"]').val(),
+            lang = $('#form_edit_lang select[name="lang"]').val();
+        Business.get('/admin/tools/localize_info', {id: id, lang: lang}, function (data) {
+            $('#form_edit_lang input[name="tool[name]"]').val(data.name);
+        });
+    }
+
+    function set_on_shelf(id) {
+        swal({
+            title: '确认操作',
+            text: '确认上架？',
+            icon: 'info',
+            buttons: {
+                cancel: {
+                    text: '取消',
+                    value: null,
+                    visible: true,
+                    className: 'btn btn-default',
+                    closeModal: true,
+                },
+                confirm: {
+                    text: '确认',
+                    value: true,
+                    visible: true,
+                    className: 'btn btn-primary',
+                    closeModal: true
+                }
+            }
+        }).then((confirmed) => {
+            if (confirmed) {
+                Business.post("/admin/tools/set_on_shelf", {
+                        id: id,
+                        authenticity_token: '<%= form_authenticity_token %>'
+                    },
+                    function () {
+                        table.bootstrapTable('refresh');
+                    }
+                );
+            }
+        });
+    }
+
+    function set_off_shelf(id) {
+        swal({
+            title: '确认操作',
+            text: '确认下架？',
+            icon: 'info',
+            buttons: {
+                cancel: {
+                    text: '取消',
+                    value: null,
+                    visible: true,
+                    className: 'btn btn-default',
+                    closeModal: true,
+                },
+                confirm: {
+                    text: '确认',
+                    value: true,
+                    visible: true,
+                    className: 'btn btn-primary',
+                    closeModal: true
+                }
+            }
+        }).then((confirmed) => {
+            if (confirmed) {
+                Business.post("/admin/tools/set_off_shelf", {
+                        id: id,
+                        authenticity_token: '<%= form_authenticity_token %>'
+                    },
+                    function () {
+                        table.bootstrapTable('refresh');
+                    }
+                );
+            }
+        });
+    }
+
+    $(function () {
+        init_table();
+        load_languages();
+
+        $('#form_new').submit(function () {
+            let l = $('#form_new button[type="submit"]').ladda();
+            l.ladda('start');
+            Business.upload_files('/admin/tools/create', 'form_new', function () {
+                    l.ladda('stop');
+                    $('#modal_new').modal('hide');
+                    table.bootstrapTable('refresh');
+                }, function (data) {
+                    l.ladda('stop');
+                    swal('错误', data.msg, 'error');
+                }
+            );
+
+            return false;
+        });
+
+        $('#form_edit').submit(function () {
+            let l = $('#form_edit button[type="submit"]').ladda();
+            l.ladda('start');
+            Business.upload_files('/admin/tools/update', 'form_edit', function () {
+                    l.ladda('stop');
+                    $('#modal_edit').modal('hide');
+                    table.bootstrapTable('refresh');
+                }, function (data) {
+                    l.ladda('stop');
+                    swal('错误', data.msg, 'error');
+                }
+            );
+
+            return false;
+        });
+
+        $('#form_edit_lang').submit(function () {
+            let l = $('#form_edit_lang button[type="submit"]').ladda();
+            l.ladda('start');
+            Business.submit_form(
+                '/admin/tools/set_localize', 'form_edit_lang',
+                function () {
+                    l.ladda('stop');
+                    table.bootstrapTable('refresh');
+                    $('#modal_edit_lang').modal('hide');
+                }, function (data) {
+                    l.ladda('stop');
+                    swal('错误', data.msg, 'error');
+                }
+            );
+
+            return false;
+        });
+    });
+</script>

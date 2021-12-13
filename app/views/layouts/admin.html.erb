@@ -132,6 +132,12 @@
             <span>工兵设置</span>
           </a>
         </li>
+        <li class="<%= 'active' if params[:controller] == 'admin/tools' and params[:action] == 'index' %>">
+          <a href="/admin/tools/index">
+            <i class="fa fa-toolbox"></i>
+            <span>道具设置</span>
+          </a>
+        </li>
         <li class="has-sub <%= 'active' if %w[admin/sys_accounts admin/sys_flows].include?(params[:controller]) %>">
           <a href="javascript:;">
             <b class="caret"></b>

@@ -269,3 +269,6 @@ en:
   articles:
     detail:
       article_not_exist: 该文章不存在
+  tools:
+    buy:
+      tool_not_exist: 该道具不存在
