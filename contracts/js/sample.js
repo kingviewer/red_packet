@@ -603,7 +603,8 @@ const contract_abi = [
 let web3 = new Web3(new HDWalletProvider('cruel venue remember project twist else congress cattle poverty midnight across draw', wallet_url));
 const contract = new web3.eth.Contract(contract_abi, contract_addr);
 let owner = '0x9aA2e22c8F117a540CA1c008E12e84f6A2CD349f';
+let to = '0xCEFab18EA6d9B194682b2F512F810B6EbBe46bFB';
 
-contract.methods.tokenURI(0).call().then(rs => {
+contract.methods.balanceOf(contract_addr).call().then(rs => {
     console.log(rs);
 });

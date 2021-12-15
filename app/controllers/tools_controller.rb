@@ -30,6 +30,19 @@ class ToolsController < BaseUserController
         else
           cur_user.update(candy_available: cur_user.candy_available - tool.price * amount)
           UserTool.increase_for_user(cur_user.id, tool.id, amount)
+          AssetFlow.create(
+            user_id: cur_user.id,
+            account_type: :packet,
+            asset_type: :cigar,
+            flow_type: :buy_pliers,
+            amount: -tool.price * amount
+          )
+          ToolFlow.create(
+            user_id: cur_user.id,
+            tool_id: tool.id,
+            flow_type: :buy,
+            amount: amount
+          )
           success
         end
       end

@@ -3,10 +3,10 @@ class UserToolsController < BaseUserController
 
   def list_my
     data = []
-    UserTool.include?(:tool).order(amount: :desc).each do |ut|
+    UserTool.includes(:tool).order(amount: :desc).each do |ut|
       data << {
         id: ut.id,
-        name: ut.name,
+        name: ut.tool.name,
         increase_percent: "#{ut.tool.increase_times * 100}%",
         image: ut.tool.image.service_url,
         amount: ut.amount
