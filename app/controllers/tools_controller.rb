@@ -43,6 +43,12 @@ class ToolsController < BaseUserController
             flow_type: :buy,
             amount: amount
           )
+          ToolOrder.create(
+            user_id: cur_user.id,
+            tool_id: tool.id,
+            price: tool.price,
+            amount: amount
+          )
           success
         end
       end

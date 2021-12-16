@@ -3,7 +3,7 @@ class UserToolsController < BaseUserController
 
   def list_my
     data = []
-    UserTool.includes(:tool).order(amount: :desc).each do |ut|
+    UserTool.available.includes(:tool).order(amount: :desc).each do |ut|
       data << {
         id: ut.id,
         name: ut.tool.name,

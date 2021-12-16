@@ -4,6 +4,7 @@ class CreateUserTools < ActiveRecord::Migration[6.1]
       t.references :user, null: false, index: true, comment: '用户ID'
       t.references :tool, null: false, index: true, comment: '道具ID'
       t.integer :amount, null: false, default: 0, index: true, comment: '数量'
+      t.integer :state, null: false, default: 0, index: true, comment: '状态'
 
       t.timestamps
     end

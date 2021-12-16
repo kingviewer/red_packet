@@ -1,4 +1,6 @@
 class UserTool < ApplicationRecord
+  enum state: [:available, :using, :used]
+
   belongs_to :user
   belongs_to :tool
 

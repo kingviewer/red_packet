@@ -258,7 +258,8 @@ zh-CN:
   user_soldiers:
     start_working:
       soldier_already_working: 该工兵已经在工作啦
-      today_has_worked: 该工兵今天已经工作过啦
+      today_has_worked: 该工兵今天工作次数已达最大
+      tool_not_exist: 道具不存在
   bombs:
     disposal:
       bomb_not_exist: 该炸弹不存在

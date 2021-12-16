@@ -23,16 +23,23 @@ class UserSoldiersController < BaseUserController
   end
 
   def start_working
+    ut = nil
     if not (us = UserSoldier.find_by(id: params[:id], user_id: cur_user.id, expired: false))
       error(t('soldiers.buy.soldier_not_exist'))
-    elsif us.start_working_at && us.start_working_at >= Time.now.beginning_of_day
+    elsif WorkingRecord.where(user_soldier_id: us.id).where(['created_at >= ?', Time.now.beginning_of_day]).count >= us.soldier.day_working_times
       error(t('.today_has_worked'))
+    elsif params[:user_tool_id] && !(ut = UserTool.available.find_by(id: params[:user_tool_id], user_id: cur_user.id))
+      error(t('.tool_not_exist'))
     else
       us.with_lock do
         if us.working?
           error(t('.soldier_already_working'))
+        elsif WorkingRecord.where(user_soldier_id: us.id).where(['created_at >= ?', Time.now.beginning_of_day]).count >= us.soldier.day_working_times
+          error(t('.today_has_worked'))
         else
           us.update(start_working_at: Time.now, state: :working)
+          WorkingRecord.create(user_soldier_id: us.id, tool_id: ut&.id)
+          ut&.using
           success
         end
       end

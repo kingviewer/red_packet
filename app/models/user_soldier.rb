@@ -10,17 +10,21 @@ class UserSoldier < ApplicationRecord
         user: user,
         soldier: soldier
       )
-    Bomb.where(id: bomb.id).update_all(['amount = amount + ?', amount])
-    if left_duration - 1 <= 0
-      update(state: :free, expired: true, left_duration: 0)
-    else
-      update(state: :free, left_duration: left_duration - 1)
-    end
+    working_record = WorkingRecord.working.where(user_soldier_id: id).last
+    _amount =
+      if working_record.user_tool_id && working_record.user_tool&.using
+        working_record.user_tool.used
+        amount * (1 + working_record.user_tool.tool.increase_times)
+      else
+        amount
+      end
+    Bomb.where(id: bomb.id).update_all(['amount = amount + ?', _amount])
+    free!
     BombFlow.create(
       user: user,
       soldier: soldier,
       flow_type: :search,
-      amount: amount
+      amount: _amount
     )
   end
 
