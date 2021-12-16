@@ -106,7 +106,7 @@ class UsersController < BaseUserController
         created_at: child.formatted_created_at
       }
     end
-    success(data)
+    success(total: cur_user.children.count, items: data)
   end
 
   def become_agent
