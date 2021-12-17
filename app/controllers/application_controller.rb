@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   def switch_locale(&action)
     lang = params[:lang] || params[:language] || cookies[:lang] || :en
-    lang = 'zh-CN' if lang.downcase =~ /^zh/
+    lang = 'zh-CN' if lang =~ /zh/i
     I18n.with_locale(lang, &action)
   end
 
