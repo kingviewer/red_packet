@@ -38,7 +38,7 @@ class UserSoldiersController < BaseUserController
           error(t('.today_has_worked'))
         else
           us.update(start_working_at: Time.now, state: :working)
-          WorkingRecord.create(user_soldier_id: us.id, user_tool: ut&.id)
+          WorkingRecord.create(user_soldier_id: us.id, user_tool_id: ut&.id)
           ut&.using
           success
         end
