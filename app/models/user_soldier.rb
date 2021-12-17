@@ -10,27 +10,28 @@ class UserSoldier < ApplicationRecord
         user: user,
         soldier: soldier
       )
-    working_record = WorkingRecord.working.where(user_soldier_id: id).last
-    _amount =
-      if working_record.user_tool_id && working_record.user_tool&.using
-        working_record.user_tool.used
-        amount * (1 + working_record.user_tool.tool.increase_times)
+    if (working_record = WorkingRecord.working.where(user_soldier_id: id).last)
+      _amount =
+        if working_record.user_tool_id && working_record.user_tool&.using
+          working_record.user_tool.used
+          amount * (1 + working_record.user_tool.tool.increase_times)
+        else
+          amount
+        end
+      working_record.finished!
+      Bomb.where(id: bomb.id).update_all(['amount = amount + ?', _amount])
+      if WorkingRecord.where(user_soldier_id: id).finished.count >= soldier.max_working_times
+        update(state: :free, expired: true, left_duration: 0)
       else
-        amount
+        update(state: :free, left_duration: left_duration - 1)
       end
-    working_record.finished!
-    Bomb.where(id: bomb.id).update_all(['amount = amount + ?', _amount])
-    if WorkingRecord.where(user_soldier_id: id).finished.count >= soldier.max_working_times
-      update(state: :free, expired: true, left_duration: 0)
-    else
-      update(state: :free, left_duration: left_duration - 1)
+      BombFlow.create(
+        user: user,
+        soldier: soldier,
+        flow_type: :search,
+        amount: _amount
+      )
     end
-    BombFlow.create(
-      user: user,
-      soldier: soldier,
-      flow_type: :search,
-      amount: _amount
-    )
   end
 
   def state_name
