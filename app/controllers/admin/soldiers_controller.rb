@@ -24,7 +24,9 @@ class Admin::SoldiersController < Admin::BaseController
         bomb_cost_pliers: item.bomb_cost_pliers,
         on_shelf: item.on_shelf,
         image: item.image.service_url,
-        bomb_image: item.bomb_image.service_url
+        bomb_image: item.bomb_image.service_url,
+        working_duration: item.working_duration,
+        day_working_times: item.day_working_times
       }
     end
     ok(total: Soldier.count, rows: data)
@@ -33,7 +35,7 @@ class Admin::SoldiersController < Admin::BaseController
   def create
     soldier = Soldier.new(params.require(:soldier).
       permit(:price, :duration, :max_employ_amount, :contribution, :power, :image, :bomb_image,
-             :bomb_no, :bomb_cost, :bomb_benefit, :bomb_cost_pliers))
+             :bomb_no, :bomb_cost, :bomb_benefit, :bomb_cost_pliers, :day_working_times, :working_duration))
     if soldier.save
       soldier.set_level(params[:soldier][:level], 'zh-CN')
       success

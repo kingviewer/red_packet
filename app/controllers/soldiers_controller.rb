@@ -33,7 +33,7 @@ class SoldiersController < BaseUserController
           UserSoldier.create(
             user: cur_user,
             soldier: soldier,
-            left_duration: soldier.duration,
+            left_duration: soldier.duration * soldier.day_working_times,
             amount: amount
           )
           AssetFlow.create(

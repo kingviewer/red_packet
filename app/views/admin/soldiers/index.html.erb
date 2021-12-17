@@ -70,6 +70,14 @@
             <input name="soldier[contribution]" class="form-control" type="number" min="0" required>
           </div>
           <div class="form-group">
+            <label>每日派出次数 <span class="text-danger">*</span></label>
+            <input name="soldier[day_working_times]" class="form-control" type="number" min="1" required>
+          </div>
+          <div class="form-group">
+            <label>每次派出工作时间(分钟) <span class="text-danger">*</span></label>
+            <input name="soldier[working_duration]" class="form-control" type="number" min="1" required>
+          </div>
+          <div class="form-group">
             <label>工兵图片(375X330) <span class="text-danger">*</span></label>
             <input name="soldier[image]" type="file" class="form-control" accept="image/gif, image/png" required>
           </div>
@@ -136,6 +144,14 @@
           <div class="form-group">
             <label>贡献 <span class="text-danger">*</span></label>
             <input name="soldier[contribution]" class="form-control" type="number" min="0" required>
+          </div>
+          <div class="form-group">
+            <label>每日派出次数 <span class="text-danger">*</span></label>
+            <input name="soldier[day_working_times]" class="form-control" type="number" min="1" required>
+          </div>
+          <div class="form-group">
+            <label>每次派出工作时间(分钟) <span class="text-danger">*</span></label>
+            <input name="soldier[working_duration]" class="form-control" type="number" min="1" required>
           </div>
           <div class="form-group">
             <label>工兵图片(375X330)</label>
@@ -217,6 +233,8 @@
                 {field: 'power', title: '战力'},
                 {field: 'bomb_cost_pliers', title: '雷耗钳'},
                 {field: 'duration', title: '雇佣周期(天)'},
+                {field: 'day_working_times', title: '工作次数/天'},
+                {field: 'working_duration', title: '工作时长(分钟)'},
                 {field: 'max_employ_amount', title: '单用户最多雇佣'},
                 {field: 'contribution', title: '贡献'},
                 {
@@ -268,6 +286,8 @@
         $('#form_edit input[name="soldier[duration]"]').val(row.duration);
         $('#form_edit input[name="soldier[max_employ_amount]"]').val(row.max_employ_amount);
         $('#form_edit input[name="soldier[contribution]"]').val(row.contribution);
+        $('#form_edit input[name="soldier[day_working_times]"]').val(row.day_working_times);
+        $('#form_edit input[name="soldier[working_duration]"]').val(row.working_duration);
         $('#modal_edit').modal('show');
     }
 

@@ -18,8 +18,13 @@ class UserSoldier < ApplicationRecord
       else
         amount
       end
+    working_record.finished!
     Bomb.where(id: bomb.id).update_all(['amount = amount + ?', _amount])
-    free!
+    if WorkingRecord.where(user_soldier_id: id).finished.count >= soldier.max_working_times
+      update(state: :free, expired: true, left_duration: 0)
+    else
+      update(state: :free, left_duration: left_duration - 1)
+    end
     BombFlow.create(
       user: user,
       soldier: soldier,
