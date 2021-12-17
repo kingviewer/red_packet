@@ -13,8 +13,9 @@ class AssetFlowsController < BaseUserController
 
   def list_my
     data = []
-    AssetFlow.where(user_id: cur_user.id, asset_type: :cigar, account_type: params[:account_type])
-             .order(id: :desc).limit(params[:limit].to_i).offset(params[:limit].to_i * params[:page].to_i).each do |flow|
+    relation = AssetFlow.where(user_id: cur_user.id, asset_type: :cigar, account_type: params[:account_type])
+    relation.order(id: :desc).limit(params[:limit].to_i).
+      offset(params[:limit].to_i * (params[:page].to_i - 1)).each do |flow|
       data << {
         id: flow.id,
         flow_type: flow.flow_type,
@@ -23,6 +24,6 @@ class AssetFlowsController < BaseUserController
         created_at: flow.formatted_created_at
       }
     end
-    success(data)
+    success(total: relation.count, items: data)
   end
 end
