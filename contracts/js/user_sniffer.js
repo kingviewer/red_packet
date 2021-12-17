@@ -1866,9 +1866,9 @@ const snifferSchedual = () => {
     });
 };
 
-// snifferSchedual();
+snifferSchedual();
 
-let contract_cic = new web3.eth.Contract(Contracts.cic.abi, Contracts.cic.address);
-contract_cic.methods.allowance('0x9aA2e22c8F117a540CA1c008E12e84f6A2CD349f', Contracts.game.address).call().then(allow => {
-    console.log(allow);
-});
+// let contract_cic = new web3.eth.Contract(Contracts.cic.abi, Contracts.cic.address);
+// contract_cic.methods.allowance('0x9aA2e22c8F117a540CA1c008E12e84f6A2CD349f', Contracts.game.address).call().then(allow => {
+//     console.log(allow);
+// });
