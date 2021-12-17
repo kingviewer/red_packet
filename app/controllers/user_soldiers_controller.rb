@@ -39,7 +39,7 @@ class UserSoldiersController < BaseUserController
         else
           us.update(start_working_at: Time.now, state: :working)
           WorkingRecord.create(user_soldier_id: us.id, user_tool_id: ut&.id)
-          ut&.using
+          ut&.using!
           success
         end
       end
