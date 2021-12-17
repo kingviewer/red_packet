@@ -33,44 +33,10 @@ class Bomb < ApplicationRecord
       amount: reward_cic
     )
 
-    # 上级收益
-    rewarded_rate = 0
-    pre_role = nil
-    same_rewarded = false
-    pre_reward = 0
-    height = 1
-
+    # 直推收益
     if (dst_user = user.parent)
-      loop do
-        if dst_user.role == 'pai' && height == 1
-          rate = Utils::Constants::REWARD_RATES[:pai][:disposal][:rate]
-          reward = (benefit * rate).floor(8)
-          rewarded_rate = rate
-          reward_cic(dst_user.id, reward, :disposal_dynamic)
-        elsif !dst_user.user? && !dst_user.pai?
-          if pre_role && dst_user.role == pre_role && !same_rewarded
-            same_rewarded = true
-            rate = Utils::Constants::REWARD_RATES[dst_user.role.to_sym][:disposal][:same_role]
-            reward = (pre_reward * rate).floor(8)
-            reward_cic(dst_user.id, reward, :disposal_dynamic_same)
-            break if dst_user.jun?
-            pre_role = dst_user.role
-          else
-            same_rewarded = false
-            rate = Utils::Constants::REWARD_RATES[dst_user.role.to_sym][:disposal][:rate]
-            dif_rate = rate - rewarded_rate
-            if dif_rate > 0
-              pre_role = dst_user.role
-              rewarded_rate = rate
-              reward = (benefit * dif_rate).floor(8)
-              reward_cic(dst_user.id, reward, :disposal_dynamic)
-              pre_reward = reward
-            end
-          end
-        end
-        break unless (dst_user = dst_user.parent)
-        height += 1
-      end
+      reward = (reward_cic * 0.1).floor(8)
+      reward_cic(dst_user.id, reward, :disposal_dynamic)
     end
 
     # 减数量
