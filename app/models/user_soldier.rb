@@ -12,8 +12,8 @@ class UserSoldier < ApplicationRecord
       )
     if (working_record = WorkingRecord.working.where(user_soldier_id: id).last)
       _amount =
-        if working_record.user_tool_id && working_record.user_tool&.using
-          working_record.user_tool.used
+        if working_record.user_tool_id && working_record.user_tool&.using?
+          working_record.user_tool.used!
           amount * (1 + working_record.user_tool.tool.increase_times)
         else
           amount
