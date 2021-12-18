@@ -176,13 +176,13 @@ class User < ApplicationRecord
 
   # 新增/减贡献值，更新贡献、级别
   def new_contribution(contribution)
-    self.my_contribution += contribution
-    role_amount = update_new_role
-    save
-    parent&.sync_for_contribution(
-      contribution, role_amount[:pai], role_amount[:lian], role_amount[:ying], role_amount[:tuan],
-      role_amount[:shi], role_amount[:jun]
-    )
+    # self.my_contribution += contribution
+    # role_amount = update_new_role
+    # save
+    # parent&.sync_for_contribution(
+    #   contribution, role_amount[:pai], role_amount[:lian], role_amount[:ying], role_amount[:tuan],
+    #   role_amount[:shi], role_amount[:jun]
+    # )
   end
 
   # 增加团队贡献，更新团队贡献、级别
