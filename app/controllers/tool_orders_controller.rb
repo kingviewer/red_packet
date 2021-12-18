@@ -4,7 +4,7 @@ class ToolOrdersController < BaseUserController
   def list_my
     data = []
     relation = ToolOrder.where(user_id: cur_user.id)
-    relation.includes(:tool).
+    relation.includes(:tool).order(id: :desc).
       limit(params[:limit].to_i).offset(params[:limit].to_i * (params[:page].to_i - 1)).each do |order|
       data << {
         id: order.id,
