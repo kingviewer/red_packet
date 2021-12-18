@@ -1,6 +1,6 @@
 en:
   common:
-    plat_name: Bomb disposal expert
+    plat_name: Forest warden
     language: English
     no_record: There is no record
     coming_soon: Coming Soon
@@ -49,11 +49,11 @@ en:
         agent_init_reward: Chief instructor's Reward
         exchange_cic: Exchange BOMB
         air_drop: Air drop
-        buy_soldier: 雇佣工兵
+        buy_soldier: Buy guardian(s)
         buy_pliers: Buy props
-        disposal: 拆弹
-        disposal_dynamic: 培训津贴
-        disposal_dynamic_same: 平级补贴
+        disposal: Binding a thief
+        disposal_dynamic: Training allowance
+        disposal_dynamic_same: Seniority subsidies
     user:
       roles:
         user: Recruit
@@ -77,17 +77,17 @@ en:
     pliers_flow:
       flow_types:
         air_drop: Air drop
-        buy: 兑换
-        disposal: 拆弹
-        pk: 福利
+        buy: Buy
+        disposal: Binding a thief
+        pk: Welfare
     bomb_flow:
       flow_types:
-        search: 扫雷
-        disposal: 拆弹
+        search: Find the wood thief
+        disposal: Binding a thief
     user_soldier:
       states:
-        free: 休息
-        working: 扫雷中
+        free: Free
+        working: Working
   users:
     new:
       sign_up_tip: Please enter your inviter ID to register
@@ -255,21 +255,21 @@ en:
       not_exist: The bomb disposal record does not exist
   soldiers:
     buy:
-      soldier_not_exist: 该工兵不存在
-      max_employ_amount: 雇佣工兵总数不可超过最大数量
+      soldier_not_exist: The guardian does not exist
+      max_employ_amount: The total number of guardians purchased cannot exceed the maximum
   user_soldiers:
     start_working:
-      soldier_already_working: 该工兵已经在工作啦
-      today_has_worked: 该工兵今天工作次数已达最大
-      tool_not_exist: 道具不存在
+      soldier_already_working: The guardian is already at work
+      today_has_worked: The guardian has worked his maximum duty today
+      tool_not_exist: Item does not exist
   bombs:
     disposal:
-      bomb_not_exist: 该炸弹不存在
-      bomb_insufficient: 炸弹数量不足
-      pliers_insufficient: 钳子数量不足
+      bomb_not_exist: The thief does not exist
+      bomb_insufficient: There are not enough wood thieves
+      pliers_insufficient: Insufficient rope
   articles:
     detail:
-      article_not_exist: 该文章不存在
+      article_not_exist: The article does not exist
   tools:
     buy:
-      tool_not_exist: 该道具不存在
+      tool_not_exist: The item does not exist
