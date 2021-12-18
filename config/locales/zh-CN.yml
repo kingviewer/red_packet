@@ -77,13 +77,13 @@ zh-CN:
     pliers_flow:
       flow_types:
         air_drop: 空投
-        buy: 兑换
-        disposal: 拆弹
+        buy: 购买
+        disposal: 捆绑盗木者
         pk: 福利
     bomb_flow:
       flow_types:
-        search: 搜索盗木人
-        disposal: 拆弹
+        search: 搜索盗木者
+        disposal: 捆绑
     user_soldier:
       states:
         free: 休息
@@ -115,7 +115,7 @@ zh-CN:
       already_vip: 您已经是教官，请勿重复升级
       already_agent: 您是总教官，无需升级教官
     exchange_cic:
-      packet_usdt_available: 拆弹账户可用金额
+      packet_usdt_available: 游戏账户可用金额
       cic_usdt_price: BOMB/USDT 价格
       exchange_amount: 兑换数量
       cic_amount_you_will_exchange: 您要兑换的BOMB数量
@@ -132,11 +132,11 @@ zh-CN:
       game_room_id: 房间号
       join_now: 立即参与
       joined: 已参与
-      joined_leave_tip: 您已参与本次拆弹，退出房间则会取消您的参与。确认退出吗？
-      win_records: 拆弹记录
+      joined_leave_tip: 您已参与本次游戏，退出房间则会取消您的参与。确认退出吗？
+      win_records: PK记录
       not_joined: 未参与
     create:
-      game_not_exist: 该拆弹金额不存在
+      game_not_exist: 该游戏金额不存在
       min_usdt_amount_less_than_game_required: 最低保证金不应低于拆弹金额
       in_room_not_to_create: 您当前正在参与一个密码房间，不可再次创建密码房间
       usdt_available_less_than_min: 您的CIC可用余额小于要创建的密码房要求的最低账户余额
@@ -155,10 +155,10 @@ zh-CN:
       cic_available_insufficient: CIC可用余额不足
   games:
     show:
-      title: 拆弹详情
+      title: PK详情
     join:
       game_not_exist: 该炸弹不存在
-      already_joined: 您已经参与了本次拆弹，不可重复参与
+      already_joined: 您已经参与了本次PK，不可重复参与
   dashboard:
     titles:
       red_packets: 战场
