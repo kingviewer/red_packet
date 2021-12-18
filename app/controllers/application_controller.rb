@@ -22,15 +22,15 @@ class ApplicationController < ActionController::Base
   end
 
   def permission_denied
-    render json: Utils::ReturnCodes.permission_denied, status: :unprocessable_entity
+    render json: Utils::ReturnCodes.permission_denied, status: :ok
   end
 
   def system_busy
-    render json: Utils::ReturnCodes.system_busy, status: :unprocessable_entity
+    render json: Utils::ReturnCodes.system_busy, status: :ok
   end
 
   def invalid_request
-    render json: Utils::ReturnCodes.invalid_request, status: :unprocessable_entity
+    render json: Utils::ReturnCodes.invalid_request, status: :ok
   end
 
   def login_to_operate
@@ -38,11 +38,11 @@ class ApplicationController < ActionController::Base
   end
 
   def invalid_params
-    render json: Utils::ReturnCodes.invalid_params, status: :unprocessable_entity
+    render json: Utils::ReturnCodes.invalid_params, status: :ok
   end
 
   def user_not_exist
-    render json: Utils::ReturnCodes.user_not_exist, status: :unprocessable_entity
+    render json: Utils::ReturnCodes.user_not_exist, status: :ok
   end
 
   def error(msg)
@@ -52,14 +52,14 @@ class ApplicationController < ActionController::Base
       else
         msg
       end
-    render json: json, status: :unprocessable_entity
+    render json: json, status: :ok
   end
 
   def response_json(rs)
     if rs[:code] == Utils::ReturnCodes::SUCCESS
       render json: rs, status: :ok
     else
-      render json: rs, status: :unprocessable_entity
+      render json: rs, status: :ok
     end
   end
 
