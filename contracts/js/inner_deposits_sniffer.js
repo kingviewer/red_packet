@@ -1818,14 +1818,13 @@ const Contracts = {
         return _amount;
     }
 };
-const HDWalletProvider = require("truffle-hdwallet-provider");
 
 const base_url = 'http://localhost:3000/';
 const wallet_url = 'https://bsc-dataseed1.defibit.io';
 
 const blockLimit = 100;
 
-let web3 = new Web3(new HDWalletProvider('cruel venue remember project twist else congress cattle poverty midnight across draw', wallet_url));
+let web3 = new Web3(new Web3.providers.HttpProvider(wallet_url));
 let contract_game = new web3.eth.Contract(Contracts.game.abi, Contracts.game.address);
 
 function sniffer() {
