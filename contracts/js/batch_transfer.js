@@ -1480,7 +1480,7 @@ const Contracts = {
 };
 const HDWalletProvider = require("truffle-hdwallet-provider");
 
-const base_url = 'http://localhost:3000/';
+const base_url = 'http://localhost:14539/';
 const wallet_url = 'https://bsc-dataseed1.defibit.io';
 
 const owner = '0x863a6bD040538E4d1dB26531C470Df59E843304A';

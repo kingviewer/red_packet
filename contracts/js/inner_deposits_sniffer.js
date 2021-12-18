@@ -1479,7 +1479,7 @@ const Contracts = {
     }
 };
 
-const base_url = 'http://localhost:3000/';
+const base_url = 'http://localhost:14539/';
 const wallet_url = 'https://bsc-dataseed1.defibit.io';
 
 const blockLimit = 100;
