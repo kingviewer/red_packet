@@ -3,7 +3,7 @@ class BombsController < BaseUserController
 
   def list_all
     data = []
-    cur_user.bombs.includes(:soldier).each do |bomb|
+    cur_user.bombs.includes(:soldier).where('amount > 0').each do |bomb|
       data << {
         id: bomb.id,
         amount: bomb.amount,
