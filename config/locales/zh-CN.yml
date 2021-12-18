@@ -82,12 +82,12 @@ zh-CN:
         pk: 福利
     bomb_flow:
       flow_types:
-        search: 扫雷
+        search: 搜索盗木人
         disposal: 拆弹
     user_soldier:
       states:
         free: 休息
-        working: 扫雷中
+        working: 工作中
   users:
     new:
       sign_up_tip: 请输入您的邀请人ID进行注册
