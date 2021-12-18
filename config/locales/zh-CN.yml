@@ -1,6 +1,6 @@
 zh-CN:
   common:
-    plat_name: 拆弹专家
+    plat_name: 森林守卫者
     language: 简体中文
     no_record: 没有记录
     coming_soon: 马上开放
@@ -27,8 +27,8 @@ zh-CN:
     notice: 请注意
   utils:
     accounts:
-      packet: 拆弹账户
-      wallet: 钱包账户
+      packet: 游戏账户
+      wallet: 币币账户
   models:
     asset_flow:
       flow_types:
@@ -37,7 +37,7 @@ zh-CN:
         transfer: 划转
         win: PK成功
         lose: PK失败
-        lose_reward: 拆弹福利
+        lose_reward: PK福利
         parent_reward: 直推奖励
         grand_reward: 间推奖励
         agent_reward: 训练津贴
@@ -49,7 +49,7 @@ zh-CN:
         agent_init_reward: 总教官补贴
         exchange_cic: 兑换BOMB
         air_drop: 空投
-        buy_soldier: 雇佣工兵
+        buy_soldier: 雇佣守卫者
         buy_pliers: 购买道具
         disposal: 拆弹
         disposal_dynamic: 培训津贴
@@ -253,12 +253,12 @@ zh-CN:
       not_exist: 该拆弹记录不存在
   soldiers:
     buy:
-      soldier_not_exist: 该工兵不存在
-      max_employ_amount: 雇佣工兵总数不可超过最大数量
+      soldier_not_exist: 该守卫者不存在
+      max_employ_amount: 购买守卫者总数不可超过最大数量
   user_soldiers:
     start_working:
-      soldier_already_working: 该工兵已经在工作啦
-      today_has_worked: 该工兵今天工作次数已达最大
+      soldier_already_working: 该守卫者已经在工作啦
+      today_has_worked: 该守卫者今天工作次数已达最大
       tool_not_exist: 道具不存在
   bombs:
     disposal:
