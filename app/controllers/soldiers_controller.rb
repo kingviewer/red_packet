@@ -9,7 +9,7 @@ class SoldiersController < BaseUserController
         power: soldier.power,
         duration: soldier.duration,
         max_employ_amount: soldier.max_employ_amount,
-        contribution: soldier.contribution,
+        contribution: soldier.id == 1 ? '0.6' : '2',
         image: soldier.image.service_url
       }
     end
