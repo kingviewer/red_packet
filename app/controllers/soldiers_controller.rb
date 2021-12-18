@@ -26,7 +26,7 @@ class SoldiersController < BaseUserController
       cur_user.with_lock do
         if cur_user.candy_available < soldier.price * amount
           error(t('dashboard.index.balance_insufficient'))
-        elsif cur_user.user_soldiers.where(id: soldier.id).count + amount > soldier.max_employ_amount
+        elsif cur_user.user_soldiers.where(solder_id: soldier.id).count + amount > soldier.max_employ_amount
           error(t('.max_employ_amount'))
         else
           cur_user.update(candy_available: cur_user.candy_available - soldier.price * amount)
