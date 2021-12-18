@@ -16,7 +16,8 @@ class UserSoldiersController < BaseUserController
         left_secs: us.working? ? (us.start_working_at.since(Utils::Constants::SOLDIER_WORKING_TIME.minutes) - Time.now).to_i : 0,
         power: us.soldier.power,
         image: us.soldier.image.service_url,
-        state: us.state
+        state: us.state,
+        state_name: us.state_name
       }
     end
     success(data)
