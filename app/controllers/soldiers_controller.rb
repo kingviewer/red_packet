@@ -42,7 +42,7 @@ class SoldiersController < BaseUserController
             asset_type: :cigar,
             account_type: :packet,
             amount: -soldier.price * amount
-          )
+          ) if soldier.price > 0
           if soldier.contribution > 0
             cur_user.new_contribution(soldier.contribution * amount)
           end
