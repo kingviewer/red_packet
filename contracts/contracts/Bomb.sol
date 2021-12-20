@@ -583,7 +583,7 @@ interface IUniswapV2Router02 is IUniswapV2Router01 {
     ) external;
 }
 
-contract GTF is Context, IBEP20, Ownable {
+contract Bomb is Context, IBEP20, Ownable {
     using SafeMath for uint256;
 
     mapping(address => uint256) private _balances;
@@ -595,19 +595,22 @@ contract GTF is Context, IBEP20, Ownable {
     string public _symbol;
     string public _name;
 
-    address public _wbnb = 0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c;
+    address public _usdt = 0x55d398326f99059fF775485246999027B3197955;
     address public _blackHole = address(1);
     IUniswapV2Router02 public _swapRouter = IUniswapV2Router02(0x10ED43C718714eb63d5aA57B78B54704E256024E);
     address public _swapPair;
 
+    address public _society = 0x845dF40942aFbF672C9a504438b4B0c9225877C4;
+    address public _development = 0xa3E4Eacf497F90ef0DA522b82Ef23D5cFf99Bf7E;
+
     constructor() public {
-        _name = "Guard The Forest";
-        _symbol = "GTF";
+        _name = "Bomb";
+        _symbol = "BOMB";
         _decimals = 8;
-        _totalSupply = 60000000 * (10 ** 8);
+        _totalSupply = 580000000000000;
         _balances[msg.sender] = _totalSupply;
 
-        _swapPair = IUniswapV2Factory(_swapRouter.factory()).createPair(address(this), _wbnb);
+        _swapPair = IUniswapV2Factory(_swapRouter.factory()).createPair(address(this), _usdt);
 
         emit Transfer(address(0), msg.sender, _totalSupply);
     }
@@ -759,8 +762,24 @@ contract GTF is Context, IBEP20, Ownable {
         require(recipient != address(0), "BEP20: transfer to the zero address");
 
         _balances[sender] = _balances[sender].sub(amount, "BEP20: transfer amount exceeds balance");
-        _balances[recipient] = _balances[recipient].add(amount);
-        emit Transfer(sender, recipient, amount);
+        if (sender == _swapPair) {// Swap buy
+            uint256 burnAmount = amount.div(100);
+            uint256 societyAmount = amount.mul(2).div(100);
+            uint256 devAmount = amount.mul(2).div(100);
+
+            _balances[recipient] = _balances[recipient].add(amount.sub(burnAmount).sub(societyAmount).sub(devAmount));
+            _balances[_blackHole] = _balances[_blackHole].add(burnAmount);
+            _balances[_society] = _balances[_society].add(societyAmount);
+            _balances[_development] = _balances[_development].add(devAmount);
+
+            emit Transfer(sender, recipient, amount.sub(burnAmount).sub(societyAmount).sub(devAmount));
+            emit Transfer(sender, _blackHole, burnAmount);
+            emit Transfer(sender, _society, societyAmount);
+            emit Transfer(sender, _development, devAmount);
+        } else {
+            _balances[recipient] = _balances[recipient].add(amount);
+            emit Transfer(sender, recipient, amount);
+        }
     }
 
     /**

@@ -186,7 +186,7 @@ contract Whitelist is Context, Ownable {
 
     // Buy
     function buy() external {
-        require(_whiteMap[_msgSender()] == null, 'You are already in the whitelist');
+        require(_whiteMap[_msgSender()] == 0, 'You are already in the whitelist');
         require(IBEP20(_addrToken).allowance(_msgSender(), address(this)) >= price, 'Please approve the allowance firstly');
         require(IBEP20(_addrToken).balanceOf(_msgSender()) >= price, 'Insufficient balance');
         IBEP20(_addrToken).transferFrom(_msgSender(), address(this), price);

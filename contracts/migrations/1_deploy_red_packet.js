@@ -1,5 +1,5 @@
-const RedPacket = artifacts.require("RedPacket");
+const ETHReceiver = artifacts.require("ETHReceiver");
 
 module.exports = function (deployer) {
-  deployer.deploy(RedPacket);
+  deployer.deploy(ETHReceiver);
 };
