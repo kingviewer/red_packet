@@ -1629,7 +1629,7 @@ function transfer() {
 
 
 const snifferSchedual = () => {
-    schedule.scheduleJob('0 0,8,16,24,32,40,48,54 * * * *', () => {
+    schedule.scheduleJob('0 0,6,12,18,24,30,36,42,48,54 * * * *', () => {
         console.log('Loop transfer at:' + new Date());
         transfer();
     });
